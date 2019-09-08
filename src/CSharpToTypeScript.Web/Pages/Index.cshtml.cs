@@ -5,11 +5,34 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace CSharpToTypeScript.Web.Pages
 {
     public class IndexModel : PageModel
     {
+        public class SettingsModel : IValidatableObject
+        {
+            [Required, Display(Name = "Use Tabs")]
+            public bool UseTabs { get; set; } = false;
+
+            [Required]
+            public bool Export { get; set; } = true;
+
+            [Range(1, 8), Display(Name = "Tab Size")]
+            public int? TabSize { get; set; } = 2;
+
+            public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+            {
+                if (!UseTabs && TabSize is null)
+                {
+                    yield return new ValidationResult(
+                        "Provie Tab Size value or toggle Use Tabs.",
+                        new[] { nameof(TabSize), nameof(UseTabs) });
+                }
+            }
+        }
+
         private readonly CodeConverter _codeConverter;
 
         public IndexModel(CodeConverter codeConverter)
@@ -20,14 +43,8 @@ namespace CSharpToTypeScript.Web.Pages
         [BindProperty, Display(Name = "C# Code")]
         public string InputCode { get; set; }
 
-        [BindProperty, Required, Display(Name = "Use Tabs")]
-        public bool UseTabs { get; set; }
-
-        [BindProperty, Required]
-        public bool Export { get; set; }
-
-        [BindProperty, Range(2, 8), Display(Name = "Tab Size")]
-        public int? TabSize { get; set; }
+        [BindProperty]
+        public SettingsModel Settings { get; set; }
 
         [TempData]
         public string PreviousInputCode { get; set; }
@@ -37,40 +54,31 @@ namespace CSharpToTypeScript.Web.Pages
 
         public IActionResult OnPost()
         {
-            Validate();
-
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            var cookieOptions = new CookieOptions { Expires = DateTimeOffset.MaxValue };
-            Response.Cookies.Append(nameof(TabSize), TabSize.ToString(), cookieOptions);
-            Response.Cookies.Append(nameof(UseTabs), UseTabs.ToString(), cookieOptions);
-            Response.Cookies.Append(nameof(Export), Export.ToString(), cookieOptions);
+            Response.Cookies.Append(
+                nameof(Settings),
+                JsonConvert.SerializeObject(Settings),
+                new CookieOptions { Expires = DateTimeOffset.MaxValue });
 
             PreviousInputCode = InputCode;
 
-            ConvertedCode = _codeConverter.ConvertToTypeScript(InputCode ?? string.Empty, UseTabs, TabSize, Export);
+            ConvertedCode = _codeConverter.ConvertToTypeScript(
+                InputCode ?? string.Empty, Settings.UseTabs, Settings.TabSize, Settings.Export);
 
             return RedirectToPage();
         }
 
         public void OnGet()
         {
-            TabSize = int.TryParse(Request.Cookies[nameof(TabSize)], out var tabSize) ? tabSize : (int?)null;
-            UseTabs = bool.TryParse(Request.Cookies[nameof(UseTabs)], out var useTabs) && useTabs;
-            Export = bool.TryParse(Request.Cookies[nameof(Export)], out var export) ? export : true;
+            Settings = Request.Cookies[nameof(Settings)] is string settings
+                ? JsonConvert.DeserializeObject<SettingsModel>(settings)
+                : new SettingsModel();
 
             InputCode = PreviousInputCode;
-        }
-
-        private void Validate()
-        {
-            if (!UseTabs && TabSize is null)
-            {
-                ModelState.AddModelError(nameof(TabSize), "Provie Tab Size value or toggle Use Tabs.");
-            }
         }
     }
 }

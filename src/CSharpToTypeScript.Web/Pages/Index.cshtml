@@ -11,19 +11,19 @@
         <div class="row">
             <div class="col-6 col-md-9 col-lg-10">
                 <div class="form-group">
-                    <label asp-for="TabSize"></label>
-                    <input asp-for="TabSize" class="form-control" min="2" max="8" />
-                    <span asp-validation-for="TabSize" class="text-danger"></span>
+                    <label asp-for="Settings.TabSize"></label>
+                    <input asp-for="Settings.TabSize" class="form-control" min="1" max="8" />
+                    <span asp-validation-for="Settings.TabSize" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-6 col-md-3 col-lg-2">
                 <div class="custom-control custom-switch mt-4">
-                    <input asp-for="UseTabs" class="custom-control-input">
-                    <label asp-for="UseTabs" class="custom-control-label"></label>
+                    <input asp-for="Settings.UseTabs" class="custom-control-input">
+                    <label asp-for="Settings.UseTabs" class="custom-control-label"></label>
                 </div>
                 <div class="custom-control custom-switch mt-1">
-                    <input asp-for="Export" class="custom-control-input">
-                    <label asp-for="Export" class="custom-control-label"></label>
+                    <input asp-for="Settings.Export" class="custom-control-input">
+                    <label asp-for="Settings.Export" class="custom-control-label"></label>
                 </div>
             </div>
         </div>
