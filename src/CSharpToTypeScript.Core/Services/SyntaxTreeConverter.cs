@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using CSharpToTypeScript.Core.Models;
-using CSharpToTypeScript.Core.Services.FieldTypeConverters;
+using CSharpToTypeScript.Core.Services.FieldTypeHandlers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -39,9 +39,10 @@ namespace CSharpToTypeScript.Core.Services
 
         private IEnumerable<FieldNode> ConvertProperties(IEnumerable<PropertyDeclarationSyntax> properties)
         {
-            var converter = new NumberConverter();
+            var converter = new QualifiedUnpacker();
 
             converter.SetNext(new StringConverter())
+                .SetNext(new NumberConverter())
                 .SetNext(new BooleanConverter())
                 .SetNext(new ArrayConverter(converter))
                 .SetNext(new TupleConverter(converter))
@@ -52,7 +53,7 @@ namespace CSharpToTypeScript.Core.Services
 
             return properties.Select(p => new FieldNode(
                 name: p.Identifier.Text,
-                type: converter.Convert(p.Type)));
+                type: converter.Handle(p.Type)));
         }
     }
 }

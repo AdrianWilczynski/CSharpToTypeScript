@@ -3,13 +3,13 @@ using System.Linq;
 using CSharpToTypeScript.Core.Models.FieldTypes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace CSharpToTypeScript.Core.Services.FieldTypeConverters
+namespace CSharpToTypeScript.Core.Services.FieldTypeHandlers
 {
-    public class ArrayConverter : FieldTypeConverter
+    public class ArrayConverter : FieldTypeConversionHandler
     {
-        private readonly FieldTypeConverter _converter;
+        private readonly FieldTypeConversionHandler _converter;
 
-        public ArrayConverter(FieldTypeConverter converter)
+        public ArrayConverter(FieldTypeConversionHandler converter)
         {
             _converter = converter;
         }
@@ -19,12 +19,12 @@ namespace CSharpToTypeScript.Core.Services.FieldTypeConverters
             "List", "IList", "Collection", "ICollection", "Enumerable", "IEnumerable"
         };
 
-        public override IFieldType Convert(TypeSyntax type)
+        public override IFieldType Handle(TypeSyntax type)
         {
             if (type is ArrayTypeSyntax array)
             {
                 return new Array(
-                    of: _converter.Convert(array.ElementType),
+                    of: _converter.Handle(array.ElementType),
                     rank: array.RankSpecifiers.Aggregate(0, (total, specifier) => total + specifier.Rank));
             }
             else if (type is IdentifierNameSyntax identified && ConvertibleFrom.Contains(identified.Identifier.Text))
@@ -37,11 +37,11 @@ namespace CSharpToTypeScript.Core.Services.FieldTypeConverters
                 && generic.TypeArgumentList.Arguments.Count == 1)
             {
                 return new Array(
-                    of: _converter.Convert(generic.TypeArgumentList.Arguments.Single()),
+                    of: _converter.Handle(generic.TypeArgumentList.Arguments.Single()),
                     rank: 1);
             }
 
-            return base.Convert(type);
+            return base.Handle(type);
         }
     }
 }

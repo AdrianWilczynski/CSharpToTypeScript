@@ -1,18 +1,18 @@
 using CSharpToTypeScript.Core.Models.FieldTypes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace CSharpToTypeScript.Core.Services.FieldTypeConverters
+namespace CSharpToTypeScript.Core.Services.FieldTypeHandlers
 {
-    public class CustomConverter : FieldTypeConverter
+    public class CustomConverter : FieldTypeConversionHandler
     {
-        public override IFieldType Convert(TypeSyntax type)
+        public override IFieldType Handle(TypeSyntax type)
         {
             if (type is IdentifierNameSyntax identified && identified.Identifier.Text != "Object")
             {
                 return new Custom(identified.Identifier.Text);
             }
 
-            return base.Convert(type);
+            return base.Handle(type);
         }
     }
 }

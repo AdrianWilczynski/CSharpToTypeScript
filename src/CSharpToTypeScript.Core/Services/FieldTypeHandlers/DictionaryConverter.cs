@@ -3,33 +3,33 @@ using System.Linq;
 using CSharpToTypeScript.Core.Models.FieldTypes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace CSharpToTypeScript.Core.Services.FieldTypeConverters
+namespace CSharpToTypeScript.Core.Services.FieldTypeHandlers
 {
-    public class DictionaryConverter : FieldTypeConverter
+    public class DictionaryConverter : FieldTypeConversionHandler
     {
         private IEnumerable<string> ConvertibleFrom { get; } = new List<string>
         {
             "Dictionary", "IDictionary"
         };
 
-        private readonly FieldTypeConverter _converter;
+        private readonly FieldTypeConversionHandler _converter;
 
-        public DictionaryConverter(FieldTypeConverter converter)
+        public DictionaryConverter(FieldTypeConversionHandler converter)
         {
             _converter = converter;
         }
 
-        public override IFieldType Convert(TypeSyntax type)
+        public override IFieldType Handle(TypeSyntax type)
         {
             if (type is GenericNameSyntax generic && ConvertibleFrom.Contains(generic.Identifier.Text)
                 && generic.TypeArgumentList.Arguments.Count == 2)
             {
                 return new Dictionary(
-                    key: _converter.Convert(generic.TypeArgumentList.Arguments[0]),
-                    value: _converter.Convert(generic.TypeArgumentList.Arguments[1]));
+                    key: _converter.Handle(generic.TypeArgumentList.Arguments[0]),
+                    value: _converter.Handle(generic.TypeArgumentList.Arguments[1]));
             }
 
-            return base.Convert(type);
+            return base.Handle(type);
         }
     }
 }
