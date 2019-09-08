@@ -17,8 +17,7 @@ export function activate(context: vscode.ExtensionContext) {
         const tabSize = vscode.window.activeTextEditor.options.tabSize as number;
         const useTabs = !vscode.window.activeTextEditor.options.insertSpaces;
 
-        const addExport = !!vscode.workspace.getConfiguration()
-            .get('csharpToTypeScript.export');
+        const addExport = !!vscode.workspace.getConfiguration().get('csharpToTypeScript.export');
 
         try {
             const result = await process.Run(

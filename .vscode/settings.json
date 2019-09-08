@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/e5417465-5856-4888-92c3-1b3be643edc8/resourceGroups/CSharpToTypeScript/providers/Microsoft.Web/sites/CSharpToTypeScript",
+    "appService.deploySubpath": "src\\CSharpToTypeScript.Web\\bin\\Release\\netcoreapp2.2\\publish"
+}
