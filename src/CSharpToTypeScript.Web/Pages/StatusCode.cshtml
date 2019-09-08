@@ -1,0 +1,10 @@
+@page "{code:int?}"
+
+<div class="p-5 text-center">
+    <h1 class="text-warning">@(Code?.ToString() ?? @"¯\_(ツ)_/¯")</h1>
+</div>
+
+@functions {
+    [BindProperty(SupportsGet = true)]
+    public int? Code { get; set; }
+}

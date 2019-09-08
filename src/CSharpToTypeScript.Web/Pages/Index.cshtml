@@ -1,0 +1,43 @@
+﻿@page
+@model IndexModel
+
+<form method="POST">
+    <nav class="navbar navbar-dark indigo mb-5 d-flex justify-content-between">
+        <a class="navbar-brand" href="/">C# to TypeScript</a>
+        <button class="btn btn-outline-white btn-md" type="submit">Convert</button>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-6 col-md-9 col-lg-10">
+                <div class="form-group">
+                    <label asp-for="TabSize"></label>
+                    <input asp-for="TabSize" class="form-control" min="2" max="8" />
+                    <span asp-validation-for="TabSize" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-6 col-md-3 col-lg-2">
+                <div class="custom-control custom-switch mt-4">
+                    <input asp-for="UseTabs" class="custom-control-input">
+                    <label asp-for="UseTabs" class="custom-control-label"></label>
+                </div>
+                <div class="custom-control custom-switch mt-1">
+                    <input asp-for="Export" class="custom-control-input">
+                    <label asp-for="Export" class="custom-control-label"></label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-12 col-md-6">
+                <label asp-for="InputCode"></label>
+                <textarea asp-for="InputCode" class="form-control" rows="20"></textarea>
+                <span asp-validation-for="InputCode" class="text-danger"></span>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="my-1">TypeScript Code</div>
+                <pre>@Model.ConvertedCode</pre>
+            </div>
+        </div>
+    </div>
+</form>
+

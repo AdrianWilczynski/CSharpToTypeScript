@@ -1,0 +1,10 @@
+{
+  "version": "1.0",
+  "defaultProvider": "jsdelivr",
+  "libraries": [
+    {
+      "library": "mdbootstrap@4.8.9",
+      "destination": "wwwroot\\lib\\mdbootstrap"
+    }
+  ]
+}
