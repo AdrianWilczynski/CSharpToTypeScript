@@ -7,7 +7,7 @@ namespace CSharpToTypeScript.Core.Services.FieldTypeConverters
     {
         protected override IEnumerable<string> ConvertibleFrom { get; } = new List<string>
         {
-            "String", "string", "Char", "char", "DateTime", "DateTimeOffset"
+            "String", "string", "Char", "char", "DateTime", "DateTimeOffset", "TimeSpan", "Guid"
         };
     }
 }
