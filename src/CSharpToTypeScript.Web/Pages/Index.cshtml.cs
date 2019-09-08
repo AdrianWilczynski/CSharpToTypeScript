@@ -27,7 +27,7 @@ namespace CSharpToTypeScript.Web.Pages
                 if (!UseTabs && TabSize is null)
                 {
                     yield return new ValidationResult(
-                        "Provie Tab Size value or toggle Use Tabs.",
+                        "Provide Tab Size value or toggle Use Tabs.",
                         new[] { nameof(TabSize), nameof(UseTabs) });
                 }
             }
@@ -82,4 +82,3 @@ namespace CSharpToTypeScript.Web.Pages
         }
     }
 }
-
