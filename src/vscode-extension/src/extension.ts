@@ -17,10 +17,13 @@ export function activate(context: vscode.ExtensionContext) {
         const tabSize = vscode.window.activeTextEditor.options.tabSize as number;
         const useTabs = !vscode.window.activeTextEditor.options.insertSpaces;
 
+        const addExport = !!vscode.workspace.getConfiguration()
+            .get('csharpToTypeScript.export');
+
         try {
             const result = await process.Run(
                 'dotnet',
-                [context.asAbsolutePath(dll.path), ...dll.args(selectedText, useTabs, tabSize)]);
+                [context.asAbsolutePath(dll.path), ...dll.args(selectedText, useTabs, tabSize, addExport)]);
 
             if (!result) {
                 return;
@@ -43,8 +46,8 @@ export function activate(context: vscode.ExtensionContext) {
     };
 
     context.subscriptions.push(
-        vscode.commands.registerCommand('extension.cSharpToTypeScriptReplace', () => cSharpToTypeScript('selection')),
-        vscode.commands.registerCommand('extension.cSharpToTypeScriptToClipboard', () => cSharpToTypeScript('clipboard')));
+        vscode.commands.registerCommand('extension.csharpToTypeScriptReplace', () => cSharpToTypeScript('selection')),
+        vscode.commands.registerCommand('extension.csharpToTypeScriptToClipboard', () => cSharpToTypeScript('clipboard')));
 }
 
 export function deactivate() { }
