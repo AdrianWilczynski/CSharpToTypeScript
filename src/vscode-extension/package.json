@@ -3,6 +3,7 @@
 	"displayName": "C# to TypeScript",
 	"description": "",
 	"publisher": "adrianwilczynski",
+	"icon": "img/icon.png",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.38.0"
