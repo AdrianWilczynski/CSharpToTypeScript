@@ -1,0 +1,48 @@
+{
+	"name": "csharp-to-typescript",
+	"displayName": "C# to TypeScript",
+	"description": "",
+	"publisher": "adrianwilczynski",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.38.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:extension.cSharpToTypeScriptReplace",
+		"onCommand:extension.cSharpToTypeScriptToClipboard"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "extension.cSharpToTypeScriptReplace",
+				"title": "C# to TypeScript (Replace)"
+			},
+			{
+				"command": "extension.cSharpToTypeScriptToClipboard",
+				"title": "C# to TypeScript (Clipboard)"
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile-backend && npm run compile",
+		"compile": "tsc -p ./",
+		"compile-backend": "dotnet publish ./backend/CSharpToTypeScript.Console/CSharpToTypeScript.Console.csproj -c Release",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run compile"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.1.1",
+		"@types/mocha": "^5.2.6",
+		"@types/node": "^10.12.21",
+		"@types/vscode": "^1.38.0",
+		"glob": "^7.1.4",
+		"mocha": "^6.1.4",
+		"typescript": "^3.3.1",
+		"tslint": "^5.12.1",
+		"vscode-test": "^1.0.2"
+	}
+}

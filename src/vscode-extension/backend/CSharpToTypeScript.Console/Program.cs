@@ -1,6 +1,7 @@
 ﻿using CSharpToTypeScript.Core.Services;
 using Microsoft.Extensions.Configuration;
 using CSharpToTypeScript.Core.Utilities;
+using System;
 
 namespace CSharpToTypeScript.Console
 {

@@ -1,0 +1,13 @@
+.vscode/**
+.vscode-test/**
+out/test/**
+src/**
+.gitignore
+vsc-extension-quickstart.md
+**/tsconfig.json
+**/tslint.json
+**/*.map
+**/*.ts
+
+backend/**
+!backend/CSharpToTypeScript.Console/bin/Release/netcoreapp2.2/publish/**
