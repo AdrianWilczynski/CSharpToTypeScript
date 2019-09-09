@@ -5,6 +5,10 @@
     {
       "library": "mdbootstrap@4.8.9",
       "destination": "wwwroot\\lib\\mdbootstrap"
+    },
+    {
+      "library": "animate.css@3.7.2",
+      "destination": "wwwroot\\lib\\animate.css"
     }
   ]
 }

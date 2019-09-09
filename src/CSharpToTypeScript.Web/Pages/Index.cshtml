@@ -35,9 +35,14 @@
             </div>
             <div class="col-12 col-md-6">
                 <div class="my-1">TypeScript Code</div>
-                <pre>@Model.ConvertedCode</pre>
+                <pre id="convertedCode">@Model.ConvertedCode</pre>
             </div>
         </div>
     </div>
 </form>
 
+<input id="convertedCodeHiddenInput" value="@Model.ConvertedCode" hidden>
+
+@section Scripts {
+    <script src="~/js/site.js"></script>
+}
