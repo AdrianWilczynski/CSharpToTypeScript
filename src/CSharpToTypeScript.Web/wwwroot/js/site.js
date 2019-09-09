@@ -8,8 +8,8 @@ document.getElementById('convertedCode')
 
 function copyToClipboard() {
     const input = document.getElementById('convertedCodeHiddenInput');
-    if (!(input instanceof HTMLInputElement)) {
-        throw new Error(`"convertedCodeHiddenInput" isn't an "HTMLInputElement".`)
+    if (!(input instanceof HTMLTextAreaElement)) {
+        throw new Error(`"convertedCodeHiddenInput" isn't an "HTMLTextAreaElement".`)
     }
 
     input.hidden = false;
