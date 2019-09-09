@@ -12,7 +12,12 @@ export function activate(context: vscode.ExtensionContext) {
         const document = vscode.window.activeTextEditor.document;
 
         const selection = vscode.window.activeTextEditor.selection;
-        const selectedText = document.getText(selection);
+
+        const fullRange = new vscode.Range(
+            0, 0,
+            document.lineCount - 1, document.lineAt(document.lineCount - 1).range.end.character);
+
+        const text = !selection.isEmpty ? document.getText(selection) : document.getText();
 
         const tabSize = vscode.window.activeTextEditor.options.tabSize as number;
         const useTabs = !vscode.window.activeTextEditor.options.insertSpaces;
@@ -22,14 +27,15 @@ export function activate(context: vscode.ExtensionContext) {
         try {
             const result = await process.Run(
                 'dotnet',
-                [context.asAbsolutePath(dll.path), ...dll.args(selectedText, useTabs, tabSize, addExport)]);
+                [context.asAbsolutePath(dll.path), ...dll.args(text, useTabs, tabSize, addExport)]);
 
             if (!result) {
                 return;
             }
 
             if (target === 'selection') {
-                await vscode.window.activeTextEditor.edit(builder => builder.replace(selection, result));
+                await vscode.window.activeTextEditor.edit(
+                    builder => builder.replace(!selection.isEmpty ? selection : fullRange, result));
             } else if (target === 'clipboard') {
                 await vscode.env.clipboard.writeText(result);
             }
