@@ -8,7 +8,7 @@ namespace CSharpToTypeScript.Core.Utilities
     public static class StringUtilities
     {
         public static string ToCamelCase(this string text)
-            => Regex.Replace(text, "^[A-Z](?![A-Z])", Char.ToLowerInvariant(text[0]).ToString());
+            => Regex.Replace(text, "^[A-Z]", Char.ToLowerInvariant(text[0]).ToString());
 
         public static string RemoveInterfacePrefix(this string text)
             => Regex.Replace(text, $"^I(?=[A-Z])", string.Empty);
