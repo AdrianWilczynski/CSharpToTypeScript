@@ -4,7 +4,7 @@ import * as dll from './dll';
 import * as error from './error';
 
 export function activate(context: vscode.ExtensionContext) {
-    const cSharpToTypeScript = async (target: 'selection' | 'clipboard') => {
+    const csharpToTypeScript = async (target: 'selection' | 'clipboard') => {
         if (!vscode.window.activeTextEditor) {
             return;
         }
@@ -51,8 +51,8 @@ export function activate(context: vscode.ExtensionContext) {
     };
 
     context.subscriptions.push(
-        vscode.commands.registerCommand('csharpToTypeScript.csharpToTypeScriptReplace', () => cSharpToTypeScript('selection')),
-        vscode.commands.registerCommand('csharpToTypeScript.csharpToTypeScriptToClipboard', () => cSharpToTypeScript('clipboard')));
+        vscode.commands.registerCommand('csharpToTypeScript.csharpToTypeScriptReplace', () => csharpToTypeScript('selection')),
+        vscode.commands.registerCommand('csharpToTypeScript.csharpToTypeScriptToClipboard', () => csharpToTypeScript('clipboard')));
 }
 
 export function deactivate() { }

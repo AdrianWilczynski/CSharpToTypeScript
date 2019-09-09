@@ -40,7 +40,7 @@ namespace CSharpToTypeScript.Web.Pages
             _codeConverter = codeConverter;
         }
 
-        [BindProperty, Display(Name = "C# Code")]
+        [BindProperty, Display(Name = "C# Code"), MaxLength(10000)]
         public string InputCode { get; set; }
 
         [BindProperty]
