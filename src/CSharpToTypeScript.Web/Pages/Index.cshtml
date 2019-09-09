@@ -30,12 +30,12 @@
         <div class="row">
             <div class="form-group col-12 col-md-6">
                 <label asp-for="InputCode"></label>
-                <textarea asp-for="InputCode" class="form-control" rows="20"></textarea>
+                <textarea asp-for="InputCode" class="form-control" rows="20" spellcheck="false"></textarea>
                 <span asp-validation-for="InputCode" class="text-danger"></span>
             </div>
             <div class="col-12 col-md-6">
-                <div class="my-1">TypeScript Code</div>
-                <pre id="convertedCode" title="TypeScript Code - Click to Copy!" class="rounded"><code class="language-typescript">@Model.ConvertedCode</code></pre>
+                <div class="mt-0 mb-2">TypeScript Code</div>
+                <pre id="convertedCode" title="TypeScript Code - Click to Copy!" class="rounded my-0"><code class="language-typescript">@Model.ConvertedCode</code></pre>
             </div>
         </div>
     </div>
