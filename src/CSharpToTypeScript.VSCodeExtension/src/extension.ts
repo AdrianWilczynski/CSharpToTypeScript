@@ -17,7 +17,7 @@ export function activate(context: vscode.ExtensionContext) {
             0, 0,
             document.lineCount - 1, document.lineAt(document.lineCount - 1).range.end.character);
 
-        const text = !selection.isEmpty ? document.getText(selection) : document.getText();
+        const code = !selection.isEmpty ? document.getText(selection) : document.getText();
 
         const tabSize = vscode.window.activeTextEditor.options.tabSize as number;
         const useTabs = !vscode.window.activeTextEditor.options.insertSpaces;
@@ -25,19 +25,19 @@ export function activate(context: vscode.ExtensionContext) {
         const addExport = !!vscode.workspace.getConfiguration().get('csharpToTypeScript.export');
 
         try {
-            const result = await process.Run(
+            const converted = await process.Run(
                 'dotnet',
-                [context.asAbsolutePath(dll.path), ...dll.args(text, useTabs, tabSize, addExport)]);
+                [context.asAbsolutePath(dll.path), ...dll.args(code, useTabs, tabSize, addExport)]);
 
-            if (!result) {
+            if (!converted) {
                 return;
             }
 
             if (target === 'selection') {
                 await vscode.window.activeTextEditor.edit(
-                    builder => builder.replace(!selection.isEmpty ? selection : fullRange, result));
+                    builder => builder.replace(!selection.isEmpty ? selection : fullRange, converted));
             } else if (target === 'clipboard') {
-                await vscode.env.clipboard.writeText(result);
+                await vscode.env.clipboard.writeText(converted);
             }
         } catch (err) {
             if (typeof err === 'string') {
@@ -51,8 +51,8 @@ export function activate(context: vscode.ExtensionContext) {
     };
 
     context.subscriptions.push(
-        vscode.commands.registerCommand('extension.csharpToTypeScriptReplace', () => cSharpToTypeScript('selection')),
-        vscode.commands.registerCommand('extension.csharpToTypeScriptToClipboard', () => cSharpToTypeScript('clipboard')));
+        vscode.commands.registerCommand('csharpToTypeScript.csharpToTypeScriptReplace', () => cSharpToTypeScript('selection')),
+        vscode.commands.registerCommand('csharpToTypeScript.csharpToTypeScriptToClipboard', () => cSharpToTypeScript('clipboard')));
 }
 
 export function deactivate() { }

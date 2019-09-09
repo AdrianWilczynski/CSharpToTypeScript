@@ -12,18 +12,18 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:extension.csharpToTypeScriptReplace",
-		"onCommand:extension.csharpToTypeScriptToClipboard"
+		"onCommand:csharpToTypeScript.csharpToTypeScriptReplace",
+		"onCommand:csharpToTypeScript.csharpToTypeScriptToClipboard"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "extension.csharpToTypeScriptReplace",
+				"command": "csharpToTypeScript.csharpToTypeScriptReplace",
 				"title": "C# to TypeScript (Replace)"
 			},
 			{
-				"command": "extension.csharpToTypeScriptToClipboard",
+				"command": "csharpToTypeScript.csharpToTypeScriptToClipboard",
 				"title": "C# to TypeScript (Clipboard)"
 			}
 		],
