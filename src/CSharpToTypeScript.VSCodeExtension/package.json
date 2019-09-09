@@ -33,7 +33,8 @@
 				"properties": {
 					"csharpToTypeScript.export": {
 						"type": "boolean",
-						"default": true
+						"default": true,
+						"description": "Add \"export\" keyword to emitted type."
 					}
 				}
 			}
