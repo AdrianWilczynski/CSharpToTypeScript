@@ -2,14 +2,14 @@
 @model IndexModel
 
 <form method="POST">
-    <nav class="navbar navbar-dark elegant-color mb-5 d-flex justify-content-between">
+    <nav class="navbar navbar-dark elegant-color d-flex justify-content-between mb-4">
         <a class="navbar-brand" href="/">C# to TypeScript</a>
         <button class="btn btn-outline-white btn-md" type="submit">Convert</button>
     </nav>
 
     <div class="container">
         <div class="row">
-            <div class="col-6 col-md-9 col-lg-10">
+            <div class="col-6 offset-md-5 col-md-4 offset-lg-6">
                 <div class="form-group">
                     <label asp-for="Settings.TabSize"></label>
                     <input asp-for="Settings.TabSize" class="form-control" min="1" max="8" />
@@ -30,13 +30,15 @@
         <div class="row">
             <div class="form-group col-12 col-md-6">
                 <label asp-for="InputCode"></label>
-                <pre id="inputCodeHighlightedContainer" title="C# Code - Click to Edit!" class="rounded my-0 code-area"><code class="language-csharp">@Model.InputCode</code></pre>
+                <pre id="inputCodeHighlightedContainer" title="C# Code - Click to Edit!"
+                    class="rounded my-0 code-area"><code class="language-csharp">@Model.InputCode</code></pre>
                 <textarea asp-for="InputCode" class="form-control code-area" spellcheck="false" hidden></textarea>
                 <span asp-validation-for="InputCode" class="text-danger"></span>
             </div>
             <div class="col-12 col-md-6">
                 <div class="mt-0 mb-2">TypeScript Code</div>
-                <pre id="convertedCodeContainer" title="TypeScript Code - Click to Copy!" class="rounded my-0 code-area"><code class="language-typescript">@Model.ConvertedCode</code></pre>
+                <pre id="convertedCodeContainer" title="TypeScript Code - Click to Copy!"
+                    class="rounded my-0 code-area"><code class="language-typescript">@Model.ConvertedCode</code></pre>
             </div>
         </div>
     </div>
