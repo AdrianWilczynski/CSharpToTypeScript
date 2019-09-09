@@ -1,7 +1,4 @@
 ﻿using CSharpToTypeScript.Core.Services;
-using Microsoft.Extensions.Configuration;
-using CSharpToTypeScript.Core.Utilities;
-using System;
 
 namespace CSharpToTypeScript.Console
 {
@@ -9,14 +6,10 @@ namespace CSharpToTypeScript.Console
     {
         public static void Main(string[] args)
         {
-            var configuration = new ConfigurationBuilder()
-                .AddCommandLine(args)
-                .Build();
-
-            var code = configuration.GetValue<string>("code");
-            var tabSize = configuration.GetValue<int?>("tabSize") ?? 2;
-            var useTabs = configuration.GetValue<bool?>("useTabs") ?? false;
-            var export = configuration.GetValue<bool?>("export") ?? true;
+            var code = args[0];
+            var useTabs = bool.Parse(args[1]);
+            var tabSize = int.Parse(args[2]);
+            var export = bool.Parse(args[3]);
 
             var converted = new CodeConverter().ConvertToTypeScript(code, useTabs, tabSize, export);
 

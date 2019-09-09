@@ -41,7 +41,8 @@ namespace CSharpToTypeScript.Core.Services
         {
             var converter = new QualifiedUnpacker();
 
-            converter.SetNext(new StringConverter())
+            converter.SetNext(new ByteArrayHandler())
+                .SetNext(new StringConverter())
                 .SetNext(new NumberConverter())
                 .SetNext(new BooleanConverter())
                 .SetNext(new ArrayConverter(converter))
