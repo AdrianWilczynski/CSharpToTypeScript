@@ -27,6 +27,13 @@
 				"title": "C# to TypeScript (Clipboard)"
 			}
 		],
+		"keybindings": [
+			{
+				"command": "csharpToTypeScript.csharpToTypeScriptToClipboard",
+				"key": "alt+/",
+				"when": "resourceLangId == csharp || resourceLangId == typescript"
+			}
+		],
 		"menus": {
 			"commandPalette": [
 				{
