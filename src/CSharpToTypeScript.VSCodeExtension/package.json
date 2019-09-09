@@ -27,6 +27,18 @@
 				"title": "C# to TypeScript (Clipboard)"
 			}
 		],
+		"menus": {
+			"commandPalette": [
+				{
+					"command": "csharpToTypeScript.csharpToTypeScriptReplace",
+					"when": "resourceLangId == csharp || resourceLangId == typescript"
+				},
+				{
+					"command": "csharpToTypeScript.csharpToTypeScriptToClipboard",
+					"when": "resourceLangId == csharp || resourceLangId == typescript"
+				}
+			]
+		},
 		"configuration": [
 			{
 				"title": "C# to TypeScript",
