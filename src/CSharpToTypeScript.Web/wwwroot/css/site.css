@@ -2,3 +2,7 @@
     background-color: rgb(45, 45, 45) !important;
     border-color: rgb(30, 30, 30) !important;
 }
+
+.pointer {
+    cursor: pointer
+}
