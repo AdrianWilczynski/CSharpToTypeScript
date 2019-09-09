@@ -2,14 +2,25 @@
 
 const elements = getElements();
 
-elements.inputCodeHighlightedContainer.addEventListener('click', () => {
+elements.inputCodeHighlightedContainer.addEventListener('click', editInputCode);
+
+elements.inputCodeTextarea.addEventListener('blur', highlightInputCode)
+
+elements.convertedCodeContainer.addEventListener('click', () => {
+    copyToClipboard();
+    animate();
+})
+
+elements.convertedCodeContainer.addEventListener('animationend', cleanUpAnimations);
+
+function editInputCode() {
     elements.inputCodeHighlightedContainer.hidden = true;
     elements.inputCodeTextarea.hidden = false;
 
     elements.inputCodeTextarea.focus();
-});
+}
 
-elements.inputCodeTextarea.addEventListener('blur', () => {
+function highlightInputCode() {
     elements.inputCodeHighlightedContainer.hidden = false;
     elements.inputCodeTextarea.hidden = true;
 
@@ -17,13 +28,7 @@ elements.inputCodeTextarea.addEventListener('blur', () => {
 
     // @ts-ignore
     Prism.highlightElement(elements.inputCodeHighlighted);
-})
-
-elements.convertedCodeContainer.addEventListener('click', () => {
-    copyToClipboard();
-    animate();
-})
-
+}
 
 function copyToClipboard() {
     elements.convertedCodeHiddenInput.hidden = false;
@@ -34,14 +39,14 @@ function copyToClipboard() {
     elements.convertedCodeHiddenInput.hidden = true;
 }
 
+const cssClasses = ['animated', 'pulse', 'faster'];
 function animate() {
-    const cssClasses = ['animated', 'pulse', 'faster'];
 
     elements.convertedCodeContainer.classList.add(...cssClasses);
+}
 
-    elements.convertedCodeContainer.addEventListener('animationend', () => {
-        elements.convertedCodeContainer.classList.remove(...cssClasses)
-    });
+function cleanUpAnimations() {
+    elements.convertedCodeContainer.classList.remove(...cssClasses);
 }
 
 function getElements() {
