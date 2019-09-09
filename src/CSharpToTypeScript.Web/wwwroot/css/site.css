@@ -1,0 +1,4 @@
+.custom-switch input[type=checkbox]:checked+.custom-control-label::before {
+    background-color: rgb(45, 45, 45) !important;
+    border-color: rgb(30, 30, 30) !important;
+}

@@ -2,7 +2,7 @@
 @model IndexModel
 
 <form method="POST">
-    <nav class="navbar navbar-dark indigo mb-5 d-flex justify-content-between">
+    <nav class="navbar navbar-dark elegant-color mb-5 d-flex justify-content-between">
         <a class="navbar-brand" href="/">C# to TypeScript</a>
         <button class="btn btn-outline-white btn-md" type="submit">Convert</button>
     </nav>
@@ -35,7 +35,7 @@
             </div>
             <div class="col-12 col-md-6">
                 <div class="my-1">TypeScript Code</div>
-                <pre id="convertedCode" title="TypeScript Code - Click to Copy!">@Model.ConvertedCode</pre>
+                <pre id="convertedCode" title="TypeScript Code - Click to Copy!" class="rounded"><code class="language-typescript">@Model.ConvertedCode</code></pre>
             </div>
         </div>
     </div>

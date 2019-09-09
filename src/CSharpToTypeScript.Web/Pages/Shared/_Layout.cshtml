@@ -7,9 +7,15 @@
     <link rel="stylesheet" href="~/lib/mdbootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/lib/mdbootstrap/css/mdb.min.css" />
     <link rel="stylesheet" href="~/lib/animate.css/animate.min.css" />
+    <link rel="stylesheet" href="~/lib/prismjs/themes/prism-tomorrow.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body>
+<body class="grey lighten-5">
     @RenderBody()
+
+    <script src="~/lib/prismjs/prism.min.js"></script>
+    <script src="~/lib/prismjs/components/prism-typescript.min.js"></script>
+
     @RenderSection("Scripts", required: false)
 </body>
 </html> 
