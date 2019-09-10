@@ -9,5 +9,5 @@ vsc-extension-quickstart.md
 **/*.map
 **/*.ts
 
-backend/**
-!backend/CSharpToTypeScript.Console/bin/Release/netcoreapp2.2/publish/**
+server/**
+!server/CSharpToTypeScript.Server/bin/Release/netcoreapp2.2/publish/**

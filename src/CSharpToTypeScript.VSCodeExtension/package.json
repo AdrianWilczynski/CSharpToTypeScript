@@ -62,7 +62,7 @@
 	"scripts": {
 		"vscode:prepublish": "npm run compile-backend && npm run compile",
 		"compile": "tsc -p ./",
-		"compile-backend": "dotnet publish ./backend/CSharpToTypeScript.Console/CSharpToTypeScript.Console.csproj -c Release",
+		"compile-backend": "dotnet publish ./server/CSharpToTypeScript.Server/CSharpToTypeScript.Server.csproj -c Release",
 		"watch": "tsc -watch -p ./",
 		"pretest": "npm run compile"
 	},

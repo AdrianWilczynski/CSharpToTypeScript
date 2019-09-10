@@ -1,18 +1,46 @@
 import * as vscode from 'vscode';
-import * as process from './process';
-import * as dll from './dll';
-import * as error from './error';
+import * as cp from 'child_process';
+import * as readline from 'readline';
+import * as path from 'path';
+
+let server: cp.ChildProcess | undefined;
+let running = false;
+let executingCommand = false;
 
 export function activate(context: vscode.ExtensionContext) {
-    const csharpToTypeScript = async (target: 'selection' | 'clipboard') => {
-        if (!vscode.window.activeTextEditor) {
+    running = true;
+    server = cp.spawn('dotnet', [context.asAbsolutePath(
+        path.join('server', 'CSharpToTypeScript.Server', 'bin', 'Release',
+            'netcoreapp2.2', 'publish', 'CSharpToTypeScript.Server.dll'))]);
+
+    server.on('error', err => {
+        running = false;
+        vscode.window.showErrorMessage(`"C# to TypeScript" server related error occurred: "${err.message}".`);
+    });
+    server.on('exit', code => {
+        running = false;
+        vscode.window.showWarningMessage(`"C# to TypeScript" server shutdown with code: "${code}".`);
+    });
+
+    const rl = readline.createInterface(server.stdout, server.stdin);
+
+    const csharpToTypeScript = async (target: 'document' | 'clipboard') => {
+        if (!vscode.window.activeTextEditor || !rl) {
             return;
         }
 
+        if (!running) {
+            vscode.window.showErrorMessage(`"C# to TypeScript" server isn't running!`);
+            return;
+        }
+
+        if (executingCommand) {
+            return;
+        }
+        executingCommand = true;
+
         const document = vscode.window.activeTextEditor.document;
-
         const selection = vscode.window.activeTextEditor.selection;
-
         const fullRange = new vscode.Range(
             0, 0,
             document.lineCount - 1, document.lineAt(document.lineCount - 1).range.end.character);
@@ -21,38 +49,37 @@ export function activate(context: vscode.ExtensionContext) {
 
         const tabSize = vscode.window.activeTextEditor.options.tabSize as number;
         const useTabs = !vscode.window.activeTextEditor.options.insertSpaces;
-
         const addExport = !!vscode.workspace.getConfiguration().get('csharpToTypeScript.export');
 
-        try {
-            const converted = await process.Run(
-                'dotnet',
-                [context.asAbsolutePath(dll.path), ...dll.args(code, useTabs, tabSize, addExport)]);
+        const input = {
+            Code: code,
+            UseTabs: useTabs,
+            TabSize: tabSize,
+            Export: addExport
+        };
+        const inputLine = JSON.stringify(input) + '\n';
 
-            if (!converted) {
-                return;
-            }
+        rl.question(inputLine, async outputLine => {
+            const convertedCode = JSON.parse(outputLine).Code;
 
-            if (target === 'selection') {
+            if (target === 'document' && vscode.window.activeTextEditor) {
                 await vscode.window.activeTextEditor.edit(
-                    builder => builder.replace(!selection.isEmpty ? selection : fullRange, converted));
+                    builder => builder.replace(!selection.isEmpty ? selection : fullRange, convertedCode));
             } else if (target === 'clipboard') {
-                await vscode.env.clipboard.writeText(converted);
+                await vscode.env.clipboard.writeText(convertedCode);
             }
-        } catch (err) {
-            if (typeof err === 'string') {
-                await vscode.window.showErrorMessage(error.template(err));
-            } else if (err instanceof Error && err.message) {
-                await vscode.window.showErrorMessage(error.template(err.message));
-            } else {
-                await vscode.window.showErrorMessage(error.template());
-            }
-        }
+
+            executingCommand = false;
+        });
     };
 
     context.subscriptions.push(
-        vscode.commands.registerCommand('csharpToTypeScript.csharpToTypeScriptReplace', () => csharpToTypeScript('selection')),
+        vscode.commands.registerCommand('csharpToTypeScript.csharpToTypeScriptReplace', () => csharpToTypeScript('document')),
         vscode.commands.registerCommand('csharpToTypeScript.csharpToTypeScriptToClipboard', () => csharpToTypeScript('clipboard')));
 }
 
-export function deactivate() { }
+export function deactivate() {
+    if (running && server) {
+        server.stdin.write('EXIT\n');
+    }
+}
