@@ -7,7 +7,7 @@
         <button class="btn btn-outline-white btn-md" type="submit">Convert</button>
     </nav>
 
-    <div class="container p-1">
+    <div class="container">
         <div class="row">
             <div class="col-6 offset-md-5 col-md-4 offset-lg-6">
                 <div class="form-group">
@@ -35,7 +35,7 @@
                 <textarea asp-for="InputCode" class="form-control code-area" spellcheck="false" hidden></textarea>
                 <span asp-validation-for="InputCode" class="text-danger"></span>
             </div>
-            <div class="col-12 col-md-6">
+            <div class="col-12 col-md-6 mb-1">
                 <div class="mt-0 mb-2">TypeScript Code</div>
                 <pre id="convertedCodeContainer" title="TypeScript Code - Click to Copy!"
                     class="rounded my-0 code-area"><code class="language-typescript">@Model.ConvertedCode</code></pre>
