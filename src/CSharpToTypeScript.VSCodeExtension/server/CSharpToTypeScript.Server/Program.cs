@@ -2,6 +2,7 @@
 using CSharpToTypeScript.Core.Services;
 using CSharpToTypeScript.Server.DTOs;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace CSharpToTypeScript.Server
 {
@@ -10,6 +11,11 @@ namespace CSharpToTypeScript.Server
         public static void Main(string[] _)
         {
             var converter = new CodeConverter();
+
+            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            };
 
             string inputLine;
             while ((inputLine = Console.ReadLine()) != "EXIT")
