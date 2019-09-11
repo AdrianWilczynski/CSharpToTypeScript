@@ -6,6 +6,13 @@ elements.inputCodeHighlightedContainer.addEventListener('click', editInputCode);
 
 elements.inputCodeTextarea.addEventListener('blur', highlightInputCode)
 
+elements.inputCodeTextarea.addEventListener('keydown', ev => {
+    if (ev.keyCode === 9) {
+        ev.preventDefault();
+        indent();
+    }
+})
+
 elements.convertedCodeContainer.addEventListener('click', () => {
     copyToClipboard();
     animate();
@@ -39,14 +46,27 @@ function copyToClipboard() {
     elements.convertedCodeHiddenInput.hidden = true;
 }
 
-const cssClasses = ['animated', 'pulse', 'faster'];
-function animate() {
+function indent() {
+    const start = elements.inputCodeTextarea.selectionStart;
+    const end = elements.inputCodeTextarea.selectionEnd;
 
-    elements.convertedCodeContainer.classList.add(...cssClasses);
+    const indentation = '    ';
+
+    const before = elements.inputCodeTextarea.value.substring(0, start);
+    const after = elements.inputCodeTextarea.value.substring(end);
+
+    elements.inputCodeTextarea.value = before + indentation + after;
+
+    elements.inputCodeTextarea.selectionStart = elements.inputCodeTextarea.selectionEnd = start + indentation.length;
+}
+
+const animationCssClasses = ['animated', 'pulse', 'faster'];
+function animate() {
+    elements.convertedCodeContainer.classList.add(...animationCssClasses);
 }
 
 function cleanUpAnimations() {
-    elements.convertedCodeContainer.classList.remove(...cssClasses);
+    elements.convertedCodeContainer.classList.remove(...animationCssClasses);
 }
 
 function getElements() {
