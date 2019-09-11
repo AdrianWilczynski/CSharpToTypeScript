@@ -5,7 +5,7 @@ import * as path from 'path';
 
 let server: cp.ChildProcess | undefined;
 let rl: readline.Interface | undefined;
-let running = false;
+let serverRunning = false;
 let executingCommand = false;
 
 export function activate(context: vscode.ExtensionContext) {
@@ -13,15 +13,15 @@ export function activate(context: vscode.ExtensionContext) {
         path.join('server', 'CSharpToTypeScript.Server', 'bin', 'Release',
             'netcoreapp2.2', 'publish', 'CSharpToTypeScript.Server.dll'));
 
-    running = true;
+    serverRunning = true;
     server = cp.spawn('dotnet', [dllPath]);
 
     server.on('error', err => {
-        running = false;
+        serverRunning = false;
         vscode.window.showErrorMessage(`"C# to TypeScript" server related error occurred: "${err.message}".`);
     });
     server.on('exit', code => {
-        running = false;
+        serverRunning = false;
         vscode.window.showWarningMessage(`"C# to TypeScript" server shutdown with code: "${code}".`);
     });
 
@@ -33,7 +33,7 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 export function deactivate() {
-    if (running && server) {
+    if (serverRunning && server) {
         server.stdin.write('EXIT\n');
     }
 }
@@ -43,7 +43,7 @@ export async function convert(target: 'document' | 'clipboard') {
         return;
     }
 
-    if (!running) {
+    if (!serverRunning) {
         vscode.window.showErrorMessage(`"C# to TypeScript" server isn't running!`);
         return;
     }
