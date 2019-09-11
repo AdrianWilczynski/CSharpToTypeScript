@@ -3,9 +3,12 @@
     border-color: rgb(30, 30, 30) !important;
 }
 
+.pointer {
+    cursor: pointer;
+}
+
 .code-area {
     min-height: 500px;
     height: 500px;
     font-size: 13px !important;
-    cursor: pointer;
 }
