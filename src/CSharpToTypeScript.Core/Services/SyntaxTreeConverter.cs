@@ -46,7 +46,7 @@ namespace CSharpToTypeScript.Core.Services
             || (HasGetter(property, out var getter) && !HasRestrictedAccess(getter));
 
         private bool HasGetter(PropertyDeclarationSyntax property, out AccessorDeclarationSyntax getter)
-            => (getter = property.AccessorList.Accessors.FirstOrDefault(IsGetter)) != null;
+            => (getter = property.AccessorList?.Accessors.FirstOrDefault(IsGetter)) is AccessorDeclarationSyntax;
 
         private bool IsGetter(AccessorDeclarationSyntax accessor)
             => accessor.Kind() == SyntaxKind.GetAccessorDeclaration;
