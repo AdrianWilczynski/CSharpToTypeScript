@@ -7,7 +7,7 @@ namespace CSharpToTypeScript.Core.Services.FieldTypeConversionHandlers
     {
         private FieldTypeConversionHandler _nextConverter;
 
-        public virtual FieldType Handle(TypeSyntax type)
+        public virtual FieldTypeNode Handle(TypeSyntax type)
            => _nextConverter is null ? new Any() : _nextConverter.Handle(type);
 
         public FieldTypeConversionHandler SetNext(FieldTypeConversionHandler converter)

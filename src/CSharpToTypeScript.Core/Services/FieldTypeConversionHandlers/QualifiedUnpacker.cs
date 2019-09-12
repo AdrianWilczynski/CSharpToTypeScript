@@ -5,7 +5,7 @@ namespace CSharpToTypeScript.Core.Services.FieldTypeConversionHandlers
 {
     public class QualifiedUnpacker : FieldTypeConversionHandler
     {
-        public override FieldType Handle(TypeSyntax type)
+        public override FieldTypeNode Handle(TypeSyntax type)
         {
             if (type is QualifiedNameSyntax qualified)
             {

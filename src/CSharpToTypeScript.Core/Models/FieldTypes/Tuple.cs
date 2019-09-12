@@ -4,7 +4,7 @@ using CSharpToTypeScript.Core.Utilities;
 
 namespace CSharpToTypeScript.Core.Models.FieldTypes
 {
-    public class Tuple : FieldType
+    public class Tuple : FieldTypeNode
     {
         public Tuple(IEnumerable<Element> elements)
         {
@@ -15,14 +15,14 @@ namespace CSharpToTypeScript.Core.Models.FieldTypes
 
         public class Element
         {
-            public Element(string name, FieldType type)
+            public Element(string name, FieldTypeNode type)
             {
                 Name = name;
                 Type = type;
             }
 
             public string Name { get; }
-            public FieldType Type { get; }
+            public FieldTypeNode Type { get; }
 
             public string WriteTypeScript()
                 => Name.ToCamelCase() + "?".If(Type.IsOptional) + ": " + Type.WriteTypeScript() + ";";

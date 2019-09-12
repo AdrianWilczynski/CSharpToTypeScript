@@ -1,6 +1,6 @@
 namespace CSharpToTypeScript.Core.Models.FieldTypes
 {
-    public class Any : FieldType
+    public class Any : FieldTypeNode
     {
         public override string WriteTypeScript() => "any";
     }

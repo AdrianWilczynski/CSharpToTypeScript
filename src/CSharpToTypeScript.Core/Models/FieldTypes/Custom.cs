@@ -2,7 +2,7 @@ using CSharpToTypeScript.Core.Utilities;
 
 namespace CSharpToTypeScript.Core.Models.FieldTypes
 {
-    public class Custom : FieldType
+    public class Custom : FieldTypeNode
     {
         public Custom(string name)
         {

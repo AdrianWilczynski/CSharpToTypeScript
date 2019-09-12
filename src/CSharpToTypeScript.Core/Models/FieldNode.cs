@@ -5,14 +5,14 @@ namespace CSharpToTypeScript.Core.Models
 {
     public class FieldNode
     {
-        public FieldNode(string name, FieldType type)
+        public FieldNode(string name, FieldTypeNode type)
         {
             Name = name;
             Type = type;
         }
 
         public string Name { get; }
-        public FieldType Type { get; }
+        public FieldTypeNode Type { get; }
 
         public string WriteTypeScript()
             => Name.ToCamelCase() + "?".If(Type.IsOptional) + ": " + Type.WriteTypeScript() + ";";

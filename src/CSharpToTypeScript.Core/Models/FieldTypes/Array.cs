@@ -3,15 +3,15 @@ using CSharpToTypeScript.Core.Utilities;
 
 namespace CSharpToTypeScript.Core.Models.FieldTypes
 {
-    public class Array : FieldType
+    public class Array : FieldTypeNode
     {
-        public Array(FieldType of, int rank)
+        public Array(FieldTypeNode of, int rank)
         {
             Of = of;
             Rank = rank;
         }
 
-        public FieldType Of { get; }
+        public FieldTypeNode Of { get; }
         public int Rank { get; }
 
         public override string WriteTypeScript()

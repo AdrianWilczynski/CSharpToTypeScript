@@ -1,13 +1,13 @@
 namespace CSharpToTypeScript.Core.Models.FieldTypes
 {
-    public class Nullable : FieldType
+    public class Nullable : FieldTypeNode
     {
-        public Nullable(FieldType of)
+        public Nullable(FieldTypeNode of)
         {
             Of = of;
         }
 
-        public FieldType Of { get; }
+        public FieldTypeNode Of { get; }
 
         public override bool IsOptional => true;
         public override bool IsUnionType => true;

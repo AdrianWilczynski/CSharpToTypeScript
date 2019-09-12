@@ -5,11 +5,11 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CSharpToTypeScript.Core.Services.FieldTypeConversionHandlers
 {
-    public abstract class BasicTypeConverterBase<T> : FieldTypeConversionHandler where T : FieldType, new()
+    public abstract class BasicTypeConverterBase<T> : FieldTypeConversionHandler where T : FieldTypeNode, new()
     {
         protected abstract IEnumerable<string> ConvertibleFrom { get; }
 
-        public override FieldType Handle(TypeSyntax type)
+        public override FieldTypeNode Handle(TypeSyntax type)
             => CanConvert(type) ? new T() : base.Handle(type);
 
         private bool CanConvert(TypeSyntax type)

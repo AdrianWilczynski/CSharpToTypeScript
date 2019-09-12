@@ -19,7 +19,7 @@ namespace CSharpToTypeScript.Core.Services.FieldTypeConversionHandlers
             "List", "IList", "Collection", "ICollection", "Enumerable", "IEnumerable"
         };
 
-        public override FieldType Handle(TypeSyntax type)
+        public override FieldTypeNode Handle(TypeSyntax type)
         {
             if (type is ArrayTypeSyntax array)
             {

@@ -13,7 +13,7 @@ namespace CSharpToTypeScript.Core.Services.FieldTypeConversionHandlers
             _converter = converter;
         }
 
-        public override FieldType Handle(TypeSyntax type)
+        public override FieldTypeNode Handle(TypeSyntax type)
         {
             if (type is GenericNameSyntax generic)
             {

@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace CSharpToTypeScript.Core.Models.FieldTypes
 {
-    public abstract class FieldType
+    public abstract class FieldTypeNode
     {
         public virtual bool IsUnionType => false;
         public virtual bool IsOptional => false;
