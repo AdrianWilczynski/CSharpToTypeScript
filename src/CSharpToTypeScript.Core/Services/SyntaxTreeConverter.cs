@@ -55,6 +55,6 @@ namespace CSharpToTypeScript.Core.Services
             => accessor.Modifiers.Any(m => RestrictiveAccessModifiers.Contains(m.Kind()));
 
         private readonly IEnumerable<SyntaxKind> RestrictiveAccessModifiers
-            = new[] { SyntaxKind.PrivateKeyword, SyntaxKind.ProtectedKeyword, SyntaxKind.InterfaceKeyword };
+            = new[] { SyntaxKind.PrivateKeyword, SyntaxKind.ProtectedKeyword, SyntaxKind.InternalKeyword };
     }
 }
