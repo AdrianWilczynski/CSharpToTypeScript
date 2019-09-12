@@ -1,16 +1,17 @@
 namespace CSharpToTypeScript.Core.Models.FieldTypes
 {
-    public class Dictionary : IFieldType
+    public class Dictionary : FieldType
     {
-        public Dictionary(IFieldType key, IFieldType value)
+        public Dictionary(FieldType key, FieldType value)
         {
             Key = key;
             Value = value;
         }
 
-        public IFieldType Key { get; }
-        public IFieldType Value { get; }
+        public FieldType Key { get; }
+        public FieldType Value { get; }
 
-        public override string ToString() => $"{{ [key: {Key}]: {Value}; }}";
+        public override string WriteTypeScript()
+            => "{ [key: " + Key.WriteTypeScript() + "]: " + Value.WriteTypeScript() + "; }";
     }
 }

@@ -1,7 +1,7 @@
 using CSharpToTypeScript.Core.Models.FieldTypes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace CSharpToTypeScript.Core.Services.FieldTypeHandlers
+namespace CSharpToTypeScript.Core.Services.FieldTypeConversionHandlers
 {
     public class NullableConverter : FieldTypeConversionHandler
     {
@@ -12,7 +12,7 @@ namespace CSharpToTypeScript.Core.Services.FieldTypeHandlers
             _converter = converter;
         }
 
-        public override IFieldType Handle(TypeSyntax type)
+        public override FieldType Handle(TypeSyntax type)
         {
             if (type is NullableTypeSyntax nullable)
             {

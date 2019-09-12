@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using System.Linq;
 using CSharpToTypeScript.Core.Utilities;
 
 namespace CSharpToTypeScript.Core.Models.FieldTypes
 {
-    public class Tuple : IFieldType
+    public class Tuple : FieldType
     {
         public Tuple(IEnumerable<Element> elements)
         {
@@ -14,21 +15,20 @@ namespace CSharpToTypeScript.Core.Models.FieldTypes
 
         public class Element
         {
-            public Element(string name, IFieldType type)
+            public Element(string name, FieldType type)
             {
                 Name = name;
                 Type = type;
             }
 
             public string Name { get; }
-            public IFieldType Type { get; }
+            public FieldType Type { get; }
 
-            public bool IsOptional => Type is Nullable;
-
-            public override string ToString()
-                => $"{Name.ToCamelCase()}{(IsOptional ? "?" : string.Empty)}: {(IsOptional ? ((Nullable)Type).Of : Type)};";
+            public string WriteTypeScript()
+                => Name.ToCamelCase() + "?".If(Type.IsOptional) + ": " + Type.WriteTypeScript() + ";";
         }
 
-        public override string ToString() => $"{{ {string.Join(" ", Elements)} }}";
+        public override string WriteTypeScript()
+            => "{ " + Elements.Select(e => e.WriteTypeScript()).ToSpaceSepratedList() + " }";
     }
 }

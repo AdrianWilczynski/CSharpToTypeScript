@@ -3,7 +3,7 @@ using System.Linq;
 using CSharpToTypeScript.Core.Models.FieldTypes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace CSharpToTypeScript.Core.Services.FieldTypeHandlers
+namespace CSharpToTypeScript.Core.Services.FieldTypeConversionHandlers
 {
     public class ArrayConverter : FieldTypeConversionHandler
     {
@@ -19,7 +19,7 @@ namespace CSharpToTypeScript.Core.Services.FieldTypeHandlers
             "List", "IList", "Collection", "ICollection", "Enumerable", "IEnumerable"
         };
 
-        public override IFieldType Handle(TypeSyntax type)
+        public override FieldType Handle(TypeSyntax type)
         {
             if (type is ArrayTypeSyntax array)
             {

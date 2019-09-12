@@ -1,7 +1,7 @@
 namespace CSharpToTypeScript.Core.Models.FieldTypes
 {
-    public class Boolean : IFieldType
+    public class Boolean : FieldType
     {
-        public override string ToString() => "boolean";
+        public override string WriteTypeScript() => "boolean";
     }
 }

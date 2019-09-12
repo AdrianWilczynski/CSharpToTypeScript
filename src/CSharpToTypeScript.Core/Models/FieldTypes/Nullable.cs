@@ -1,14 +1,18 @@
 namespace CSharpToTypeScript.Core.Models.FieldTypes
 {
-    public class Nullable : IFieldType
+    public class Nullable : FieldType
     {
-        public Nullable(IFieldType of)
+        public Nullable(FieldType of)
         {
             Of = of;
         }
 
-        public IFieldType Of { get; }
+        public FieldType Of { get; }
 
-        public override string ToString() => $"{Of} | undefined";
+        public override bool IsOptional => true;
+        public override bool IsUnionType => true;
+
+        public override string WriteTypeScript()
+            => Of.WriteTypeScript() + " | undefined";
     }
 }

@@ -5,18 +5,16 @@ namespace CSharpToTypeScript.Core.Models
 {
     public class FieldNode
     {
-        public FieldNode(string name, IFieldType type)
+        public FieldNode(string name, FieldType type)
         {
             Name = name;
             Type = type;
         }
 
         public string Name { get; }
-        public IFieldType Type { get; }
+        public FieldType Type { get; }
 
-        public bool IsOptional => Type is Nullable;
-
-        public override string ToString()
-            => $"{Name.ToCamelCase()}{(IsOptional ? "?" : string.Empty)}: {(IsOptional ? ((Nullable)Type).Of : Type)};";
+        public string WriteTypeScript()
+            => Name.ToCamelCase() + "?".If(Type.IsOptional) + ": " + Type.WriteTypeScript() + ";";
     }
 }

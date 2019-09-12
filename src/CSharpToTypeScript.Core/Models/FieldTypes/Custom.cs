@@ -2,7 +2,7 @@ using CSharpToTypeScript.Core.Utilities;
 
 namespace CSharpToTypeScript.Core.Models.FieldTypes
 {
-    public class Custom : IFieldType
+    public class Custom : FieldType
     {
         public Custom(string name)
         {
@@ -11,6 +11,6 @@ namespace CSharpToTypeScript.Core.Models.FieldTypes
 
         public string Name { get; }
 
-        public override string ToString() => Name.RemoveInterfacePrefix();
+        public override string WriteTypeScript() => Name.RemoveInterfacePrefix();
     }
 }

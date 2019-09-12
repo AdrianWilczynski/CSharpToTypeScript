@@ -17,7 +17,7 @@ namespace CSharpToTypeScript.Core.Services
 
             var outputCode = string.Join(
                 NewLine.Repeat(2),
-                convertedTree.Select(t => t.ToString(useTabs, tabSize, export)));
+                convertedTree.Select(t => t.WriteTypeScript(useTabs, tabSize, export)));
 
             return outputCode;
         }

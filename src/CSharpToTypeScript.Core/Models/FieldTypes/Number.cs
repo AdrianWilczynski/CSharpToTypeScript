@@ -1,7 +1,7 @@
 namespace CSharpToTypeScript.Core.Models.FieldTypes
 {
-    public class Number : IFieldType
+    public class Number : FieldType
     {
-        public override string ToString() => "number";
+        public override string WriteTypeScript() => "number";
     }
 }

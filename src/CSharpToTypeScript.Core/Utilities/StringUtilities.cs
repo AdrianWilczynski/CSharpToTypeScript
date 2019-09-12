@@ -19,6 +19,29 @@ namespace CSharpToTypeScript.Core.Utilities
         public static string LineByLine(this IEnumerable<string> lines)
             => string.Join(NewLine, lines);
 
+        public static string Parenthesize(this string text)
+            => "(" + text + ")";
+
+        public static string ToCommaSepratedList(this IEnumerable<string> texts)
+            => string.Join(", ", texts);
+
+        public static string ToSpaceSepratedList(this IEnumerable<string> texts)
+            => string.Join(" ", texts);
+
+        public static string If(this string text, bool condition)
+            => condition ? text : string.Empty;
+
+        public static string TransformIf(this string text, bool condition, Func<string, string> transformation)
+            => condition ? transformation(text) : text;
+
+        public static IEnumerable<string> Indent(this IEnumerable<string> texts, bool useTabs, int? tabSize)
+            => texts.Select(t => Indentation(useTabs, tabSize) + t);
+
+        public static string Indentation(bool useTabs, int? tabSize)
+            => useTabs ? "\t"
+            : tabSize is int && tabSize > 0 ? " ".Repeat((int)tabSize)
+            : throw new ArgumentException();
+
         public static string NewLine => "\r\n";
     }
 }

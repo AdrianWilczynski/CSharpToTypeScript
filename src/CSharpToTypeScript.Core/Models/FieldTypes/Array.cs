@@ -3,23 +3,18 @@ using CSharpToTypeScript.Core.Utilities;
 
 namespace CSharpToTypeScript.Core.Models.FieldTypes
 {
-    public class Array : IFieldType
+    public class Array : FieldType
     {
-        public Array(IFieldType of, int rank)
+        public Array(FieldType of, int rank)
         {
             Of = of;
             Rank = rank;
         }
 
-        public IFieldType Of { get; }
+        public FieldType Of { get; }
         public int Rank { get; }
 
-        public bool RequiresParenthesis => Of is Nullable;
-
-        public override string ToString()
-            => $"{(RequiresParenthesis ? ParenthesizedOf : Of.ToString())}{Brackets}";
-
-        private string ParenthesizedOf => $"({Of})";
-        private string Brackets => "[]".Repeat(Rank);
+        public override string WriteTypeScript()
+            => Of.WriteTypeScript().TransformIf(Of.IsUnionType, StringUtilities.Parenthesize) + "[]".Repeat(Rank);
     }
 }
