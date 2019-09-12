@@ -43,5 +43,7 @@ namespace CSharpToTypeScript.Core.Utilities
             : throw new ArgumentException();
 
         public static string NewLine => "\r\n";
+
+        public static string EmptyLine => NewLine.Repeat(2);
     }
 }
