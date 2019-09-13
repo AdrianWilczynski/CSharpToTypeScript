@@ -357,3 +357,5 @@ out
 node_modules
 .vscode-test/
 *.vsix
+
+**/wwwroot/js/**/*.js
