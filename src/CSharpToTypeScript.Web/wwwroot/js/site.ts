@@ -74,7 +74,7 @@ enum SnippetPrefix {
 
 function isPrecededBySnippetPrefix(prefix: SnippetPrefix) {
     return inputCodeTextarea.selectionStart === inputCodeTextarea.selectionEnd
-        && new RegExp(prefix + '$').test(getTextBeforeSelection());
+        && new RegExp('(^|\\s)' + prefix + '$').test(getTextBeforeSelection());
 }
 
 function insertClassSnippet() {
