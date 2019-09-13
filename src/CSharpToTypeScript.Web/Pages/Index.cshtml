@@ -9,7 +9,19 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-6 offset-md-5 col-md-4 offset-lg-6">
+            <div class="col-12 col-md-5 col-lg-6">
+                <ul>
+                    <li><b>Tab</b> to indent</li>
+                    <li>
+                        Supported snippets
+                        <ul>
+                            <li><b>class</b></li>
+                            <li><b>prop</b></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-6 col-md-4">
                 <div class="form-group">
                     <label asp-for="Settings.TabSize"></label>
                     <input asp-for="Settings.TabSize" class="form-control" min="1" max="8" />
