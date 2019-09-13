@@ -11,9 +11,16 @@ inputCodeHighlightedContainer.addEventListener('click', editInputCode);
 inputCodeTextarea.addEventListener('blur', highlightInputCode)
 
 addEventListener('keydown', ev => {
-    if (ev.keyCode === 9) {
+    if (ev.keyCode === 9 /* Tab */) {
         ev.preventDefault();
-        indent();
+
+        if (isPrecededBySnippetPrefix(SnippetPrefix.Class)) {
+            insertClassSnippet();
+        } else if (isPrecededBySnippetPrefix(SnippetPrefix.Property)) {
+            insertPropertySnippet();
+        } else {
+            indent();
+        }
     }
 })
 
@@ -50,17 +57,52 @@ function copyToClipboard() {
 }
 
 function indent() {
-    const start = inputCodeTextarea.selectionStart;
-    const end = inputCodeTextarea.selectionEnd;
-
     const indentation = '    ';
 
-    const before = inputCodeTextarea.value.substring(0, start);
-    const after = inputCodeTextarea.value.substring(end);
+    const before = getTextBeforeSelection();
+    const after = getTextAfterSelection();
 
     inputCodeTextarea.value = before + indentation + after;
 
-    inputCodeTextarea.selectionStart = inputCodeTextarea.selectionEnd = start + indentation.length;
+    inputCodeTextarea.selectionEnd = inputCodeTextarea.selectionStart = before.length + indentation.length;
+}
+
+enum SnippetPrefix {
+    Class = 'class',
+    Property = 'prop'
+}
+
+function isPrecededBySnippetPrefix(prefix: SnippetPrefix) {
+    return inputCodeTextarea.selectionStart === inputCodeTextarea.selectionEnd
+        && new RegExp(prefix + '$').test(getTextBeforeSelection());
+}
+
+function insertClassSnippet() {
+    insertSnippet(SnippetPrefix.Class, 'class ', 'Name', '\r\n{\r\n    \r\n}');
+}
+
+function insertPropertySnippet() {
+    insertSnippet(SnippetPrefix.Property, 'public ', 'int MyProperty', ' { get; set; }');
+}
+
+function insertSnippet(prefix: SnippetPrefix, beginningPart: string, selectedPart: string, endPart: string) {
+    const before = getTextBeforeSelection();
+    const after = getTextAfterSelection();
+
+    const beforeWithoutPrefix = before.substring(0, before.length - prefix.length);
+
+    inputCodeTextarea.value = beforeWithoutPrefix + beginningPart + selectedPart + endPart + after;
+
+    inputCodeTextarea.selectionStart = beforeWithoutPrefix.length + beginningPart.length;
+    inputCodeTextarea.selectionEnd = inputCodeTextarea.selectionStart + selectedPart.length;
+}
+
+function getTextBeforeSelection() {
+    return inputCodeTextarea.value.substring(0, inputCodeTextarea.selectionStart);
+}
+
+function getTextAfterSelection() {
+    return inputCodeTextarea.value.substring(inputCodeTextarea.selectionEnd);
 }
 
 const animationCssClasses = ['animated', 'pulse', 'faster'];
