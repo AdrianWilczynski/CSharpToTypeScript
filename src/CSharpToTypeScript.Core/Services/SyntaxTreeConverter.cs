@@ -54,7 +54,7 @@ namespace CSharpToTypeScript.Core.Services
         private bool HasRestrictedAccess(AccessorDeclarationSyntax accessor)
             => accessor.Modifiers.Any(m => RestrictiveAccessModifiers.Contains(m.Kind()));
 
-        private readonly IEnumerable<SyntaxKind> RestrictiveAccessModifiers
+        private IEnumerable<SyntaxKind> RestrictiveAccessModifiers { get; }
             = new[] { SyntaxKind.PrivateKeyword, SyntaxKind.ProtectedKeyword, SyntaxKind.InternalKeyword };
     }
 }
