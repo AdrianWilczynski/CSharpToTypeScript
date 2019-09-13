@@ -11,6 +11,7 @@ namespace CSharpToTypeScript.Core.Services.FieldTypeConversionHandlers
             {
                 return base.Handle(qualified.Right);
             }
+
             return base.Handle(type);
         }
     }
