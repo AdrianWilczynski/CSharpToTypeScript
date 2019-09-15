@@ -25,7 +25,8 @@ namespace CSharpToTypeScript.Core.Services
                         .OfType<PropertyDeclarationSyntax>()
                         .Where(property => IsSerializable(property, type))),
                     genericTypeParameters: type.TypeParameterList?.Parameters
-                        .Select(a => a.Identifier.Text) ?? Enumerable.Empty<string>(),
+                        .Select(p => p.Identifier.Text)
+                        .Where(p => !string.IsNullOrWhiteSpace(p)) ?? Enumerable.Empty<string>(),
                     baseTypes: ConvertBaseTypes(
                         type.BaseList?.Types ?? Enumerable.Empty<BaseTypeSyntax>(),
                         type)));
