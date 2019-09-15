@@ -1,7 +1,7 @@
 {
 	"name": "csharp-to-typescript",
 	"displayName": "C# to TypeScript",
-	"description": "",
+	"description": "Convert C# Models, ViewModels and DTOs into their TypeScript equivalents.",
 	"publisher": "adrianwilczynski",
 	"icon": "img/icon.png",
 	"version": "0.0.1",
