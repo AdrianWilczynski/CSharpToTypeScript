@@ -7,12 +7,10 @@ namespace CSharpToTypeScript.Core.Services
 {
     public class RootEnumConverter
     {
-        public IEnumerable<RootEnumNode> Convert(CompilationUnitSyntax root)
-            => root.DescendantNodes()
-                .OfType<EnumDeclarationSyntax>()
-                .Select(@enum => new RootEnumNode(
-                    name: @enum.Identifier.Text,
-                    members: ConvertEnumMembers(@enum.Members)));
+        public RootEnumNode Convert(EnumDeclarationSyntax @enum)
+            => new RootEnumNode(
+                name: @enum.Identifier.Text,
+                members: ConvertEnumMembers(@enum.Members));
 
         private IEnumerable<EnumMemberNode> ConvertEnumMembers(IEnumerable<EnumMemberDeclarationSyntax> members)
           => members.Select(m => new EnumMemberNode(

@@ -14,22 +14,19 @@ namespace CSharpToTypeScript.Core.Services
     {
         private readonly TypeConversionHandler _typeConverter = TypeConverterFactory.Create();
 
-        public IEnumerable<RootTypeNode> Convert(CompilationUnitSyntax root)
-            => root.DescendantNodes()
-                .OfType<TypeDeclarationSyntax>()
-                .Where(IsSerializable)
-                .Select(type => new RootTypeNode(
-                    name: type.Identifier.Text,
-                    fields: ConvertProperties(
-                        type.ChildNodes()
-                        .OfType<PropertyDeclarationSyntax>()
-                        .Where(property => IsSerializable(property, type))),
-                    genericTypeParameters: type.TypeParameterList?.Parameters
-                        .Select(p => p.Identifier.Text)
-                        .Where(p => !string.IsNullOrWhiteSpace(p)) ?? Enumerable.Empty<string>(),
-                    baseTypes: ConvertBaseTypes(
-                        type.BaseList?.Types ?? Enumerable.Empty<BaseTypeSyntax>(),
-                        type)));
+        public RootTypeNode Convert(TypeDeclarationSyntax type)
+            => new RootTypeNode(
+                name: type.Identifier.Text,
+                fields: ConvertProperties(
+                    type.ChildNodes()
+                    .OfType<PropertyDeclarationSyntax>()
+                    .Where(property => IsSerializable(property, type))),
+                genericTypeParameters: type.TypeParameterList?.Parameters
+                    .Select(p => p.Identifier.Text)
+                    .Where(p => !string.IsNullOrWhiteSpace(p)) ?? Enumerable.Empty<string>(),
+                baseTypes: ConvertBaseTypes(
+                    type.BaseList?.Types ?? Enumerable.Empty<BaseTypeSyntax>(),
+                    type));
 
         private IEnumerable<FieldNode> ConvertProperties(IEnumerable<PropertyDeclarationSyntax> properties)
             => properties.Select(p => new FieldNode(
@@ -56,13 +53,10 @@ namespace CSharpToTypeScript.Core.Services
             return namedTypes;
         }
 
-        private bool IsSerializable(TypeDeclarationSyntax type)
-            => IsNotStatic(type);
-
         private bool IsSerializable(PropertyDeclarationSyntax property, TypeDeclarationSyntax containingType)
             => IsPublic(property, containingType) && IsNotStatic(property) && IsGettable(property);
 
-        private bool IsNotStatic(MemberDeclarationSyntax syntax)
+        private bool IsNotStatic(PropertyDeclarationSyntax syntax)
             => syntax.Modifiers.All(m => m.Kind() != SyntaxKind.StaticKeyword);
 
         private bool IsPublic(PropertyDeclarationSyntax property, TypeDeclarationSyntax containingType)
