@@ -3,6 +3,10 @@
 	"displayName": "C# to TypeScript",
 	"description": "Convert C# Models, ViewModels and DTOs into their TypeScript equivalents.",
 	"publisher": "adrianwilczynski",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/AdrianWilczynski/CSharpToTypeScript"
+	},
 	"icon": "img/icon.png",
 	"version": "0.0.1",
 	"engines": {
