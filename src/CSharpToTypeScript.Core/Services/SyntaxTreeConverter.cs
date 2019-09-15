@@ -21,7 +21,9 @@ namespace CSharpToTypeScript.Core.Services
                     fields: ConvertProperties(
                         type.ChildNodes()
                         .OfType<PropertyDeclarationSyntax>()
-                        .Where(property => IsSerializable(property, type)))));
+                        .Where(property => IsSerializable(property, type))),
+                    genericArguments: type.TypeParameterList?.Parameters
+                        .Select(p => p.Identifier.Text) ?? Enumerable.Empty<string>()));
 
         private IEnumerable<FieldNode> ConvertProperties(IEnumerable<PropertyDeclarationSyntax> properties)
             => properties.Select(p => new FieldNode(

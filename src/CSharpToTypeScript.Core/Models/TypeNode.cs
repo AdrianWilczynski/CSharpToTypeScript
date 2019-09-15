@@ -8,17 +8,19 @@ namespace CSharpToTypeScript.Core.Models
 {
     public class TypeNode
     {
-        public TypeNode(string name, IEnumerable<FieldNode> fields)
+        public TypeNode(string name, IEnumerable<FieldNode> fields, IEnumerable<string> genericArguments)
         {
             Name = name;
             Fields = fields;
+            GenericArguments = genericArguments;
         }
 
         public string Name { get; }
         public IEnumerable<FieldNode> Fields { get; }
+        public IEnumerable<string> GenericArguments { get; set; }
 
         public string WriteTypeScript(bool useTabs, int? tabSize, bool export)
-            => "export ".If(export) + "interface " + Name.RemoveInterfacePrefix() + " {" + NewLine
+            => "export ".If(export) + "interface " + Name.RemoveInterfacePrefix() + ("<" + GenericArguments.ToCommaSepratedList() + ">").If(GenericArguments.Any()) + " {" + NewLine
             + Fields.Select(f => f.WriteTypeScript()).Indent(useTabs, tabSize).LineByLine() + NewLine
             + "}";
     }
