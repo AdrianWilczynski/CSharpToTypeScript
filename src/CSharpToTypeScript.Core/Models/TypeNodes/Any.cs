@@ -1,7 +1,7 @@
 namespace CSharpToTypeScript.Core.Models.TypeNodes
 {
-    public class Any : TypeNode
+    public class Any : ITypeNode
     {
-        public override string WriteTypeScript() => "any";
+        public string WriteTypeScript() => "any";
     }
 }

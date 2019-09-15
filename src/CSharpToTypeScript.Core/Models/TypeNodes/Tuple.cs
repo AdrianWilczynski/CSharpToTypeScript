@@ -4,7 +4,7 @@ using CSharpToTypeScript.Core.Utilities;
 
 namespace CSharpToTypeScript.Core.Models.TypeNodes
 {
-    public class Tuple : TypeNode
+    public class Tuple : ITypeNode
     {
         public Tuple(IEnumerable<Element> elements)
         {
@@ -15,20 +15,20 @@ namespace CSharpToTypeScript.Core.Models.TypeNodes
 
         public class Element
         {
-            public Element(string name, TypeNode type)
+            public Element(string name, ITypeNode type)
             {
                 Name = name;
                 Type = type;
             }
 
             public string Name { get; }
-            public TypeNode Type { get; }
+            public ITypeNode Type { get; }
 
             public string WriteTypeScript()
-                => Name.ToCamelCase() + "?".If(Type.IsOptional) + ": " + Type.WriteTypeScript() + ";";
+                => Name.ToCamelCase() + "?".If(Type is Nullable) + ": " + (Type is Nullable nullable ? nullable.Of.WriteTypeScript() : Type.WriteTypeScript()) + ";";
         }
 
-        public override string WriteTypeScript()
+        public string WriteTypeScript()
             => "{ " + Elements.Select(e => e.WriteTypeScript()).ToSpaceSepratedList() + " }";
     }
 }

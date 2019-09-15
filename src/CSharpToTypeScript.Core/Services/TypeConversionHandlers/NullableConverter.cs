@@ -12,7 +12,7 @@ namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
             _converter = converter;
         }
 
-        public override TypeNode Handle(TypeSyntax type)
+        public override ITypeNode Handle(TypeSyntax type)
         {
             if (type is NullableTypeSyntax nullable)
             {

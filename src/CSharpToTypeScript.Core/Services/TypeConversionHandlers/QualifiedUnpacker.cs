@@ -5,7 +5,7 @@ namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
 {
     public class QualifiedUnpacker : TypeConversionHandler
     {
-        public override TypeNode Handle(TypeSyntax type)
+        public override ITypeNode Handle(TypeSyntax type)
         {
             if (type is QualifiedNameSyntax qualified)
             {

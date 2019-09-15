@@ -1,7 +1,7 @@
 namespace CSharpToTypeScript.Core.Models.TypeNodes
 {
-    public class Boolean : TypeNode
+    public class Boolean : ITypeNode
     {
-        public override string WriteTypeScript() => "boolean";
+        public string WriteTypeScript() => "boolean";
     }
 }

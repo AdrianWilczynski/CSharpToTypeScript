@@ -1,18 +1,15 @@
 namespace CSharpToTypeScript.Core.Models.TypeNodes
 {
-    public class Nullable : TypeNode
+    public class Nullable : ITypeNode
     {
-        public Nullable(TypeNode of)
+        public Nullable(ITypeNode of)
         {
             Of = of;
         }
 
-        public TypeNode Of { get; }
+        public ITypeNode Of { get; }
 
-        public override bool IsOptional => true;
-        public override bool IsUnionType => true;
-
-        public override string WriteTypeScript()
+        public string WriteTypeScript()
             => Of.WriteTypeScript() + " | undefined";
     }
 }

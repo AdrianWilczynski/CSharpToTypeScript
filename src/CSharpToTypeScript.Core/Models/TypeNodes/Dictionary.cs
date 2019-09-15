@@ -1,17 +1,17 @@
 namespace CSharpToTypeScript.Core.Models.TypeNodes
 {
-    public class Dictionary : TypeNode
+    public class Dictionary : ITypeNode
     {
-        public Dictionary(TypeNode key, TypeNode value)
+        public Dictionary(ITypeNode key, ITypeNode value)
         {
             Key = key;
             Value = value;
         }
 
-        public TypeNode Key { get; }
-        public TypeNode Value { get; }
+        public ITypeNode Key { get; }
+        public ITypeNode Value { get; }
 
-        public override string WriteTypeScript()
+        public string WriteTypeScript()
             => "{ [key: " + Key.WriteTypeScript() + "]: " + Value.WriteTypeScript() + "; }";
     }
 }

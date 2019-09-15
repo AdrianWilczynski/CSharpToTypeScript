@@ -3,18 +3,18 @@ using CSharpToTypeScript.Core.Utilities;
 
 namespace CSharpToTypeScript.Core.Models.TypeNodes
 {
-    public class Array : TypeNode
+    public class Array : ITypeNode
     {
-        public Array(TypeNode of, int rank)
+        public Array(ITypeNode of, int rank)
         {
             Of = of;
             Rank = rank;
         }
 
-        public TypeNode Of { get; }
+        public ITypeNode Of { get; }
         public int Rank { get; }
 
-        public override string WriteTypeScript()
-            => Of.WriteTypeScript().TransformIf(Of.IsUnionType, StringUtilities.Parenthesize) + "[]".Repeat(Rank);
+        public string WriteTypeScript()
+            => Of.WriteTypeScript().TransformIf(Of is Nullable, StringUtilities.Parenthesize) + "[]".Repeat(Rank);
     }
 }

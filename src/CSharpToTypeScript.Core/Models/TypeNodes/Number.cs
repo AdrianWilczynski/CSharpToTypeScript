@@ -1,7 +1,7 @@
 namespace CSharpToTypeScript.Core.Models.TypeNodes
 {
-    public class Number : TypeNode
+    public class Number : ITypeNode
     {
-        public override string WriteTypeScript() => "number";
+        public string WriteTypeScript() => "number";
     }
 }

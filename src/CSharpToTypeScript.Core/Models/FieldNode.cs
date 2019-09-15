@@ -5,16 +5,16 @@ namespace CSharpToTypeScript.Core.Models
 {
     public class FieldNode
     {
-        public FieldNode(string name, TypeNode type)
+        public FieldNode(string name, ITypeNode type)
         {
             Name = name;
             Type = type;
         }
 
         public string Name { get; }
-        public TypeNode Type { get; }
+        public ITypeNode Type { get; }
 
         public string WriteTypeScript()
-            => Name.ToCamelCase() + "?".If(Type.IsOptional) + ": " + Type.WriteTypeScript() + ";";
+            => Name.ToCamelCase() + "?".If(Type is Nullable) + ": " + (Type is Nullable nullable ? nullable.Of.WriteTypeScript() : Type.WriteTypeScript()) + ";";
     }
 }
