@@ -9,21 +9,21 @@ namespace CSharpToTypeScript.Core.Models
 {
     public class RootTypeNode
     {
-        public RootTypeNode(string name, IEnumerable<FieldNode> fields, IEnumerable<string> typeParameters, IEnumerable<TypeNode> baseTypes)
+        public RootTypeNode(string name, IEnumerable<FieldNode> fields, IEnumerable<string> genericTypeParameters, IEnumerable<TypeNode> baseTypes)
         {
             Name = name;
             Fields = fields;
-            TypeParameters = typeParameters;
+            GenericTypeParameters = genericTypeParameters;
             BaseTypes = baseTypes;
         }
 
         public string Name { get; }
         public IEnumerable<FieldNode> Fields { get; }
-        public IEnumerable<string> TypeParameters { get; set; }
+        public IEnumerable<string> GenericTypeParameters { get; set; }
         public IEnumerable<TypeNode> BaseTypes { get; set; }
 
         public string WriteTypeScript(bool useTabs, int? tabSize, bool export)
-            => "export ".If(export) + "interface " + Name.RemoveInterfacePrefix() + ("<" + TypeParameters.ToCommaSepratedList() + ">").If(TypeParameters.Any()) + (" extends " + BaseTypes.Select(e => e.WriteTypeScript()).ToCommaSepratedList()).If(BaseTypes.Any()) + " {" + NewLine
+            => "export ".If(export) + "interface " + Name.RemoveInterfacePrefix() + ("<" + GenericTypeParameters.ToCommaSepratedList() + ">").If(GenericTypeParameters.Any()) + (" extends " + BaseTypes.Select(e => e.WriteTypeScript()).ToCommaSepratedList()).If(BaseTypes.Any()) + " {" + NewLine
             + Fields.Select(f => f.WriteTypeScript()).Indent(useTabs, tabSize).LineByLine() + NewLine
             + "}";
     }

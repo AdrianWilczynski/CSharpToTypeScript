@@ -24,7 +24,7 @@ namespace CSharpToTypeScript.Core.Services
                         type.ChildNodes()
                         .OfType<PropertyDeclarationSyntax>()
                         .Where(property => IsSerializable(property, type))),
-                    typeParameters: type.TypeParameterList?.Parameters
+                    genericTypeParameters: type.TypeParameterList?.Parameters
                         .Select(a => a.Identifier.Text) ?? Enumerable.Empty<string>(),
                     baseTypes: ConvertBaseTypes(
                         type.BaseList?.Types ?? Enumerable.Empty<BaseTypeSyntax>(),
