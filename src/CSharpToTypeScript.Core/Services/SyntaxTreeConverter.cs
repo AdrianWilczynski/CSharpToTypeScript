@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using CSharpToTypeScript.Core.Models;
-using CSharpToTypeScript.Core.Services.FieldTypeConversionHandlers;
+using CSharpToTypeScript.Core.Models.TypeNodes;
+using CSharpToTypeScript.Core.Services.TypeConversionHandlers;
+using CSharpToTypeScript.Core.Utilities;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -10,25 +12,33 @@ namespace CSharpToTypeScript.Core.Services
 {
     public class SyntaxTreeConverter
     {
-        private readonly FieldTypeConversionHandler _fieldTypeConverter = FieldTypeConverterFactory.Create();
+        private readonly TypeConversionHandler _fieldTypeConverter = FieldTypeConverterFactory.Create();
 
-        public IEnumerable<TypeNode> Convert(CompilationUnitSyntax root)
+        public IEnumerable<RootTypeNode> Convert(CompilationUnitSyntax root)
             => root.DescendantNodes()
                 .OfType<TypeDeclarationSyntax>()
                 .Where(IsSerializable)
-                .Select(type => new TypeNode(
+                .Select(type => new RootTypeNode(
                     name: type.Identifier.Text,
                     fields: ConvertProperties(
                         type.ChildNodes()
                         .OfType<PropertyDeclarationSyntax>()
                         .Where(property => IsSerializable(property, type))),
-                    genericArguments: type.TypeParameterList?.Parameters
-                        .Select(p => p.Identifier.Text) ?? Enumerable.Empty<string>()));
+                    typeParameters: type.TypeParameterList?.Parameters
+                        .Select(a => a.Identifier.Text) ?? Enumerable.Empty<string>(),
+                    baseTypes: ConvertBaseTypes(
+                        type.BaseList?.Types ?? Enumerable.Empty<BaseTypeSyntax>(),
+                        type)));
 
         private IEnumerable<FieldNode> ConvertProperties(IEnumerable<PropertyDeclarationSyntax> properties)
             => properties.Select(p => new FieldNode(
                     name: p.Identifier.Text,
                     type: _fieldTypeConverter.Handle(p.Type)));
+
+        private IEnumerable<TypeNode> ConvertBaseTypes(IEnumerable<BaseTypeSyntax> baseTypes, TypeDeclarationSyntax containingType)
+             => baseTypes.Select(b => _fieldTypeConverter.Handle(b.Type))
+                    .OfType<NamedTypeBase>()
+                    .Where(t => containingType is InterfaceDeclarationSyntax || !t.Name.HasInterfacePrefix());
 
         private bool IsSerializable(TypeDeclarationSyntax type)
             => IsNotStatic(type);

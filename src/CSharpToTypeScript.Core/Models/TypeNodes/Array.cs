@@ -1,17 +1,17 @@
 using System.Linq;
 using CSharpToTypeScript.Core.Utilities;
 
-namespace CSharpToTypeScript.Core.Models.FieldTypes
+namespace CSharpToTypeScript.Core.Models.TypeNodes
 {
-    public class Array : FieldTypeNode
+    public class Array : TypeNode
     {
-        public Array(FieldTypeNode of, int rank)
+        public Array(TypeNode of, int rank)
         {
             Of = of;
             Rank = rank;
         }
 
-        public FieldTypeNode Of { get; }
+        public TypeNode Of { get; }
         public int Rank { get; }
 
         public override string WriteTypeScript()

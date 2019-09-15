@@ -1,11 +1,11 @@
-using CSharpToTypeScript.Core.Models.FieldTypes;
+using CSharpToTypeScript.Core.Models.TypeNodes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace CSharpToTypeScript.Core.Services.FieldTypeConversionHandlers
+namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
 {
-    public class CustomConverter : FieldTypeConversionHandler
+    public class CustomConverter : TypeConversionHandler
     {
-        public override FieldTypeNode Handle(TypeSyntax type)
+        public override TypeNode Handle(TypeSyntax type)
         {
             if (type is IdentifierNameSyntax identified && identified.Identifier.Text != "Object")
             {

@@ -1,10 +1,10 @@
-using CSharpToTypeScript.Core.Services.FieldTypeConversionHandlers;
+using CSharpToTypeScript.Core.Services.TypeConversionHandlers;
 
 namespace CSharpToTypeScript.Core.Services
 {
     public static class FieldTypeConverterFactory
     {
-        public static FieldTypeConversionHandler Create()
+        public static TypeConversionHandler Create()
         {
             var converter = new QualifiedUnpacker();
 

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using CSharpToTypeScript.Core.Models.FieldTypes;
+using CSharpToTypeScript.Core.Models.TypeNodes;
 
-namespace CSharpToTypeScript.Core.Services.FieldTypeConversionHandlers
+namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
 {
     public class StringConverter : BasicTypeConverterBase<String>
     {

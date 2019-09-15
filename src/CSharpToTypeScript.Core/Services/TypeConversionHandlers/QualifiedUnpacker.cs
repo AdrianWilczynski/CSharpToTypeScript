@@ -1,11 +1,11 @@
-using CSharpToTypeScript.Core.Models.FieldTypes;
+using CSharpToTypeScript.Core.Models.TypeNodes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace CSharpToTypeScript.Core.Services.FieldTypeConversionHandlers
+namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
 {
-    public class QualifiedUnpacker : FieldTypeConversionHandler
+    public class QualifiedUnpacker : TypeConversionHandler
     {
-        public override FieldTypeNode Handle(TypeSyntax type)
+        public override TypeNode Handle(TypeSyntax type)
         {
             if (type is QualifiedNameSyntax qualified)
             {

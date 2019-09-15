@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
-using CSharpToTypeScript.Core.Models.FieldTypes;
+using CSharpToTypeScript.Core.Models.TypeNodes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace CSharpToTypeScript.Core.Services.FieldTypeConversionHandlers
+namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
 {
-    public class ArrayConverter : FieldTypeConversionHandler
+    public class ArrayConverter : TypeConversionHandler
     {
-        private readonly FieldTypeConversionHandler _converter;
+        private readonly TypeConversionHandler _converter;
 
-        public ArrayConverter(FieldTypeConversionHandler converter)
+        public ArrayConverter(TypeConversionHandler converter)
         {
             _converter = converter;
         }
@@ -19,7 +19,7 @@ namespace CSharpToTypeScript.Core.Services.FieldTypeConversionHandlers
             "List", "IList", "Collection", "ICollection", "Enumerable", "IEnumerable"
         };
 
-        public override FieldTypeNode Handle(TypeSyntax type)
+        public override TypeNode Handle(TypeSyntax type)
         {
             if (type is ArrayTypeSyntax array)
             {

@@ -1,12 +1,12 @@
 using System.Linq;
-using CSharpToTypeScript.Core.Models.FieldTypes;
+using CSharpToTypeScript.Core.Models.TypeNodes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace CSharpToTypeScript.Core.Services.FieldTypeConversionHandlers
+namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
 {
-    public class ByteArrayHandler : FieldTypeConversionHandler
+    public class ByteArrayHandler : TypeConversionHandler
     {
-        public override FieldTypeNode Handle(TypeSyntax type)
+        public override TypeNode Handle(TypeSyntax type)
         {
             if (type is ArrayTypeSyntax array && array.RankSpecifiers.Last().Rank == 1
                 && ((array.ElementType is PredefinedTypeSyntax predefinedOf && predefinedOf.Keyword.Text == "byte")

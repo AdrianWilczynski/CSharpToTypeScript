@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
-using CSharpToTypeScript.Core.Models.FieldTypes;
+using CSharpToTypeScript.Core.Models.TypeNodes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace CSharpToTypeScript.Core.Services.FieldTypeConversionHandlers
+namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
 {
-    public abstract class BasicTypeConverterBase<T> : FieldTypeConversionHandler where T : FieldTypeNode, new()
+    public abstract class BasicTypeConverterBase<T> : TypeConversionHandler where T : TypeNode, new()
     {
         protected abstract IEnumerable<string> ConvertibleFrom { get; }
 
-        public override FieldTypeNode Handle(TypeSyntax type)
+        public override TypeNode Handle(TypeSyntax type)
             => CanConvert(type) ? new T() : base.Handle(type);
 
         private bool CanConvert(TypeSyntax type)

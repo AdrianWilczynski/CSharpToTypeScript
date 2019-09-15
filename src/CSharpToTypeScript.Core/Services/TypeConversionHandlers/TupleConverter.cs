@@ -1,19 +1,19 @@
 using System.Linq;
-using CSharpToTypeScript.Core.Models.FieldTypes;
+using CSharpToTypeScript.Core.Models.TypeNodes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace CSharpToTypeScript.Core.Services.FieldTypeConversionHandlers
+namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
 {
-    public class TupleConverter : FieldTypeConversionHandler
+    public class TupleConverter : TypeConversionHandler
     {
-        private readonly FieldTypeConversionHandler _converter;
+        private readonly TypeConversionHandler _converter;
 
-        public TupleConverter(FieldTypeConversionHandler converter)
+        public TupleConverter(TypeConversionHandler converter)
         {
             _converter = converter;
         }
 
-        public override FieldTypeNode Handle(TypeSyntax type)
+        public override TypeNode Handle(TypeSyntax type)
         {
             if (type is TupleTypeSyntax tuple)
             {

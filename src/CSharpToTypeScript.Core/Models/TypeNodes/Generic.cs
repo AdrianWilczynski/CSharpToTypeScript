@@ -2,18 +2,16 @@ using System.Collections.Generic;
 using System.Linq;
 using CSharpToTypeScript.Core.Utilities;
 
-namespace CSharpToTypeScript.Core.Models.FieldTypes
+namespace CSharpToTypeScript.Core.Models.TypeNodes
 {
-    public class Generic : FieldTypeNode
+    public class Generic : NamedTypeBase
     {
-        public Generic(string name, IEnumerable<FieldTypeNode> arguments)
+        public Generic(string name, IEnumerable<TypeNode> arguments) : base(name)
         {
-            Name = name;
             Arguments = arguments;
         }
 
-        public string Name { get; }
-        public IEnumerable<FieldTypeNode> Arguments { get; }
+        public IEnumerable<TypeNode> Arguments { get; }
 
         public override string WriteTypeScript()
             => Name.RemoveInterfacePrefix() + "<" + Arguments.Select(a => a.WriteTypeScript()).ToCommaSepratedList() + ">";
