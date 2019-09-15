@@ -12,3 +12,12 @@
     height: 500px;
     font-size: 13px !important;
 }
+
+pre.code-area~textarea.code-area {
+    color: rgb(204, 204, 204);
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    background-color: rgb(45, 45, 45);
+    line-height: 1.5;
+    padding: 1em;
+    white-space: pre;
+}

@@ -74,7 +74,7 @@ export async function convert(target: 'document' | 'clipboard') {
 
         if (!succeeded || !convertedCode) {
             if (errorMessage) {
-                vscode.window.showErrorMessage(`"C# to TypeScript" extension encountered an error while converting your code: "${errorMessage}"`);
+                vscode.window.showErrorMessage(`"C# to TypeScript" extension encountered an error while converting your code: "${errorMessage}".`);
             }
 
             executingCommand = false;
