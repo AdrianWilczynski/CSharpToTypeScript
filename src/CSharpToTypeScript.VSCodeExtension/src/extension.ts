@@ -3,6 +3,7 @@ import * as cp from 'child_process';
 import * as readline from 'readline';
 import * as path from 'path';
 import { Output } from './output';
+import { Input } from './input';
 
 let server: cp.ChildProcess | undefined;
 let rl: readline.Interface | undefined;
@@ -66,7 +67,7 @@ export async function convert(target: 'document' | 'clipboard') {
     const useTabs = !vscode.window.activeTextEditor.options.insertSpaces;
     const addExport = !!vscode.workspace.getConfiguration().get('csharpToTypeScript.export');
 
-    const input = {
+    const input = <Input>{
         code: code,
         useTabs: useTabs,
         tabSize: tabSize,
