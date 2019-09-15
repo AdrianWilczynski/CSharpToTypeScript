@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 import * as cp from 'child_process';
 import * as readline from 'readline';
 import * as path from 'path';
+import { Output } from './output';
 
 let server: cp.ChildProcess | undefined;
 let rl: readline.Interface | undefined;
@@ -74,9 +75,13 @@ export async function convert(target: 'document' | 'clipboard') {
     const inputLine = JSON.stringify(input) + '\n';
 
     rl.question(inputLine, async outputLine => {
-        const { convertedCode, succeeded } = JSON.parse(outputLine);
+        const { convertedCode, succeeded, errorMessage } = JSON.parse(outputLine) as Output;
 
         if (!succeeded || !convertedCode) {
+            if (errorMessage) {
+                vscode.window.showErrorMessage(`"C# to TypeScript" extension encountered an error while converting your code: "${errorMessage}"`);
+            }
+
             executingCommand = false;
             return;
         }

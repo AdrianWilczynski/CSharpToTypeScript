@@ -4,5 +4,6 @@ namespace CSharpToTypeScript.Server.DTOs
     {
         public string ConvertedCode { get; set; }
         public bool Succeeded { get; set; }
+        public string ErrorMessage { get; set; }
     }
 }
