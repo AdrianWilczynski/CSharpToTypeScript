@@ -13,7 +13,7 @@ namespace CSharpToTypeScript.Core.Models
         public string Name { get; }
         public string Value { get; }
 
-        public string WriteTypeScript(bool isLast)
-            => Name + (" = " + Value?.SquashWhistespace()).If(!string.IsNullOrWhiteSpace(Value)) + ",".If(!isLast);
+        public string WriteTypeScript()
+            => Name + (" = " + Value?.SquashWhistespace()).If(!string.IsNullOrWhiteSpace(Value));
     }
 }

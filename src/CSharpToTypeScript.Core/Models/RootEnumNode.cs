@@ -19,7 +19,7 @@ namespace CSharpToTypeScript.Core.Models
 
         public string WriteTypeScript(bool useTabs, int? tabSize, bool export)
             => "export ".If(export) + "enum " + Name + " {" + NewLine
-            + Members.Select((member, index) => member.WriteTypeScript(index == Members.Count - 1)).Indent(useTabs, tabSize).LineByLine() + NewLine
+            + Members.Select((member, index) => member.WriteTypeScript() + ",".If(index != Members.Count - 1)).Indent(useTabs, tabSize).LineByLine() + NewLine
             + "}";
     }
 }
