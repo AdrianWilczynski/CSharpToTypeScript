@@ -2,7 +2,7 @@ using CSharpToTypeScript.Core.Services.TypeConversionHandlers;
 
 namespace CSharpToTypeScript.Core.Services
 {
-    public static class FieldTypeConverterFactory
+    public static class TypeConverterFactory
     {
         public static TypeConversionHandler Create()
         {

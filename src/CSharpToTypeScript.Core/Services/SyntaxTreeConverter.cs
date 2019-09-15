@@ -12,7 +12,7 @@ namespace CSharpToTypeScript.Core.Services
 {
     public class SyntaxTreeConverter
     {
-        private readonly TypeConversionHandler _fieldTypeConverter = FieldTypeConverterFactory.Create();
+        private readonly TypeConversionHandler _typeConverter = TypeConverterFactory.Create();
 
         public IEnumerable<RootTypeNode> Convert(CompilationUnitSyntax root)
             => root.DescendantNodes()
@@ -33,7 +33,7 @@ namespace CSharpToTypeScript.Core.Services
         private IEnumerable<FieldNode> ConvertProperties(IEnumerable<PropertyDeclarationSyntax> properties)
             => properties.Select(p => new FieldNode(
                     name: p.Identifier.Text,
-                    type: _fieldTypeConverter.Handle(p.Type)));
+                    type: _typeConverter.Handle(p.Type)));
 
         private IEnumerable<TypeNode> ConvertBaseTypes(IEnumerable<BaseTypeSyntax> baseTypes, TypeDeclarationSyntax containingType)
         {
@@ -44,7 +44,7 @@ namespace CSharpToTypeScript.Core.Services
             }
 
             var namedTypes = types
-                .Select(t => _fieldTypeConverter.Handle(t.Type))
+                .Select(t => _typeConverter.Handle(t.Type))
                 .OfType<NamedTypeBase>();
 
             if (!(containingType is InterfaceDeclarationSyntax))
