@@ -20,12 +20,22 @@ namespace CSharpToTypeScript.Server
             string inputLine;
             while ((inputLine = Console.ReadLine()) != "EXIT")
             {
-                var input = JsonConvert.DeserializeObject<Input>(inputLine);
+                Output output;
 
-                var convertedCode = converter.ConvertToTypeScript(
-                    input.Code, input.UseTabs, input.TabSize, input.Export);
+                try
+                {
+                    var input = JsonConvert.DeserializeObject<Input>(inputLine);
 
-                var output = new Output { Code = convertedCode };
+                    var convertedCode = converter.ConvertToTypeScript(
+                        input.Code, input.UseTabs, input.TabSize, input.Export);
+
+                    output = new Output { ConvertedCode = convertedCode, Succeeded = true };
+                }
+                catch
+                {
+                    output = new Output { Succeeded = false };
+                }
+
                 var outputLine = JsonConvert.SerializeObject(output);
 
                 Console.WriteLine(outputLine);

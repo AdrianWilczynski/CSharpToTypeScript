@@ -74,7 +74,12 @@ export async function convert(target: 'document' | 'clipboard') {
     const inputLine = JSON.stringify(input) + '\n';
 
     rl.question(inputLine, async outputLine => {
-        const convertedCode = JSON.parse(outputLine).code;
+        const { convertedCode, succeeded } = JSON.parse(outputLine);
+
+        if (!succeeded || !convertedCode) {
+            executingCommand = false;
+            return;
+        }
 
         if (target === 'document' && vscode.window.activeTextEditor) {
             await vscode.window.activeTextEditor.edit(

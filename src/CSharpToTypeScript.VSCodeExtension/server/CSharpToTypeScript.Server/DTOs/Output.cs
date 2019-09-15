@@ -2,6 +2,7 @@ namespace CSharpToTypeScript.Server.DTOs
 {
     public class Output
     {
-        public string Code { get; set; }
+        public string ConvertedCode { get; set; }
+        public bool Succeeded { get; set; }
     }
 }
