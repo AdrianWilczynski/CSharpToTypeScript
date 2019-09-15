@@ -39,6 +39,9 @@ namespace CSharpToTypeScript.Core.Utilities
         public static string TransformIf(this string text, bool condition, Func<string, string> transformation)
             => condition ? transformation(text) : text;
 
+        public static string SquashWhistespace(this string text)
+            => Regex.Replace(text, @"\s+", " ");
+
         public static IEnumerable<string> Indent(this IEnumerable<string> texts, bool useTabs, int? tabSize)
             => texts.Select(t => Indentation(useTabs, tabSize) + t);
 

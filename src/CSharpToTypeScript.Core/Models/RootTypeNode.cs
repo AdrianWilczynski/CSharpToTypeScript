@@ -7,7 +7,7 @@ using static CSharpToTypeScript.Core.Utilities.StringUtilities;
 
 namespace CSharpToTypeScript.Core.Models
 {
-    public class RootTypeNode
+    public class RootTypeNode : IRootNode
     {
         public RootTypeNode(string name, IEnumerable<FieldNode> fields, IEnumerable<string> genericTypeParameters, IEnumerable<TypeNode> baseTypes)
         {
