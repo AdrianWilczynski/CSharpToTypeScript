@@ -61,7 +61,7 @@ export async function convert(target: 'document' | 'clipboard') {
         0, 0,
         document.lineCount - 1, document.lineAt(document.lineCount - 1).range.end.character);
 
-    const input = <Input>{
+    const input: Input = {
         code: !selection.isEmpty ? document.getText(selection) : document.getText(),
         useTabs: !vscode.window.activeTextEditor.options.insertSpaces,
         tabSize: vscode.window.activeTextEditor.options.tabSize as number,
