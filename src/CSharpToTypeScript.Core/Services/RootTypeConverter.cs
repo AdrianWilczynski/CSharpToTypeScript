@@ -14,7 +14,7 @@ namespace CSharpToTypeScript.Core.Services
     {
         private readonly TypeConversionHandler _typeConverter = TypeConverterFactory.Create();
 
-        public IEnumerable<IRootNode> Convert(CompilationUnitSyntax root)
+        public IEnumerable<RootTypeNode> Convert(CompilationUnitSyntax root)
             => root.DescendantNodes()
                 .OfType<TypeDeclarationSyntax>()
                 .Where(IsSerializable)

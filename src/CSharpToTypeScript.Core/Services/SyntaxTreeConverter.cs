@@ -11,6 +11,6 @@ namespace CSharpToTypeScript.Core.Services
         private readonly RootEnumConverter _rootEnumConverter = new RootEnumConverter();
 
         public IEnumerable<IRootNode> Convert(CompilationUnitSyntax root)
-            => _rootTypeConverter.Convert(root).Union(_rootEnumConverter.Convert(root));
+            => _rootTypeConverter.Convert(root).Union((IEnumerable<IRootNode>)_rootEnumConverter.Convert((root)));
     }
 }
