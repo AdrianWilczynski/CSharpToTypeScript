@@ -61,17 +61,11 @@ export async function convert(target: 'document' | 'clipboard') {
         0, 0,
         document.lineCount - 1, document.lineAt(document.lineCount - 1).range.end.character);
 
-    const code = !selection.isEmpty ? document.getText(selection) : document.getText();
-
-    const tabSize = vscode.window.activeTextEditor.options.tabSize as number;
-    const useTabs = !vscode.window.activeTextEditor.options.insertSpaces;
-    const addExport = !!vscode.workspace.getConfiguration().get('csharpToTypeScript.export');
-
     const input = <Input>{
-        code: code,
-        useTabs: useTabs,
-        tabSize: tabSize,
-        export: addExport
+        code: !selection.isEmpty ? document.getText(selection) : document.getText(),
+        useTabs: !vscode.window.activeTextEditor.options.insertSpaces,
+        tabSize: vscode.window.activeTextEditor.options.tabSize as number,
+        export: !!vscode.workspace.getConfiguration().get('csharpToTypeScript.export')
     };
     const inputLine = JSON.stringify(input) + '\n';
 
