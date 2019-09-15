@@ -10,7 +10,7 @@ inputCodeHighlightedContainer.addEventListener('click', editInputCode);
 
 inputCodeTextarea.addEventListener('blur', highlightInputCode)
 
-addEventListener('keydown', ev => {
+inputCodeTextarea.addEventListener('keydown', ev => {
     if (ev.keyCode === 9 /* Tab */) {
         ev.preventDefault();
 
