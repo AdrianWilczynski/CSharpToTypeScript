@@ -36,9 +36,24 @@ namespace CSharpToTypeScript.Core.Services
                     type: _fieldTypeConverter.Handle(p.Type)));
 
         private IEnumerable<TypeNode> ConvertBaseTypes(IEnumerable<BaseTypeSyntax> baseTypes, TypeDeclarationSyntax containingType)
-             => baseTypes.Select(b => _fieldTypeConverter.Handle(b.Type))
-                    .OfType<NamedTypeBase>()
-                    .Where(t => containingType is InterfaceDeclarationSyntax || !t.Name.HasInterfacePrefix());
+        {
+            var types = baseTypes;
+            if (!(containingType is InterfaceDeclarationSyntax))
+            {
+                types = types.Take(1);
+            }
+
+            var namedTypes = types
+                .Select(t => _fieldTypeConverter.Handle(t.Type))
+                .OfType<NamedTypeBase>();
+
+            if (!(containingType is InterfaceDeclarationSyntax))
+            {
+                namedTypes = namedTypes.Where(t => !t.Name.HasInterfacePrefix());
+            }
+
+            return namedTypes;
+        }
 
         private bool IsSerializable(TypeDeclarationSyntax type)
             => IsNotStatic(type);
