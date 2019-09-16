@@ -8,16 +8,16 @@
 }
 
 .code-area {
-    min-height: 500px;
-    height: 500px;
+    height: 500px !important;
     font-size: 13px !important;
 }
 
-pre.code-area~textarea.code-area {
-    color: rgb(204, 204, 204);
-    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
-    background-color: rgb(45, 45, 45);
-    line-height: 1.5;
-    padding: 1em;
-    white-space: pre;
+textarea.code-area {
+    color: rgb(204, 204, 204) !important;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace !important;
+    background-color: rgb(45, 45, 45) !important;
+    line-height: 1.5 !important;
+    padding: 1em !important;
+    white-space: pre !important;
+    resize: none !important;
 }
