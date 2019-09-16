@@ -33,11 +33,7 @@ namespace CSharpToTypeScript.Server
                 }
                 catch (Exception ex)
                 {
-                    output = new Output
-                    {
-                        Succeeded = false,
-                        ErrorMessage = ex.Message
-                    };
+                    output = new Output { Succeeded = false, ErrorMessage = ex.Message };
                 }
 
                 var outputLine = JsonConvert.SerializeObject(output);
