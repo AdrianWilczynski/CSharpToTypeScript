@@ -16,7 +16,10 @@ namespace CSharpToTypeScript.Core.Utilities
             => Regex.IsMatch(text, InterfacePrefixRegex);
 
         public static string ToCamelCase(this string text)
-            => Regex.Replace(text, "^[A-Z]", Char.ToLowerInvariant(text[0]).ToString());
+            => Regex.Replace(text, "^[A-Z]", char.ToLowerInvariant(text[0]).ToString());
+
+        public static string ToKebabCase(this string text)
+            => Regex.Replace(text, "(?<![A-Z]|^)([A-Z])", "-$1").ToLowerInvariant();
 
         public static string Repeat(this string text, int count)
             => string.Concat(Enumerable.Repeat(text, count));
@@ -47,7 +50,7 @@ namespace CSharpToTypeScript.Core.Utilities
 
         public static string Indentation(bool useTabs, int? tabSize)
             => useTabs ? "\t"
-            : tabSize is int && tabSize > 0 ? " ".Repeat((int)tabSize)
+            : tabSize is int @int && tabSize > 0 ? " ".Repeat(@int)
             : throw new ArgumentException();
 
         public static string NewLine => "\r\n";

@@ -1,23 +1,20 @@
 using System.Linq;
+using CSharpToTypeScript.Core.Options;
 using Microsoft.CodeAnalysis.CSharp;
-
-using static CSharpToTypeScript.Core.Utilities.StringUtilities;
 
 namespace CSharpToTypeScript.Core.Services
 {
     public class CodeConverter
     {
-        public string ConvertToTypeScript(string code, bool useTabs, int? tabSize, bool export)
+        public string ConvertToTypeScript(string code, CodeConversionOptions options)
         {
             var root = CSharpSyntaxTree.ParseText(code)
                 .GetCompilationUnitRoot();
 
-            var convertedTree = new SyntaxTreeConverter()
+            var converted = new SyntaxTreeConverter()
                 .Convert(root);
 
-            var convertedCode = string.Join(EmptyLine, convertedTree.Select(t => t.WriteTypeScript(useTabs, tabSize, export)));
-
-            return convertedCode;
+            return converted.WriteTypeScript(options);
         }
     }
 }

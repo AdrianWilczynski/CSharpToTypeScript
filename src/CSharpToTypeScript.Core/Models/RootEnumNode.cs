@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using CSharpToTypeScript.Core.Options;
 using CSharpToTypeScript.Core.Utilities;
 
 using static CSharpToTypeScript.Core.Utilities.StringUtilities;
@@ -17,9 +18,9 @@ namespace CSharpToTypeScript.Core.Models
         public string Name { get; }
         public IEnumerable<EnumMemberNode> Members { get; }
 
-        public string WriteTypeScript(bool useTabs, int? tabSize, bool export)
-            => "export ".If(export) + "enum " + Name + " {" + NewLine
-            + string.Join("," + NewLine, Members.Select(m => m.WriteTypeScript()).Indent(useTabs, tabSize)) + NewLine
+        public string WriteTypeScript(CodeConversionOptions options)
+            => "export ".If(options.Export) + "enum " + Name + " {" + NewLine
+            + string.Join("," + NewLine, Members.Select(m => m.WriteTypeScript()).Indent(options.UseTabs, options.TabSize)) + NewLine
             + "}";
     }
 }

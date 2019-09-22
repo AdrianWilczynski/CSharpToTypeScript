@@ -4,16 +4,18 @@ using CSharpToTypeScript.Core.Utilities;
 
 namespace CSharpToTypeScript.Core.Models.TypeNodes
 {
-    public class Generic : NamedTypeBase
+    public class Generic : INamedTypeNode
     {
-        public Generic(string name, IEnumerable<ITypeNode> arguments) : base(name)
+        public Generic(string name, IEnumerable<ITypeNode> arguments)
         {
+            Name = name;
             Arguments = arguments;
         }
 
+        public string Name { get; }
         public IEnumerable<ITypeNode> Arguments { get; }
 
-        public override string WriteTypeScript()
+        public string WriteTypeScript()
             => Name.RemoveInterfacePrefix() + "<" + Arguments.Select(a => a.WriteTypeScript()).ToCommaSepratedList() + ">";
     }
 }

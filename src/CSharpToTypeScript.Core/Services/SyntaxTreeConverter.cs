@@ -12,11 +12,13 @@ namespace CSharpToTypeScript.Core.Services
         private readonly RootTypeConverter _rootTypeConverter = new RootTypeConverter();
         private readonly RootEnumConverter _rootEnumConverter = new RootEnumConverter();
 
-        public IEnumerable<IRootNode> Convert(CompilationUnitSyntax root)
+        public FileNode Convert(CompilationUnitSyntax root)
+            => new FileNode(ConvertRootNodes(root));
+
+        private IEnumerable<IRootNode> ConvertRootNodes(CompilationUnitSyntax root)
             => root.DescendantNodes()
                 .Where(node => (node is TypeDeclarationSyntax type && IsNotStatic(type)) || node is EnumDeclarationSyntax)
-                .Select(node
-                    => node is TypeDeclarationSyntax type ? (IRootNode)_rootTypeConverter.Convert(type)
+                .Select(node => node is TypeDeclarationSyntax type ? (IRootNode)_rootTypeConverter.Convert(type)
                     : node is EnumDeclarationSyntax @enum ? _rootEnumConverter.Convert(@enum)
                     : throw new ArgumentException());
 

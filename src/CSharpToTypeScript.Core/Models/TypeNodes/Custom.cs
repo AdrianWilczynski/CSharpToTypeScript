@@ -2,10 +2,15 @@ using CSharpToTypeScript.Core.Utilities;
 
 namespace CSharpToTypeScript.Core.Models.TypeNodes
 {
-    public class Custom : NamedTypeBase
+    public class Custom : INamedTypeNode
     {
-        public Custom(string name) : base(name) { }
+        public Custom(string name)
+        {
+            Name = name;
+        }
 
-        public override string WriteTypeScript() => Name.RemoveInterfacePrefix();
+        public string Name { get; }
+
+        public string WriteTypeScript() => Name.RemoveInterfacePrefix();
     }
 }

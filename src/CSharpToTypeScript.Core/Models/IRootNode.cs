@@ -1,7 +1,9 @@
+using CSharpToTypeScript.Core.Options;
+
 namespace CSharpToTypeScript.Core.Models
 {
     public interface IRootNode
     {
-        string WriteTypeScript(bool useTabs, int? tabSize, bool export);
+        string WriteTypeScript(CodeConversionOptions options);
     }
 }

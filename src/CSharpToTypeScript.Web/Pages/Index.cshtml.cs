@@ -6,6 +6,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using CSharpToTypeScript.Core.Options;
 
 namespace CSharpToTypeScript.Web.Pages
 {
@@ -14,7 +15,7 @@ namespace CSharpToTypeScript.Web.Pages
         public class SettingsModel : IValidatableObject
         {
             [Required, Display(Name = "Use Tabs")]
-            public bool UseTabs { get; set; } = false;
+            public bool UseTabs { get; set; }
 
             [Required]
             public bool Export { get; set; } = true;
@@ -31,6 +32,8 @@ namespace CSharpToTypeScript.Web.Pages
                         new[] { nameof(TabSize), nameof(UseTabs) });
                 }
             }
+
+            public CodeConversionOptions MapToCodeConversionOptions() => new CodeConversionOptions(Export, UseTabs, TabSize);
         }
 
         private readonly CodeConverter _codeConverter;
@@ -66,8 +69,7 @@ namespace CSharpToTypeScript.Web.Pages
 
             PreviousInputCode = InputCode;
 
-            ConvertedCode = _codeConverter.ConvertToTypeScript(
-                InputCode ?? string.Empty, Settings.UseTabs, Settings.TabSize, Settings.Export);
+            ConvertedCode = _codeConverter.ConvertToTypeScript(InputCode ?? string.Empty, Settings.MapToCodeConversionOptions());
 
             return RedirectToPage();
         }

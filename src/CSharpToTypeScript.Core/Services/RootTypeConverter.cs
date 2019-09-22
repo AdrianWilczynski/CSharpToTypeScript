@@ -43,7 +43,7 @@ namespace CSharpToTypeScript.Core.Services
 
             var namedTypes = types
                 .Select(t => _typeConverter.Handle(t.Type))
-                .OfType<NamedTypeBase>();
+                .OfType<INamedTypeNode>();
 
             if (!(containingType is InterfaceDeclarationSyntax))
             {

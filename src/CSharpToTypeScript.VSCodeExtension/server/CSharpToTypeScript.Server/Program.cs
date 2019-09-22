@@ -26,8 +26,7 @@ namespace CSharpToTypeScript.Server
                 {
                     var input = JsonConvert.DeserializeObject<Input>(inputLine);
 
-                    var convertedCode = converter.ConvertToTypeScript(
-                        input.Code, input.UseTabs, input.TabSize, input.Export);
+                    var convertedCode = converter.ConvertToTypeScript(input.Code, input.MapToCodeConversionOptions());
 
                     output = new Output { ConvertedCode = convertedCode, Succeeded = true };
                 }

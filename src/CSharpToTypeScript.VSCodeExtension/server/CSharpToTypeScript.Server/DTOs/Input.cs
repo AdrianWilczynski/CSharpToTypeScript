@@ -1,3 +1,5 @@
+using CSharpToTypeScript.Core.Options;
+
 namespace CSharpToTypeScript.Server.DTOs
 {
     public class Input
@@ -6,5 +8,7 @@ namespace CSharpToTypeScript.Server.DTOs
         public bool UseTabs { get; set; }
         public int? TabSize { get; set; }
         public bool Export { get; set; }
+
+        public CodeConversionOptions MapToCodeConversionOptions() => new CodeConversionOptions(Export, UseTabs, TabSize);
     }
 }
