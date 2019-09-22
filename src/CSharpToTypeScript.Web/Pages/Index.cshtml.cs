@@ -21,7 +21,7 @@ namespace CSharpToTypeScript.Web.Pages
             public bool Export { get; set; } = true;
 
             [Range(1, 8), Display(Name = "Tab Size")]
-            public int? TabSize { get; set; } = 2;
+            public int? TabSize { get; set; } = 4;
 
             public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
             {
@@ -36,9 +36,9 @@ namespace CSharpToTypeScript.Web.Pages
             public CodeConversionOptions MapToCodeConversionOptions() => new CodeConversionOptions(Export, UseTabs, TabSize);
         }
 
-        private readonly CodeConverter _codeConverter;
+        private readonly ICodeConverter _codeConverter;
 
-        public IndexModel(CodeConverter codeConverter)
+        public IndexModel(ICodeConverter codeConverter)
         {
             _codeConverter = codeConverter;
         }

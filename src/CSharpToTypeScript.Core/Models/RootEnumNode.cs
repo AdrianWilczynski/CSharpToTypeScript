@@ -7,7 +7,7 @@ using static CSharpToTypeScript.Core.Utilities.StringUtilities;
 
 namespace CSharpToTypeScript.Core.Models
 {
-    public class RootEnumNode : IRootNode
+    internal class RootEnumNode : IRootNode
     {
         public RootEnumNode(string name, IEnumerable<EnumMemberNode> members)
         {

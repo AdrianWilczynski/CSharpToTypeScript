@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
 {
-    public class DictionaryConverter : TypeConversionHandler
+    internal class DictionaryConverter : TypeConversionHandler
     {
         private IEnumerable<string> ConvertibleFrom { get; } = new List<string>
         {

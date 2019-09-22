@@ -1,6 +1,6 @@
 namespace CSharpToTypeScript.Core.Models.TypeNodes
 {
-    public interface ITypeNode
+    internal interface ITypeNode
     {
         string WriteTypeScript();
     }

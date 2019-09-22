@@ -10,7 +10,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CSharpToTypeScript.Core.Services
 {
-    public class RootTypeConverter
+    internal class RootTypeConverter
     {
         private readonly TypeConversionHandler _typeConverter = TypeConverterFactory.Create();
 

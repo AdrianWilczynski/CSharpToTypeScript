@@ -4,7 +4,7 @@ using CSharpToTypeScript.Core.Utilities;
 
 namespace CSharpToTypeScript.Core.Models.TypeNodes
 {
-    public class Tuple : ITypeNode
+    internal class Tuple : ITypeNode
     {
         public Tuple(IEnumerable<Element> elements)
         {

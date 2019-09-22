@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
 {
-    public abstract class BasicTypeConverterBase<T> : TypeConversionHandler where T : ITypeNode, new()
+    internal abstract class BasicTypeConverterBase<T> : TypeConversionHandler where T : ITypeNode, new()
     {
         protected abstract IEnumerable<string> ConvertibleFrom { get; }
 

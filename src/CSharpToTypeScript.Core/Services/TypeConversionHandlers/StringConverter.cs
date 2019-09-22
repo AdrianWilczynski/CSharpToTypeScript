@@ -3,7 +3,7 @@ using CSharpToTypeScript.Core.Models.TypeNodes;
 
 namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
 {
-    public class StringConverter : BasicTypeConverterBase<String>
+    internal class StringConverter : BasicTypeConverterBase<String>
     {
         protected override IEnumerable<string> ConvertibleFrom { get; } = new List<string>
         {

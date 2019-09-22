@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
 {
-    public class TupleConverter : TypeConversionHandler
+    internal class TupleConverter : TypeConversionHandler
     {
         private readonly TypeConversionHandler _converter;
 

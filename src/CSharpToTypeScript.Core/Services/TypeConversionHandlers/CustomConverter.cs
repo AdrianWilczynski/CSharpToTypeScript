@@ -3,7 +3,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
 {
-    public class CustomConverter : TypeConversionHandler
+    internal class CustomConverter : TypeConversionHandler
     {
         public override ITypeNode Handle(TypeSyntax type)
         {

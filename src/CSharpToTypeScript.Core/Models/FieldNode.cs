@@ -3,7 +3,7 @@ using CSharpToTypeScript.Core.Models.TypeNodes;
 
 namespace CSharpToTypeScript.Core.Models
 {
-    public class FieldNode
+    internal class FieldNode
     {
         public FieldNode(string name, ITypeNode type)
         {

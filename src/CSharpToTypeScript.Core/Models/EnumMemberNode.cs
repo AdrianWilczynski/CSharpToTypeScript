@@ -2,7 +2,7 @@ using CSharpToTypeScript.Core.Utilities;
 
 namespace CSharpToTypeScript.Core.Models
 {
-    public class EnumMemberNode
+    internal class EnumMemberNode
     {
         public EnumMemberNode(string name, string value)
         {

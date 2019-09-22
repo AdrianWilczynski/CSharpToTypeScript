@@ -1,6 +1,6 @@
 namespace CSharpToTypeScript.Core.Models.TypeNodes
 {
-    public class Nullable : ITypeNode
+    internal class Nullable : ITypeNode
     {
         public Nullable(ITypeNode of)
         {

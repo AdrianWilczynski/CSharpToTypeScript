@@ -18,7 +18,7 @@ namespace CSharpToTypeScript.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<CodeConverter>();
+            services.AddScoped<ICodeConverter, CodeConverter>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

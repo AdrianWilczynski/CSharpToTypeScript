@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
 {
-    public class ByteArrayHandler : TypeConversionHandler
+    internal class ByteArrayHandler : TypeConversionHandler
     {
         public override ITypeNode Handle(TypeSyntax type)
         {

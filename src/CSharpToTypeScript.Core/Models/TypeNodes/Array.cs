@@ -3,7 +3,7 @@ using CSharpToTypeScript.Core.Utilities;
 
 namespace CSharpToTypeScript.Core.Models.TypeNodes
 {
-    public class Array : ITypeNode
+    internal class Array : ITypeNode
     {
         public Array(ITypeNode of, int rank)
         {

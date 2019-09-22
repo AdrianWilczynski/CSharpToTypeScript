@@ -2,7 +2,7 @@ using CSharpToTypeScript.Core.Utilities;
 
 namespace CSharpToTypeScript.Core.Models.TypeNodes
 {
-    public class Custom : INamedTypeNode
+    internal class Custom : INamedTypeNode
     {
         public Custom(string name)
         {

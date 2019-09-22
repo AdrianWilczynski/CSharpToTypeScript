@@ -3,7 +3,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
 {
-    public abstract class TypeConversionHandler
+    internal abstract class TypeConversionHandler
     {
         private TypeConversionHandler _nextHandler;
 

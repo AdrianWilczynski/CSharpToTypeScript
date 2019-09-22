@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CSharpToTypeScript.Core.Services
 {
-    public class RootEnumConverter
+    internal class RootEnumConverter
     {
         public RootEnumNode Convert(EnumDeclarationSyntax @enum)
             => new RootEnumNode(

@@ -4,7 +4,7 @@ using CSharpToTypeScript.Core.Utilities;
 
 namespace CSharpToTypeScript.Core.Models.TypeNodes
 {
-    public class Generic : INamedTypeNode
+    internal class Generic : INamedTypeNode
     {
         public Generic(string name, IEnumerable<ITypeNode> arguments)
         {

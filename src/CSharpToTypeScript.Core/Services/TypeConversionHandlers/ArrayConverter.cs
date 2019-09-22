@@ -5,7 +5,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
 {
-    public class ArrayConverter : TypeConversionHandler
+    internal class ArrayConverter : TypeConversionHandler
     {
         private readonly TypeConversionHandler _converter;
 

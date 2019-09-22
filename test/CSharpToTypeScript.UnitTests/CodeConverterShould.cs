@@ -1,4 +1,5 @@
 using System;
+using CSharpToTypeScript.Core.Options;
 using CSharpToTypeScript.Core.Services;
 using Xunit;
 
@@ -16,7 +17,7 @@ namespace CSharpToTypeScript.UnitTests
 }";
 
             var typeScriptCode = new CodeConverter()
-                .ConvertToTypeScript(csharpCode, false, 4, true);
+                .ConvertToTypeScript(csharpCode, new CodeConversionOptions(true, false, 4));
 
             Assert.Equal(@"export interface Item {
     id: number;

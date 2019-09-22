@@ -1,6 +1,6 @@
 namespace CSharpToTypeScript.Core.Models.TypeNodes
 {
-    public class Any : ITypeNode
+    internal class Any : ITypeNode
     {
         public string WriteTypeScript() => "any";
     }

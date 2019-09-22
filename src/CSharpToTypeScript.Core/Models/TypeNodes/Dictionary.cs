@@ -1,6 +1,6 @@
 namespace CSharpToTypeScript.Core.Models.TypeNodes
 {
-    public class Dictionary : ITypeNode
+    internal class Dictionary : ITypeNode
     {
         public Dictionary(ITypeNode key, ITypeNode value)
         {

@@ -1,10 +1,9 @@
-using System.Linq;
 using CSharpToTypeScript.Core.Options;
 using Microsoft.CodeAnalysis.CSharp;
 
 namespace CSharpToTypeScript.Core.Services
 {
-    public class CodeConverter
+    public class CodeConverter : ICodeConverter
     {
         public string ConvertToTypeScript(string code, CodeConversionOptions options)
         {

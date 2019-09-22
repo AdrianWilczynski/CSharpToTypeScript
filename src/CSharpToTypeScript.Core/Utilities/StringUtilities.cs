@@ -15,6 +15,9 @@ namespace CSharpToTypeScript.Core.Utilities
         public static bool HasInterfacePrefix(this string text)
             => Regex.IsMatch(text, InterfacePrefixRegex);
 
+        public static bool EndsWithFileExtension(this string text)
+            => Regex.IsMatch(text, @"\.\w+$");
+
         public static string ToCamelCase(this string text)
             => Regex.Replace(text, "^[A-Z]", char.ToLowerInvariant(text[0]).ToString());
 

@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
 {
-    public class GenericConverter : TypeConversionHandler
+    internal class GenericConverter : TypeConversionHandler
     {
         private readonly TypeConversionHandler _converter;
 

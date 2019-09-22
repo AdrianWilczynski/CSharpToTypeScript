@@ -7,7 +7,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace CSharpToTypeScript.Core.Services
 {
-    public class SyntaxTreeConverter
+    internal class SyntaxTreeConverter
     {
         private readonly RootTypeConverter _rootTypeConverter = new RootTypeConverter();
         private readonly RootEnumConverter _rootEnumConverter = new RootEnumConverter();

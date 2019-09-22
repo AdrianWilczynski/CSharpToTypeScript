@@ -1,6 +1,6 @@
 namespace CSharpToTypeScript.Core.Models.TypeNodes
 {
-    public interface INamedTypeNode : ITypeNode
+    internal interface INamedTypeNode : ITypeNode
     {
         string Name { get; }
     }

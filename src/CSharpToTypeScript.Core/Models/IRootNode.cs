@@ -2,7 +2,7 @@ using CSharpToTypeScript.Core.Options;
 
 namespace CSharpToTypeScript.Core.Models
 {
-    public interface IRootNode
+    internal interface IRootNode
     {
         string WriteTypeScript(CodeConversionOptions options);
     }
