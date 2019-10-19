@@ -46,7 +46,7 @@ export async function convert(target: 'document' | 'clipboard') {
     }
 
     if (!serverRunning) {
-        vscode.window.showErrorMessage(`"C# to TypeScript" server isn't running!`);
+        vscode.window.showErrorMessage(`"C# to TypeScript" server isn't running! Reload Window to restart it.`);
         return;
     }
 
