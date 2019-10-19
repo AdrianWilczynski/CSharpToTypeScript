@@ -1,7 +1,5 @@
 ﻿using CSharpToTypeScript.Core.DI;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using Server.Services;
 
 namespace CSharpToTypeScript.Server
@@ -10,19 +8,14 @@ namespace CSharpToTypeScript.Server
     {
         public static void Main(string[] _)
         {
-            JsonConvert.DefaultSettings = () => new JsonSerializerSettings
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            };
-
             var services = new ServiceCollection()
                 .AddCSharpToTypeScript()
                 .AddTransient<IStdio, Stdio>()
-                .AddTransient<Server>();
+                .AddTransient<StdioServer>();
 
             var provider = services.BuildServiceProvider();
 
-            provider.GetRequiredService<Server>()
+            provider.GetRequiredService<StdioServer>()
                 .Handle();
         }
     }
