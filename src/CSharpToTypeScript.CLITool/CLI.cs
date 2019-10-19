@@ -63,7 +63,7 @@ namespace CSharpToTypeScript.CLITool
                 AngularConventions.Override(this);
             }
 
-            if (ClearOutputDirectory)
+            if (ClearOutputDirectory && !string.IsNullOrWhiteSpace(Output) && _fileSystem.IsExistingDirectory(Output))
             {
                 _fileSystem.ClearOutputIfPossible(Input, Output);
             }

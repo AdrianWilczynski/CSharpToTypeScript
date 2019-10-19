@@ -8,24 +8,18 @@ namespace CSharpToTypeScript.CLITool.Services
     public class FileSystem : IFileSystem
     {
         public void EnsureDirectoryExists(string path)
-        {
-            if (path.EndsWithFileExtension())
-            {
-                Directory.CreateDirectory(new FileInfo(path).DirectoryName);
-            }
-            else
-            {
-                Directory.CreateDirectory(path);
-            }
-        }
+            => Directory.CreateDirectory(path.EndsWithFileExtension() ? new FileInfo(path).DirectoryName : path);
 
         public void ClearOutputIfPossible(string input, string output)
         {
-            if (!Path.GetFullPath(input).StartsWith(Path.GetFullPath(output)) && Directory.Exists(output))
+            if (!IsSameOrParrentDirectory(input, output) && IsExistingDirectory(output))
             {
                 Directory.Delete(output, true);
             }
         }
+
+        public bool IsSameOrParrentDirectory(string child, string parrent)
+            => Path.GetFullPath(child).StartsWith(Path.GetFullPath(parrent));
 
         public IEnumerable<string> GetCSharpFiles(string path)
             => Directory.GetFiles(path)

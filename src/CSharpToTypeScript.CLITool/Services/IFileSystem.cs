@@ -11,5 +11,6 @@ namespace CSharpToTypeScript.CLITool.Services
         bool IsExistingFile(string path);
         string ReadAllText(string path);
         void WriteAllText(string path, string content);
+        bool IsSameOrParrentDirectory(string child, string parrent);
     }
 }
