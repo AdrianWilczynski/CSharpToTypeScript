@@ -9,13 +9,11 @@ namespace CSharpToTypeScript.CLITool.Validation
     {
         protected override ValidationResult IsValid(object value, ValidationContext context)
         {
-            if (value is Program program)
+            if (value is CLI cli
+                && cli.Input is string && cli.Output is string
+                && cli.Output.EndsWithFileExtension() && !cli.Input.EndsWithFileExtension())
             {
-                if (program.Input is string && program.Output is string
-                && program.Output.EndsWithFileExtension() && !program.Input.EndsWithFileExtension())
-                {
-                    return new ValidationResult("If your Output is a file, your Input has to be a file as well.");
-                }
+                return new ValidationResult("If your Output is a file, your Input has to be a file as well.");
             }
 
             return ValidationResult.Success;

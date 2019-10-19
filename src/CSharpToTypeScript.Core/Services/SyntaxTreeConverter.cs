@@ -9,8 +9,14 @@ namespace CSharpToTypeScript.Core.Services
 {
     internal class SyntaxTreeConverter
     {
-        private readonly RootTypeConverter _rootTypeConverter = new RootTypeConverter();
-        private readonly RootEnumConverter _rootEnumConverter = new RootEnumConverter();
+        private readonly RootTypeConverter _rootTypeConverter;
+        private readonly RootEnumConverter _rootEnumConverter;
+
+        public SyntaxTreeConverter(RootTypeConverter rootTypeConverter, RootEnumConverter rootEnumConverter)
+        {
+            _rootTypeConverter = rootTypeConverter;
+            _rootEnumConverter = rootEnumConverter;
+        }
 
         public FileNode Convert(CompilationUnitSyntax root)
             => new FileNode(ConvertRootNodes(root));

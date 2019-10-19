@@ -1,8 +1,8 @@
-﻿using System;
-using CSharpToTypeScript.Core.Services;
-using CSharpToTypeScript.Server.DTOs;
+﻿using CSharpToTypeScript.Core.DI;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Server.Services;
 
 namespace CSharpToTypeScript.Server
 {
@@ -10,35 +10,20 @@ namespace CSharpToTypeScript.Server
     {
         public static void Main(string[] _)
         {
-            var converter = new CodeConverter();
-
             JsonConvert.DefaultSettings = () => new JsonSerializerSettings
             {
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
             };
 
-            string inputLine;
-            while ((inputLine = Console.ReadLine()) != "EXIT")
-            {
-                Output output;
+            var services = new ServiceCollection()
+                .AddCSharpToTypeScript()
+                .AddTransient<IStdio, Stdio>()
+                .AddTransient<Server>();
 
-                try
-                {
-                    var input = JsonConvert.DeserializeObject<Input>(inputLine);
+            var provider = services.BuildServiceProvider();
 
-                    var convertedCode = converter.ConvertToTypeScript(input.Code, input.MapToCodeConversionOptions());
-
-                    output = new Output { ConvertedCode = convertedCode, Succeeded = true };
-                }
-                catch (Exception ex)
-                {
-                    output = new Output { Succeeded = false, ErrorMessage = ex.Message };
-                }
-
-                var outputLine = JsonConvert.SerializeObject(output);
-
-                Console.WriteLine(outputLine);
-            }
+            provider.GetRequiredService<Server>()
+                .Handle();
         }
     }
 }

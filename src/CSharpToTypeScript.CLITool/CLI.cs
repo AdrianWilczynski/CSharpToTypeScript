@@ -68,13 +68,11 @@ namespace CSharpToTypeScript.CLITool
                 _fileSystem.ClearOutputIfPossible(Input, Output);
             }
 
-            _fileSystem.EnsureDirectoryExists(Output);
-
-            if (_fileSystem.IsExistingFile(Input))
+            if (Input.EndsWithFileExtension() && _fileSystem.IsExistingFile(Input))
             {
                 OnInputIsFile();
             }
-            else if (_fileSystem.IsExistingDirectory(Input))
+            else if (!Input.EndsWithFileExtension() && _fileSystem.IsExistingDirectory(Input))
             {
                 OnInputIsDirectory();
             }

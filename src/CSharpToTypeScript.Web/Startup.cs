@@ -1,4 +1,4 @@
-using CSharpToTypeScript.Core.Services;
+using CSharpToTypeScript.Core.DI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +18,7 @@ namespace CSharpToTypeScript.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<ICodeConverter, CodeConverter>();
+            services.AddCSharpToTypeScript();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

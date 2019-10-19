@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using CSharpToTypeScript.Core.Options;
 using CSharpToTypeScript.Core.Utilities;
 
 namespace CSharpToTypeScript.CLITool.Services
@@ -23,12 +21,10 @@ namespace CSharpToTypeScript.CLITool.Services
 
         public void ClearOutputIfPossible(string input, string output)
         {
-            if (Path.GetFullPath(input).StartsWith(Path.GetFullPath(output)) || !Directory.Exists(output))
+            if (!Path.GetFullPath(input).StartsWith(Path.GetFullPath(output)) && Directory.Exists(output))
             {
-                return;
+                Directory.Delete(output, true);
             }
-
-            Directory.Delete(output, true);
         }
 
         public IEnumerable<string> GetCSharpFiles(string path)
@@ -39,12 +35,15 @@ namespace CSharpToTypeScript.CLITool.Services
             => File.ReadAllText(path);
 
         public void WriteAllText(string path, string content)
-            => File.WriteAllText(path, content);
+        {
+            EnsureDirectoryExists(path);
+            File.WriteAllText(path, content);
+        }
 
         public bool IsExistingFile(string path)
-            => path.EndsWithFileExtension() && File.Exists(path);
+            => File.Exists(path);
 
         public bool IsExistingDirectory(string path)
-            => !path.EndsWithFileExtension() && Directory.Exists(path);
+            => Directory.Exists(path);
     }
 }

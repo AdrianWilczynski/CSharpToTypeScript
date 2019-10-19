@@ -12,7 +12,12 @@ namespace CSharpToTypeScript.Core.Services
 {
     internal class RootTypeConverter
     {
-        private readonly TypeConversionHandler _typeConverter = TypeConverterFactory.Create();
+        private readonly TypeConversionHandler _typeConverter;
+
+        public RootTypeConverter(TypeConversionHandler typeConverter)
+        {
+            _typeConverter = typeConverter;
+        }
 
         public RootTypeNode Convert(TypeDeclarationSyntax type)
             => new RootTypeNode(
