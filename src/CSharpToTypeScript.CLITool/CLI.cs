@@ -89,16 +89,19 @@ namespace CSharpToTypeScript.CLITool
 
         private void OnInputIsDirectory()
         {
-            _fileSystem.GetCSharpFiles(Input)
-                .AsParallel()
+            var files = _fileSystem.GetCSharpFiles(Input)
                 .Select(f => new
                 {
                     OutputPath = GetOutputFilePath(f, Output, FileNameConversionOptions),
                     Content = _codeConverter.ConvertToTypeScript(_fileSystem.ReadAllText(f), CodeConversionOptions)
                 })
                 .GroupBy(f => f.OutputPath)
-                .SelectMany(g => g.Take(1))
-                .ForAll(f => _fileSystem.WriteAllText(f.OutputPath, f.Content));
+                .SelectMany(g => g.Take(1));
+
+            foreach (var file in files)
+            {
+                _fileSystem.WriteAllText(file.OutputPath, file.Content);
+            }
         }
 
         private string GetOutputFilePath(string input, string output, FileNameConversionOptions options)
