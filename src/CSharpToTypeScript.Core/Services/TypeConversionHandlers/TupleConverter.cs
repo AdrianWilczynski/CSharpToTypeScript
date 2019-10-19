@@ -15,18 +15,20 @@ namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
 
         public override ITypeNode Handle(TypeSyntax type)
         {
+            string Name(int index) => $"Item{index + 1}";
+
             if (type is TupleTypeSyntax tuple)
             {
                 return new Tuple(
                     elements: tuple.Elements.Select((element, index) => new Tuple.Element(
-                        name: !string.IsNullOrEmpty(element.Identifier.Text) ? element.Identifier.Text : $"Item{index + 1}",
+                        name: !string.IsNullOrEmpty(element.Identifier.Text) ? element.Identifier.Text : Name(index),
                         type: _converter.Handle(element.Type))));
             }
             else if (type is GenericNameSyntax generic && generic.Identifier.Text == "Tuple")
             {
                 return new Tuple(
                     elements: generic.TypeArgumentList.Arguments.Select((argument, index) => new Tuple.Element(
-                        name: $"Item{index + 1}",
+                        name: Name(index),
                         type: _converter.Handle(argument))));
             }
 
