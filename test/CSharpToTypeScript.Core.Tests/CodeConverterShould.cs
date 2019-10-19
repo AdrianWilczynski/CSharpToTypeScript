@@ -286,12 +286,12 @@ export interface ImplementingItem {
             var converted = _codeConverter.ConvertToTypeScript(
                 @"class Item
 {
-    public IEnumerable<Dictionary<int, (string, int?)>>? Wtf { get; set; }
+    public IEnumerable<Dictionary<int, (string, int?)>?>? Wtf { get; set; }
 }",
                 new CodeConversionOptions(export: true, useTabs: false, tabSize: 4));
 
             Assert.Equal(@"export interface Item {
-    wtf?: { [key: number]: { item1: string; item2?: number; }; }[];
+    wtf?: ({ [key: number]: { item1: string; item2?: number; }; } | undefined)[];
 }", converted);
         }
     }
