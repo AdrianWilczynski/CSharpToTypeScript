@@ -24,9 +24,14 @@ namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
             if (type is GenericNameSyntax generic && ConvertibleFrom.Contains(generic.Identifier.Text)
                 && generic.TypeArgumentList.Arguments.Count == 2)
             {
-                return new Dictionary(
-                    key: _converter.Handle(generic.TypeArgumentList.Arguments[0]),
-                    value: _converter.Handle(generic.TypeArgumentList.Arguments[1]));
+                var key = _converter.Handle(generic.TypeArgumentList.Arguments[0]);
+
+                if (key is String || key is Number)
+                {
+                    return new Dictionary(
+                        key: key,
+                        value: _converter.Handle(generic.TypeArgumentList.Arguments[1]));
+                }
             }
 
             return base.Handle(type);
