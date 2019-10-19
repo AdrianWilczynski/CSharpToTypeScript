@@ -28,6 +28,7 @@ function copyToClipboard() {
 
     convertedCodeHiddenInput.select();
     document.execCommand('copy');
+    convertedCodeHiddenInput.blur();
 
     convertedCodeHiddenInput.hidden = true;
 }
