@@ -128,8 +128,7 @@ class ImplementingItem : IItem
 {
     public int Id { get; set; }
     private string Name { get; set; }
-}",
-                new CodeConversionOptions(export: true, useTabs: false, tabSize: 4));
+}", new CodeConversionOptions(export: true, useTabs: false, tabSize: 4));
 
             Assert.Equal(@"export interface Item extends ItemInterfaceBase {
     name: string;
@@ -159,8 +158,7 @@ export interface ImplementingItem {
     {
         return 0;
     }
-}",
-                new CodeConversionOptions(export: true, useTabs: false, tabSize: 4));
+}", new CodeConversionOptions(export: true, useTabs: false, tabSize: 4));
 
             Assert.Equal(@"export interface Item {
     id: number;
@@ -175,8 +173,7 @@ export interface ImplementingItem {
 {
     public int Id { get; set; }
     public string Name { get; set; }
-}",
-                new CodeConversionOptions(export: true, useTabs: false, tabSize: 4));
+}", new CodeConversionOptions(export: true, useTabs: false, tabSize: 4));
 
             Assert.Equal(string.Empty, converted);
         }
@@ -194,8 +191,7 @@ export interface ImplementingItem {
     public DateTime Date { get; set; }
     public Guid Guid { get; set; }
     public bool Boolean { get; set; } 
-}",
-                new CodeConversionOptions(export: true, useTabs: false, tabSize: 4));
+}", new CodeConversionOptions(export: true, useTabs: false, tabSize: 4));
 
             Assert.Equal(@"export interface Item {
     integer: number;
@@ -217,8 +213,7 @@ export interface ImplementingItem {
     public (int, int, string) TupleA { get; set; }
     public (int id, string name) TupleB { get; set; }
     public Tuple<int, string> TupleC { get; set; }
-}",
-                new CodeConversionOptions(export: true, useTabs: false, tabSize: 4));
+}", new CodeConversionOptions(export: true, useTabs: false, tabSize: 4));
 
             Assert.Equal(@"export interface Item {
     tupleA: { item1: number; item2: number; item3: string; };
@@ -235,8 +230,7 @@ export interface ImplementingItem {
 {
     public Dictionary<string, int> Dict { get; set; }
     public Dictionary<bool, string> IllegalDict { get; set; }
-}",
-                new CodeConversionOptions(export: true, useTabs: false, tabSize: 4));
+}", new CodeConversionOptions(export: true, useTabs: false, tabSize: 4));
 
             Assert.Equal(@"export interface Item {
     dict: { [key: string]: number; };
@@ -253,8 +247,7 @@ export interface ImplementingItem {
     public int[] Array { get; set; }
     public string[,] Array2D { get; set; }
     public IEnumerable<string> Enumerable { get; set; }
-}",
-                new CodeConversionOptions(export: true, useTabs: false, tabSize: 4));
+}", new CodeConversionOptions(export: true, useTabs: false, tabSize: 4));
 
             Assert.Equal(@"export interface Item {
     array: number[];
@@ -271,8 +264,7 @@ export interface ImplementingItem {
 {
     public int? Id { get; set; }
     public IEnumerable<int?> Collection { get; set; }
-}",
-                new CodeConversionOptions(export: true, useTabs: false, tabSize: 4));
+}", new CodeConversionOptions(export: true, useTabs: false, tabSize: 4));
 
             Assert.Equal(@"export interface Item {
     id?: number;
@@ -287,11 +279,47 @@ export interface ImplementingItem {
                 @"class Item
 {
     public IEnumerable<Dictionary<int, (string, int?)>?>? Wtf { get; set; }
-}",
-                new CodeConversionOptions(export: true, useTabs: false, tabSize: 4));
+}", new CodeConversionOptions(export: true, useTabs: false, tabSize: 4));
 
             Assert.Equal(@"export interface Item {
     wtf?: ({ [key: number]: { item1: string; item2?: number; }; } | undefined)[];
+}", converted);
+        }
+
+        [Fact]
+        public void RespectIndentationSettings()
+        {
+            const string code = @"class Item
+{
+    public int MyProperty { get; set; }
+};";
+
+            var twoSpaceIndented = _codeConverter.ConvertToTypeScript(
+                code, new CodeConversionOptions(export: true, useTabs: false, tabSize: 2));
+
+            var tabIndented = _codeConverter.ConvertToTypeScript(
+                code, new CodeConversionOptions(export: true, useTabs: true));
+
+            Assert.Equal(@"export interface Item {
+  myProperty: number;
+}", twoSpaceIndented);
+
+            Assert.Equal($@"export interface Item {{
+{"\t"}myProperty: number;
+}}", tabIndented);
+        }
+
+        [Fact]
+        public void RespectExportSettings()
+        {
+            var converted = _codeConverter.ConvertToTypeScript(
+                @"class Item
+{
+    public int Id => 4;
+}", new CodeConversionOptions(export: false, useTabs: false, tabSize: 4));
+
+            Assert.Equal(@"interface Item {
+    id: number;
 }", converted);
         }
     }
