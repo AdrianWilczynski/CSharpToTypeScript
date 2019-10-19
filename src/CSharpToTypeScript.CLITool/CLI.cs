@@ -96,6 +96,8 @@ namespace CSharpToTypeScript.CLITool
                     OutputPath = GetOutputFilePath(f, Output, FileNameConversionOptions),
                     Content = _codeConverter.ConvertToTypeScript(_fileSystem.ReadAllText(f), CodeConversionOptions)
                 })
+                .GroupBy(f => f.OutputPath)
+                .SelectMany(g => g.Take(1))
                 .ForAll(f => _fileSystem.WriteAllText(f.OutputPath, f.Content));
         }
 
