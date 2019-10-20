@@ -32,8 +32,7 @@ namespace CSharpToTypeScript.VSCodeExtension.Server.Tests
                 .Returns("EXIT");
 
             var codeConverterMock = new Mock<ICodeConverter>();
-            codeConverterMock.SetupSequence(c => c.ConvertToTypeScript(
-                    It.IsAny<string>(), It.IsAny<CodeConversionOptions>()))
+            codeConverterMock.SetupSequence(c => c.ConvertToTypeScript(It.IsAny<string>(), It.IsAny<CodeConversionOptions>()))
                 .Returns("export interface First { }")
                 .Returns("export interface Second { }");
 
@@ -44,8 +43,7 @@ namespace CSharpToTypeScript.VSCodeExtension.Server.Tests
             stdioMock.Verify(s => s.ReadLine(), Times.Exactly(3));
 
             stdioMock.Verify(s =>
-                s.WriteLine(It.Is<string>(
-                    response => JsonConvert.DeserializeObject<Output>(response).ConvertedCode == "export interface First { }")),
+                s.WriteLine(It.Is<string>(response => JsonConvert.DeserializeObject<Output>(response).ConvertedCode == "export interface First { }")),
                 Times.Once);
 
             stdioMock.Verify(s => s.WriteLine(It.IsAny<string>()), Times.Exactly(2));
