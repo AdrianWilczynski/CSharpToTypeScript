@@ -304,9 +304,9 @@ export interface ImplementingItem {
   myProperty: number;
 }", twoSpaceIndented);
 
-            Assert.Equal($@"export interface Item {{
-{"\t"}myProperty: number;
-}}", tabIndented);
+            Assert.Equal(@"export interface Item {
+" + "\t" + @"myProperty: number;
+}", tabIndented);
         }
 
         [Fact]

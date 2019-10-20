@@ -15,27 +15,15 @@ namespace CSharpToTypeScript.VSCodeExtension.Server.Tests
         [Fact]
         public void HandleRequests()
         {
-            // Arrange
-            var serializerSettings = new JsonSerializerSettings
-            {
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            };
+            var serializerSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
 
-            var firstRequest = JsonConvert.SerializeObject(new Input
-            {
-                Code = "class First { }",
-                Export = true,
-                UseTabs = false,
-                TabSize = 4
-            }, serializerSettings);
+            var firstRequest = JsonConvert.SerializeObject(
+                new Input { Code = "class First { }", Export = true, UseTabs = false, TabSize = 4 },
+                serializerSettings);
 
-            var secondRequest = JsonConvert.SerializeObject(new Input
-            {
-                Code = "class Second { }",
-                Export = true,
-                UseTabs = false,
-                TabSize = 2
-            }, serializerSettings);
+            var secondRequest = JsonConvert.SerializeObject(
+                new Input { Code = "class Second { }", Export = true, UseTabs = false, TabSize = 2 },
+                serializerSettings);
 
             var stdioMock = new Mock<IStdio>();
             stdioMock.SetupSequence(s => s.ReadLine())
@@ -51,10 +39,8 @@ namespace CSharpToTypeScript.VSCodeExtension.Server.Tests
 
             var server = new StdioServer(codeConverterMock.Object, stdioMock.Object);
 
-            // Act
             server.Handle();
 
-            // Assert
             stdioMock.Verify(s => s.ReadLine(), Times.Exactly(3));
 
             stdioMock.Verify(s =>
