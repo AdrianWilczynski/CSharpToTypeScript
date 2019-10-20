@@ -359,3 +359,5 @@ node_modules
 *.vsix
 
 **/wwwroot/js/**/*.js
+
+nupkg/
