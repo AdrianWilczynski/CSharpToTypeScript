@@ -36,13 +36,13 @@ namespace CSharpToTypeScript.CLITool
         [Option(ShortName = "s", Description = "Number of spaces per tab")]
         public int TabSize { get; set; } = 4;
 
-        [Option(ShortName = "e", Description = "Emit \"export\" keyword")]
+        [Option(ShortName = "e", Description = "Emit 'export' keyword")]
         public bool Export { get; set; } = true;
 
         [Option(ShortName = "k", Description = "Use kebab case for output file names")]
         public bool UseKebabCase { get; set; }
 
-        [Option(ShortName = "m", Description = "Append \".model\" suffix to output file names")]
+        [Option(ShortName = "m", Description = "Append '.model' suffix to output file names")]
         public bool AppendModelSuffix { get; set; }
 
         [Option(ShortName = "c", Description = "Clear output directory")]
