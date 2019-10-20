@@ -361,3 +361,6 @@ node_modules
 **/wwwroot/js/**/*.js
 
 nupkg/
+
+**/scenarios/**
+!**/scenarios/.gitkeep

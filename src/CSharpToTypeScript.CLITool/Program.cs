@@ -1,5 +1,4 @@
-﻿using CSharpToTypeScript.CLITool.Services;
-using CSharpToTypeScript.Core.DI;
+﻿using CSharpToTypeScript.Core.DI;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,7 +10,6 @@ namespace CSharpToTypeScript.CLITool
         {
             var services = new ServiceCollection()
                 .AddCSharpToTypeScript()
-                .AddSingleton<IFileSystem, FileSystem>()
                 .BuildServiceProvider();
 
             using (var cli = new CommandLineApplication<CLI>())

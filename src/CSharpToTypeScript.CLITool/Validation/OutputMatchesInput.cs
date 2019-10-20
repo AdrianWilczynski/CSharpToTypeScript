@@ -1,6 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using CSharpToTypeScript.Core.Utilities;
+using CSharpToTypeScript.CLITool.Utilities;
 
 namespace CSharpToTypeScript.CLITool.Validation
 {

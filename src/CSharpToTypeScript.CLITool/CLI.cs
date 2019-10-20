@@ -2,11 +2,10 @@ using System;
 using System.IO;
 using System.Linq;
 using CSharpToTypeScript.CLITool.Conventions;
-using CSharpToTypeScript.CLITool.Services;
+using CSharpToTypeScript.CLITool.Utilities;
 using CSharpToTypeScript.CLITool.Validation;
 using CSharpToTypeScript.Core.Options;
 using CSharpToTypeScript.Core.Services;
-using CSharpToTypeScript.Core.Utilities;
 using McMaster.Extensions.CommandLineUtils;
 
 namespace CSharpToTypeScript.CLITool
@@ -15,13 +14,11 @@ namespace CSharpToTypeScript.CLITool
     [OutputMatchesInput]
     public class CLI
     {
-        private readonly IFileSystem _fileSystem;
         private readonly ICodeConverter _codeConverter;
         private readonly IFileNameConverter _fileNameConverter;
 
-        public CLI(IFileSystem fileSystem, ICodeConverter codeConverter, IFileNameConverter fileNameConverter)
+        public CLI(ICodeConverter codeConverter, IFileNameConverter fileNameConverter)
         {
-            _fileSystem = fileSystem;
             _codeConverter = codeConverter;
             _fileNameConverter = fileNameConverter;
         }
@@ -54,6 +51,8 @@ namespace CSharpToTypeScript.CLITool
         [Option(ShortName = "a", Description = "Use Angular style conventions")]
         public bool AngularMode { get; set; }
 
+        public string MyProperty { get; set; } = Directory.GetCurrentDirectory();
+
         public CodeConversionOptions CodeConversionOptions => new CodeConversionOptions(Export, UseTabs, TabSize);
         public FileNameConversionOptions FileNameConversionOptions => new FileNameConversionOptions(UseKebabCase, AppendModelSuffix);
 
@@ -64,16 +63,17 @@ namespace CSharpToTypeScript.CLITool
                 AngularConventions.Override(this);
             }
 
-            if (ClearOutputDirectory && !string.IsNullOrWhiteSpace(Output) && _fileSystem.IsExistingDirectory(Output))
+            if (ClearOutputDirectory && !string.IsNullOrWhiteSpace(Output)
+            && Directory.Exists(Output) && !Output.IsSameOrParrentDirectory(Input))
             {
-                _fileSystem.ClearOutputIfPossible(Input, Output);
+                Directory.Delete(Output, true);
             }
 
-            if (Input.EndsWithFileExtension() && _fileSystem.IsExistingFile(Input))
+            if (Input.EndsWithFileExtension() && File.Exists(Input))
             {
                 OnInputIsFile();
             }
-            else if (!Input.EndsWithFileExtension() && _fileSystem.IsExistingDirectory(Input))
+            else if (!Input.EndsWithFileExtension() && Directory.Exists(Input))
             {
                 OnInputIsDirectory();
             }
@@ -81,27 +81,29 @@ namespace CSharpToTypeScript.CLITool
 
         private void OnInputIsFile()
         {
-            var content = _fileSystem.ReadAllText(Input);
+            var content = File.ReadAllText(Input);
             var converted = _codeConverter.ConvertToTypeScript(content, CodeConversionOptions);
             var outputPath = GetOutputFilePath(Input, Output, FileNameConversionOptions);
 
-            _fileSystem.WriteAllText(outputPath, converted);
+            FileSystem.EnsureDirectoryExists(outputPath.ContainingDirectory());
+            File.WriteAllText(outputPath, converted);
         }
 
         private void OnInputIsDirectory()
         {
-            var files = _fileSystem.GetCSharpFiles(Input)
+            var files = FileSystem.GetFilesWithExtension(Input, "cs")
                 .Select(f => new
                 {
                     OutputPath = GetOutputFilePath(f, Output, FileNameConversionOptions),
-                    Content = _codeConverter.ConvertToTypeScript(_fileSystem.ReadAllText(f), CodeConversionOptions)
+                    Content = _codeConverter.ConvertToTypeScript(File.ReadAllText(f), CodeConversionOptions)
                 })
                 .GroupBy(f => f.OutputPath)
                 .SelectMany(g => g.Take(1));
 
             foreach (var file in files)
             {
-                _fileSystem.WriteAllText(file.OutputPath, file.Content);
+                FileSystem.EnsureDirectoryExists(file.OutputPath.ContainingDirectory());
+                File.WriteAllText(file.OutputPath, file.Content);
             }
         }
 
