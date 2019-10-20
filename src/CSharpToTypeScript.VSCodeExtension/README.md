@@ -4,6 +4,8 @@
 
 Convert C# Models, ViewModels and DTOs into their TypeScript equivalents.
 
+![In Action](img/inAction.gif)
+
 ## Commands
 
 - `"C# to TypeScript (Replace)"` - converts content of open document (or it's selected part) and replaces it.
