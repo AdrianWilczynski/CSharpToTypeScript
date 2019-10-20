@@ -1,25 +1,19 @@
 using System;
 using System.IO;
+using System.Linq;
 using CSharpToTypeScript.Core.DI;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
 namespace CSharpToTypeScript.CLITool.Tests
 {
-    public class CLIShould
+    public class CLIShould : IClassFixture<CLIFixture>
     {
         private readonly CLI _cli;
 
-        public CLIShould()
+        public CLIShould(CLIFixture fixture)
         {
-            var serviceProvider = new ServiceCollection()
-                .AddCSharpToTypeScript()
-                .AddTransient<CLI>()
-                .BuildServiceProvider();
-
-            _cli = serviceProvider.GetRequiredService<CLI>();
-
-            Directory.SetCurrentDirectory("./../../../scenarios");
+            _cli = fixture.CLI;
         }
 
         [Fact]
@@ -43,6 +37,30 @@ namespace CSharpToTypeScript.CLITool.Tests
 
             Assert.True(File.Exists(generatedFilePath));
             Assert.Equal("export interface Item {" + Environment.NewLine + Environment.NewLine + "}", File.ReadAllText(generatedFilePath));
+        }
+
+        [Fact]
+        public void ConvertDirectory()
+        {
+            if (Directory.Exists(nameof(ConvertDirectory)))
+            {
+                Directory.Delete(nameof(ConvertDirectory), true);
+            }
+
+            Directory.CreateDirectory(nameof(ConvertDirectory));
+
+            File.WriteAllText(Path.Join(nameof(ConvertDirectory), "File1.cs"), string.Empty);
+            File.WriteAllText(Path.Join(nameof(ConvertDirectory), "File2.cs"), string.Empty);
+            File.WriteAllText(Path.Join(nameof(ConvertDirectory), "File3.cs"), string.Empty);
+
+            _cli.Input = nameof(ConvertDirectory);
+
+            _cli.OnExecute();
+
+            Assert.Equal(new[] { "file1.ts", "file2.ts", "file3.ts" },
+                Directory.GetFiles(nameof(ConvertDirectory))
+                    .Where(f => f.EndsWith(".ts"))
+                    .Select(Path.GetFileName));
         }
     }
 }
