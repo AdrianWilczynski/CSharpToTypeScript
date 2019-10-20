@@ -4,6 +4,11 @@
 
 Convert C# Models, ViewModels and DTOs into their TypeScript equivalents.
 
+## Commands
+
+- `"C# to TypeScript (Replace)"` - converts content of open document (or it's selected part) and replaces it.
+- `"C# to TypeScript (Clipboard)"` (*keybinding:* `Alt + /`) - writes converted code to clipboard.
+
 ## Requirements
 
 - .NET Core
