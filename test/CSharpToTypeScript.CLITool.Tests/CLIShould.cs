@@ -57,10 +57,11 @@ namespace CSharpToTypeScript.CLITool.Tests
 
             _cli.OnExecute();
 
-            Assert.Equal(new[] { "file1.ts", "file2.ts", "file3.ts" },
-                Directory.GetFiles(nameof(ConvertDirectory))
-                    .Where(f => f.EndsWith(".ts"))
-                    .Select(Path.GetFileName));
+            var convertedFiles = Directory.GetFiles(nameof(ConvertDirectory))
+                .Where(f => f.EndsWith(".ts"))
+                .Select(Path.GetFileName);
+
+            Assert.Equal(new[] { "file1.ts", "file2.ts", "file3.ts" }, convertedFiles);
         }
     }
 }
