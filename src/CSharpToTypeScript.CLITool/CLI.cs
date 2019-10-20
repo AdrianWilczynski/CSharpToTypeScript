@@ -109,20 +109,26 @@ namespace CSharpToTypeScript.CLITool
 
         private string GetOutputFilePath(string input, string output, FileNameConversionOptions options)
         {
-            if (!string.IsNullOrWhiteSpace(output) && output.EndsWithFileExtension())
+            if (!input.EndsWithFileExtension())
             {
-                return output;
-            }
-            else if (!string.IsNullOrWhiteSpace(output) && !output.EndsWithFileExtension() && input.EndsWithFileExtension())
-            {
-                return Path.Join(output, _fileNameConverter.ConvertToTypeScript(input, options));
-            }
-            else if (string.IsNullOrWhiteSpace(output) && input.EndsWithFileExtension())
-            {
-                return Path.Join(new FileInfo(input).DirectoryName, _fileNameConverter.ConvertToTypeScript(input, options));
+                throw new ArgumentException();
             }
 
-            throw new ArgumentException();
+            if (!string.IsNullOrWhiteSpace(output))
+            {
+                if (output.EndsWithFileExtension())
+                {
+                    return output;
+                }
+                else
+                {
+                    return Path.Join(output, _fileNameConverter.ConvertToTypeScript(input, options));
+                }
+            }
+            else
+            {
+                return Path.Join(input.ContainingDirectory(), _fileNameConverter.ConvertToTypeScript(input, options));
+            }
         }
     }
 }
