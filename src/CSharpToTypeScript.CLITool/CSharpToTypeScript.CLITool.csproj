@@ -15,7 +15,7 @@
     <RepositoryUrl>https://github.com/AdrianWilczynski/CSharpToTypeScript.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageProjectUrl>https://github.com/AdrianWilczynski/CSharpToTypeScript/tree/master/src/CSharpToTypeScript.CLITool</PackageProjectUrl>
-    <PackageIconUrl>https://raw.githubusercontent.com/AdrianWilczynski/CSharpToTypeScript/master/src/CSharpToTypeScript.CLITool/img/icon.png</PackageIconUrl>
+    <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,5 +26,9 @@
     <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="2.4.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.2.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Include="img\icon.png" Pack="true" PackagePath="\"/>
+</ItemGroup>
 
 </Project>

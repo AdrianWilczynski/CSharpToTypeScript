@@ -24,7 +24,7 @@ namespace CSharpToTypeScript.CLITool
         }
 
         [Argument(0, Description = "Input file or directory path")]
-        [FileOrDirectoryExists]
+        [InputExists]
         public string Input { get; set; } = ".";
 
         [Option(ShortName = "o", Description = "Output file or directory path")]
