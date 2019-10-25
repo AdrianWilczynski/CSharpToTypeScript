@@ -48,9 +48,9 @@ namespace CSharpToTypeScript.CLITool.Tests
         {
             Prepare(nameof(ConvertDirectory));
 
-            File.WriteAllText(Path.Join(nameof(ConvertDirectory), "File1.cs"), string.Empty);
-            File.WriteAllText(Path.Join(nameof(ConvertDirectory), "File2.cs"), string.Empty);
-            File.WriteAllText(Path.Join(nameof(ConvertDirectory), "File3.cs"), string.Empty);
+            File.WriteAllText(Path.Join(nameof(ConvertDirectory), "File1.cs"), "class Item { }");
+            File.WriteAllText(Path.Join(nameof(ConvertDirectory), "File2.cs"), "class Item { }");
+            File.WriteAllText(Path.Join(nameof(ConvertDirectory), "File3.cs"), "class Item { }");
 
             _cli.Input = nameof(ConvertDirectory);
 
@@ -70,8 +70,8 @@ namespace CSharpToTypeScript.CLITool.Tests
 
             Directory.SetCurrentDirectory(nameof(ConvertCurrentDirectoryWhenNoInputProvided));
 
-            File.WriteAllText("File1.cs", string.Empty);
-            File.WriteAllText("File2.cs", string.Empty);
+            File.WriteAllText("File1.cs", "class Item { }");
+            File.WriteAllText("File2.cs", "class Item { }");
 
             _cli.OnExecute();
 
@@ -89,7 +89,7 @@ namespace CSharpToTypeScript.CLITool.Tests
             var inputFilePath = Path.Join(nameof(ConvertSingleFileIntoProvidedOutputFile), "File.cs");
             var outputFilePath = Path.Join(nameof(ConvertSingleFileIntoProvidedOutputFile), "converted.ts");
 
-            File.WriteAllText(inputFilePath, string.Empty);
+            File.WriteAllText(inputFilePath, "class Item { }");
 
             _cli.Input = inputFilePath;
             _cli.Output = outputFilePath;
@@ -107,7 +107,7 @@ namespace CSharpToTypeScript.CLITool.Tests
             var inputFilePath = Path.Join(nameof(ConvertSingleFileIntoProvidedOutputDirectory), "File.cs");
             var outputDirectoryPath = Path.Join(nameof(ConvertSingleFileIntoProvidedOutputDirectory), "models");
 
-            File.WriteAllText(inputFilePath, string.Empty);
+            File.WriteAllText(inputFilePath, "class Item { }");
 
             _cli.Input = inputFilePath;
             _cli.Output = outputDirectoryPath;
@@ -127,9 +127,9 @@ namespace CSharpToTypeScript.CLITool.Tests
 
             Directory.SetCurrentDirectory(inputDirectoryPath);
 
-            File.WriteAllText("File1.cs", string.Empty);
-            File.WriteAllText("File2.cs", string.Empty);
-            File.WriteAllText("File3.cs", string.Empty);
+            File.WriteAllText("File1.cs", "class Item { }");
+            File.WriteAllText("File2.cs", "class Item { }");
+            File.WriteAllText("File3.cs", "class Item { }");
 
             var outputDirectoryPath = Path.Join("..", "Output");
 
@@ -186,8 +186,8 @@ namespace CSharpToTypeScript.CLITool.Tests
 
             Directory.CreateDirectory(outputDirectoryPath);
 
-            File.WriteAllText(originalFilePath, string.Empty);
-            File.WriteAllText(undesiredFilePath, string.Empty);
+            File.WriteAllText(originalFilePath, "class Item { }");
+            File.WriteAllText(undesiredFilePath, "export interface Garbage { }");
 
             _cli.Input = originalFilePath;
             _cli.Output = outputDirectoryPath;
@@ -210,7 +210,7 @@ namespace CSharpToTypeScript.CLITool.Tests
             Directory.CreateDirectory(inputDirectoryPath);
 
             var undesiredFilePath = Path.Join(outputDirectoryPath, "garbage.ts");
-            File.WriteAllText(undesiredFilePath, string.Empty);
+            File.WriteAllText(undesiredFilePath, "export interface Garbage { }");
 
             _cli.Input = inputDirectoryPath;
             _cli.Output = outputDirectoryPath;
@@ -221,7 +221,7 @@ namespace CSharpToTypeScript.CLITool.Tests
             Assert.True(File.Exists(undesiredFilePath));
 
             undesiredFilePath = Path.Join(inputDirectoryPath, "trash.ts");
-            File.WriteAllText(undesiredFilePath, string.Empty);
+            File.WriteAllText(undesiredFilePath, "export interface Trash { }");
 
             _cli.Output = inputDirectoryPath;
 

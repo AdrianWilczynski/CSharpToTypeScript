@@ -97,6 +97,7 @@ namespace CSharpToTypeScript.CLITool
                     OutputPath = GetOutputFilePath(f, Output, FileNameConversionOptions),
                     Content = _codeConverter.ConvertToTypeScript(File.ReadAllText(f), CodeConversionOptions)
                 })
+                .Where(f => !string.IsNullOrWhiteSpace(f.Content))
                 .GroupBy(f => f.OutputPath)
                 .Select(g => g.First());
 
