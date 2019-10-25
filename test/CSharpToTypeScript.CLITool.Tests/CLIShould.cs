@@ -14,15 +14,20 @@ namespace CSharpToTypeScript.CLITool.Tests
             _cli = fixture.CLI;
         }
 
+        private void Prepare(string directory)
+        {
+            if (Directory.Exists(directory))
+            {
+                Directory.Delete(directory, true);
+            }
+
+            Directory.CreateDirectory(directory);
+        }
+
         [Fact]
         public void ConvertSingleSimpleFile()
         {
-            if (Directory.Exists(nameof(ConvertSingleSimpleFile)))
-            {
-                Directory.Delete(nameof(ConvertSingleSimpleFile), true);
-            }
-
-            Directory.CreateDirectory(nameof(ConvertSingleSimpleFile));
+            Prepare(nameof(ConvertSingleSimpleFile));
 
             var originalFilePath = Path.Join(nameof(ConvertSingleSimpleFile), "Item.cs");
             File.WriteAllText(originalFilePath, "class Item { }");
@@ -40,12 +45,7 @@ namespace CSharpToTypeScript.CLITool.Tests
         [Fact]
         public void ConvertDirectory()
         {
-            if (Directory.Exists(nameof(ConvertDirectory)))
-            {
-                Directory.Delete(nameof(ConvertDirectory), true);
-            }
-
-            Directory.CreateDirectory(nameof(ConvertDirectory));
+            Prepare(nameof(ConvertDirectory));
 
             File.WriteAllText(Path.Join(nameof(ConvertDirectory), "File1.cs"), string.Empty);
             File.WriteAllText(Path.Join(nameof(ConvertDirectory), "File2.cs"), string.Empty);
