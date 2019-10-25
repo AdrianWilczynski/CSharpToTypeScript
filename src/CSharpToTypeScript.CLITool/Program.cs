@@ -23,6 +23,7 @@ namespace CSharpToTypeScript.CLITool
                     cli.Execute(args);
                 }
             }
+#pragma warning disable CS0168
             catch (Exception ex)
             {
 #if RELEASE
