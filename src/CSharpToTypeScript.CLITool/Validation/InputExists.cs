@@ -8,7 +8,7 @@ namespace CSharpToTypeScript.CLITool.Validation
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            if (value is string input && !string.IsNullOrWhiteSpace(input))
+            if (value is string input)
             {
                 if (input.EndsWithFileExtension() && !File.Exists(input))
                 {
