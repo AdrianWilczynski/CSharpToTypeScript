@@ -24,10 +24,12 @@ namespace CSharpToTypeScript.CLITool
         }
 
         [Argument(0, Description = "Input file or directory path")]
+        [NotEmptyOrWhiteSpace]
         [InputExists]
         public string Input { get; set; } = ".";
 
         [Option(ShortName = "o", Description = "Output file or directory path")]
+        [NotEmptyOrWhiteSpace]
         public string Output { get; set; }
 
         [Option(ShortName = "t", Description = "Use tabs for indentation")]
