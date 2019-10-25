@@ -53,8 +53,6 @@ namespace CSharpToTypeScript.CLITool
         [Option(ShortName = "a", Description = "Use Angular style conventions")]
         public bool AngularMode { get; set; }
 
-        public string MyProperty { get; set; } = Directory.GetCurrentDirectory();
-
         public CodeConversionOptions CodeConversionOptions => new CodeConversionOptions(Export, UseTabs, TabSize);
         public FileNameConversionOptions FileNameConversionOptions => new FileNameConversionOptions(UseKebabCase, AppendModelSuffix);
 
