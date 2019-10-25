@@ -273,7 +273,7 @@ export interface ImplementingItem {
         }
 
         [Fact]
-        public void ConvertCoplexTypes()
+        public void ConvertComplexTypes()
         {
             var converted = _codeConverter.ConvertToTypeScript(
                 @"class Item
