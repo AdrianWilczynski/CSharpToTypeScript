@@ -64,6 +64,24 @@ namespace CSharpToTypeScript.CLITool.Tests
         }
 
         [Fact]
+        public void ConvertCurrentDirectoryWhenNoInputProvided()
+        {
+            Prepare(nameof(ConvertCurrentDirectoryWhenNoInputProvided));
+
+            Directory.SetCurrentDirectory(nameof(ConvertCurrentDirectoryWhenNoInputProvided));
+
+            File.WriteAllText("File1.cs", string.Empty);
+            File.WriteAllText("File2.cs", string.Empty);
+
+            _cli.OnExecute();
+
+            Assert.True(File.Exists("file1.ts"));
+            Assert.True(File.Exists("file2.ts"));
+
+            Directory.SetCurrentDirectory("..");
+        }
+
+        [Fact]
         public void ConvertSingleFileIntoProvidedOutputFile()
         {
             Prepare(nameof(ConvertSingleFileIntoProvidedOutputFile));
@@ -105,15 +123,17 @@ namespace CSharpToTypeScript.CLITool.Tests
             Prepare(nameof(ConvertDirectoryIntoProvidedOutputDirectory));
 
             var inputDirectoryPath = Path.Join(nameof(ConvertDirectoryIntoProvidedOutputDirectory), "Input");
-            var outputDirectoryPath = Path.Join(nameof(ConvertDirectoryIntoProvidedOutputDirectory), "Output");
-
             Directory.CreateDirectory(inputDirectoryPath);
 
-            File.WriteAllText(Path.Join(inputDirectoryPath, "File1.cs"), string.Empty);
-            File.WriteAllText(Path.Join(inputDirectoryPath, "File2.cs"), string.Empty);
-            File.WriteAllText(Path.Join(inputDirectoryPath, "File3.cs"), string.Empty);
+            Directory.SetCurrentDirectory(inputDirectoryPath);
 
-            _cli.Input = inputDirectoryPath;
+            File.WriteAllText("File1.cs", string.Empty);
+            File.WriteAllText("File2.cs", string.Empty);
+            File.WriteAllText("File3.cs", string.Empty);
+
+            var outputDirectoryPath = Path.Join("..", "Output");
+
+            _cli.Input = ".";
             _cli.Output = outputDirectoryPath;
 
             _cli.OnExecute();
@@ -123,6 +143,8 @@ namespace CSharpToTypeScript.CLITool.Tests
                 .Select(Path.GetFileName);
 
             Assert.Equal(new[] { "file1.ts", "file2.ts", "file3.ts" }, convertedFiles);
+
+            Directory.SetCurrentDirectory(Path.Join("..", ".."));
         }
 
         [Fact]
