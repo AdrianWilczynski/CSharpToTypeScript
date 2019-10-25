@@ -201,7 +201,7 @@ namespace CSharpToTypeScript.CLITool.Tests
         [Fact]
         public void IgnoreClearOutputSettingIfUnsafe()
         {
-            Prepare(nameof(ClearOutputDirectory));
+            Prepare(nameof(IgnoreClearOutputSettingIfUnsafe));
 
             var outputDirectoryPath = Path.Join(nameof(IgnoreClearOutputSettingIfUnsafe), "Parrent");
             var inputDirectoryPath = Path.Join(outputDirectoryPath, "Input");
