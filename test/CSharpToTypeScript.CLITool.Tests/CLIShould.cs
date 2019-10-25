@@ -28,7 +28,9 @@ namespace CSharpToTypeScript.CLITool.Tests
         public void ConvertSingleSimpleFile()
         {
             Prepare(nameof(ConvertSingleSimpleFile));
+
             var originalFilePath = Path.Join(nameof(ConvertSingleSimpleFile), "Item.cs");
+
             File.WriteAllText(originalFilePath, "class Item { }");
 
             _cli.Input = originalFilePath;
@@ -86,6 +88,7 @@ namespace CSharpToTypeScript.CLITool.Tests
 
             var inputFilePath = Path.Join(nameof(ConvertSingleFileIntoProvidedOutputDirectory), "File.cs");
             var outputDirectoryPath = Path.Join(nameof(ConvertSingleFileIntoProvidedOutputDirectory), "models");
+
             File.WriteAllText(inputFilePath, string.Empty);
 
             _cli.Input = inputFilePath;
@@ -128,6 +131,7 @@ namespace CSharpToTypeScript.CLITool.Tests
             Prepare(nameof(UseAngularConventionsWhenRequested));
 
             var originalFilePath = Path.Join(nameof(UseAngularConventionsWhenRequested), "ShoppingCartItem.cs");
+
             File.WriteAllText(originalFilePath, @"class ShoppingCartItem 
             {
                 public int Id { get; set; }
@@ -146,6 +150,62 @@ namespace CSharpToTypeScript.CLITool.Tests
                 + "  id: number;" + Environment.NewLine
                 + "}",
                 File.ReadAllText(generatedFilePath));
+        }
+
+        [Fact]
+        public void ClearOutputDirectory()
+        {
+            Prepare(nameof(ClearOutputDirectory));
+
+            var originalFilePath = Path.Join(nameof(ClearOutputDirectory), "Item.cs");
+            var outputDirectoryPath = Path.Join(nameof(ClearOutputDirectory), "Output");
+
+            var undesiredFilePath = Path.Join(outputDirectoryPath, "garbage.ts");
+
+            Directory.CreateDirectory(outputDirectoryPath);
+
+            File.WriteAllText(originalFilePath, string.Empty);
+            File.WriteAllText(undesiredFilePath, string.Empty);
+
+            _cli.Input = originalFilePath;
+            _cli.Output = outputDirectoryPath;
+            _cli.ClearOutputDirectory = true;
+
+            _cli.OnExecute();
+
+            Assert.False(File.Exists(undesiredFilePath));
+        }
+
+        [Fact]
+        public void IgnoreClearOutputSettingIfUnsafe()
+        {
+            Prepare(nameof(ClearOutputDirectory));
+
+            var outputDirectoryPath = Path.Join(nameof(IgnoreClearOutputSettingIfUnsafe), "Parrent");
+            var inputDirectoryPath = Path.Join(outputDirectoryPath, "Input");
+
+            Directory.CreateDirectory(outputDirectoryPath);
+            Directory.CreateDirectory(inputDirectoryPath);
+
+            var undesiredFilePath = Path.Join(outputDirectoryPath, "garbage.ts");
+            File.WriteAllText(undesiredFilePath, string.Empty);
+
+            _cli.Input = inputDirectoryPath;
+            _cli.Output = outputDirectoryPath;
+            _cli.ClearOutputDirectory = true;
+
+            _cli.OnExecute();
+
+            Assert.True(File.Exists(undesiredFilePath));
+
+            undesiredFilePath = Path.Join(inputDirectoryPath, "trash.ts");
+            File.WriteAllText(undesiredFilePath, string.Empty);
+
+            _cli.Output = inputDirectoryPath;
+
+            _cli.OnExecute();
+
+            Assert.True(File.Exists(undesiredFilePath));
         }
     }
 }
