@@ -1,8 +1,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using CSharpToTypeScript.Core.DI;
-using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
 namespace CSharpToTypeScript.CLITool.Tests

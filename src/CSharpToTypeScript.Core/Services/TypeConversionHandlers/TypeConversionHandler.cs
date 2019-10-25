@@ -10,7 +10,7 @@ namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
         public virtual ITypeNode Handle(TypeSyntax type)
            => _nextHandler is null ? new Any() : _nextHandler.Handle(type);
 
-        public TypeConversionHandler SetNext(TypeConversionHandler converter)
-            => _nextHandler = converter;
+        public TypeConversionHandler SetNext(TypeConversionHandler handler)
+            => _nextHandler = handler;
     }
 }
