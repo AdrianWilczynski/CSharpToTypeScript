@@ -1,4 +1,5 @@
-﻿using CSharpToTypeScript.Core.DI;
+﻿using System;
+using CSharpToTypeScript.Core.DI;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -6,18 +7,29 @@ namespace CSharpToTypeScript.CLITool
 {
     public static class Program
     {
-        public static int Main(string[] args)
+        public static void Main(string[] args)
         {
-            var services = new ServiceCollection()
-                .AddCSharpToTypeScript()
-                .BuildServiceProvider();
-
-            using (var cli = new CommandLineApplication<CLI>())
+            try
             {
-                cli.Conventions.UseDefaultConventions()
-                    .UseConstructorInjection(services);
+                var services = new ServiceCollection()
+                    .AddCSharpToTypeScript()
+                    .BuildServiceProvider();
 
-                return cli.Execute(args);
+                using (var cli = new CommandLineApplication<CLI>())
+                {
+                    cli.Conventions.UseDefaultConventions()
+                        .UseConstructorInjection(services);
+
+                    cli.Execute(args);
+                }
+            }
+            catch (Exception ex)
+            {
+#if RELEASE
+                Console.Error.WriteLine(ex.Message);
+#else 
+                throw;
+#endif
             }
         }
     }

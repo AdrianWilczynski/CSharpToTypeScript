@@ -1,3 +1,3 @@
 pushd ..\src\CSharpToTypeScript.CLITool
-dotnet pack
+dotnet pack -c Release
 popd
