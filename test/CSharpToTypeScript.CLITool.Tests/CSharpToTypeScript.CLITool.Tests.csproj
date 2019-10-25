@@ -17,4 +17,8 @@
     <ProjectReference Include="..\..\src\CSharpToTypeScript.CLITool\CSharpToTypeScript.CLITool.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="scenarios\**" />
+  </ItemGroup>
+
 </Project>

@@ -6,16 +6,16 @@ namespace CSharpToTypeScript.CLITool.Tests
 {
     public class CLIFixture
     {
-        public CLI CLI { get; }
+        private readonly ServiceProvider _serviceProvider;
+
+        public CLI CLI => _serviceProvider.GetRequiredService<CLI>();
 
         public CLIFixture()
         {
-            var serviceProvider = new ServiceCollection()
+            _serviceProvider = new ServiceCollection()
                 .AddCSharpToTypeScript()
                 .AddTransient<CLI>()
                 .BuildServiceProvider();
-
-            CLI = serviceProvider.GetRequiredService<CLI>();
 
             Directory.SetCurrentDirectory("./../../../scenarios");
         }
