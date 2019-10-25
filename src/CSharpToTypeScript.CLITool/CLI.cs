@@ -98,7 +98,7 @@ namespace CSharpToTypeScript.CLITool
                     Content = _codeConverter.ConvertToTypeScript(File.ReadAllText(f), CodeConversionOptions)
                 })
                 .GroupBy(f => f.OutputPath)
-                .SelectMany(g => g.Take(1));
+                .Select(g => g.First());
 
             foreach (var file in files)
             {
