@@ -20,7 +20,7 @@ Convert C# Models, ViewModels and DTOs into their TypeScript equivalents.
 - Uses VS Code's indentation settings.
 - `"csharpToTypeScript.export": true` property controls exporting.
 
-## Know limitations / design choices
+## Known limitations / design choices
 
 - Always outputs interface type.
 - Converts names to camel case.
