@@ -29,18 +29,18 @@ namespace CSharpToTypeScript.CLITool.Tests
         {
             Prepare(nameof(ConvertSingleSimpleFile));
 
-            var originalFilePath = Path.Join(nameof(ConvertSingleSimpleFile), "Item.cs");
+            var originalFilePath = Path.Join(nameof(ConvertSingleSimpleFile), "SimpleItem.cs");
 
-            File.WriteAllText(originalFilePath, "class Item { }");
+            File.WriteAllText(originalFilePath, "class SimpleItem { }");
 
             _cli.Input = originalFilePath;
 
             _cli.OnExecute();
 
-            var generatedFilePath = Path.Join(nameof(ConvertSingleSimpleFile), "item.ts");
+            var generatedFilePath = Path.Join(nameof(ConvertSingleSimpleFile), "simpleItem.ts");
 
             Assert.True(File.Exists(generatedFilePath));
-            Assert.Equal("export interface Item {\r\n\r\n}", File.ReadAllText(generatedFilePath));
+            Assert.Equal("export interface SimpleItem {\r\n\r\n}", File.ReadAllText(generatedFilePath));
         }
 
         [Fact]
@@ -48,9 +48,9 @@ namespace CSharpToTypeScript.CLITool.Tests
         {
             Prepare(nameof(ConvertDirectory));
 
-            File.WriteAllText(Path.Join(nameof(ConvertDirectory), "File1.cs"), "class Item { }");
-            File.WriteAllText(Path.Join(nameof(ConvertDirectory), "File2.cs"), "class Item { }");
-            File.WriteAllText(Path.Join(nameof(ConvertDirectory), "File3.cs"), "class Item { }");
+            File.WriteAllText(Path.Join(nameof(ConvertDirectory), "File1.cs"), "class Item1 { }");
+            File.WriteAllText(Path.Join(nameof(ConvertDirectory), "File2.cs"), "class Item2 { }");
+            File.WriteAllText(Path.Join(nameof(ConvertDirectory), "File3.cs"), "class Item3 { }");
 
             _cli.Input = nameof(ConvertDirectory);
 
@@ -70,8 +70,8 @@ namespace CSharpToTypeScript.CLITool.Tests
 
             Directory.SetCurrentDirectory(nameof(ConvertCurrentDirectoryWhenNoInputProvided));
 
-            File.WriteAllText("File1.cs", "class Item { }");
-            File.WriteAllText("File2.cs", "class Item { }");
+            File.WriteAllText("File1.cs", "class Item4 { }");
+            File.WriteAllText("File2.cs", "class Item5 { }");
 
             _cli.OnExecute();
 
@@ -89,7 +89,7 @@ namespace CSharpToTypeScript.CLITool.Tests
             var inputFilePath = Path.Join(nameof(ConvertSingleFileIntoProvidedOutputFile), "File.cs");
             var outputFilePath = Path.Join(nameof(ConvertSingleFileIntoProvidedOutputFile), "converted.ts");
 
-            File.WriteAllText(inputFilePath, "class Item { }");
+            File.WriteAllText(inputFilePath, "class Item6 { }");
 
             _cli.Input = inputFilePath;
             _cli.Output = outputFilePath;
@@ -107,7 +107,7 @@ namespace CSharpToTypeScript.CLITool.Tests
             var inputFilePath = Path.Join(nameof(ConvertSingleFileIntoProvidedOutputDirectory), "File.cs");
             var outputDirectoryPath = Path.Join(nameof(ConvertSingleFileIntoProvidedOutputDirectory), "models");
 
-            File.WriteAllText(inputFilePath, "class Item { }");
+            File.WriteAllText(inputFilePath, "class Item7 { }");
 
             _cli.Input = inputFilePath;
             _cli.Output = outputDirectoryPath;
@@ -127,9 +127,9 @@ namespace CSharpToTypeScript.CLITool.Tests
 
             Directory.SetCurrentDirectory(inputDirectoryPath);
 
-            File.WriteAllText("File1.cs", "class Item { }");
-            File.WriteAllText("File2.cs", "class Item { }");
-            File.WriteAllText("File3.cs", "class Item { }");
+            File.WriteAllText("File1.cs", "class Item8 { }");
+            File.WriteAllText("File2.cs", "class Item9 { }");
+            File.WriteAllText("File3.cs", "class Item10 { }");
 
             var outputDirectoryPath = Path.Join("..", "Output");
 
@@ -185,7 +185,7 @@ namespace CSharpToTypeScript.CLITool.Tests
 
             Directory.CreateDirectory(outputDirectoryPath);
 
-            File.WriteAllText(originalFilePath, "class Item { }");
+            File.WriteAllText(originalFilePath, "class Item11 { }");
             File.WriteAllText(undesiredFilePath, "export interface Garbage { }");
 
             _cli.Input = originalFilePath;
