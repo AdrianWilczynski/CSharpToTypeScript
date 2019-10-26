@@ -4,7 +4,7 @@
 
 Convert C# Models, ViewModels and DTOs into their TypeScript equivalents.
 
-![In Action](src/CSharpToTypeScript.VSCodeExtension/img/inAction.gif)
+![In Action](https://raw.githubusercontent.com/AdrianWilczynski/CSharpToTypeScript/master/src/CSharpToTypeScript.VSCodeExtension/img/inAction.gif)
 
 ## Commands
 
