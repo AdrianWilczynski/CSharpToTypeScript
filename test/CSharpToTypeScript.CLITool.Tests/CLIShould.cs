@@ -40,7 +40,7 @@ namespace CSharpToTypeScript.CLITool.Tests
             var generatedFilePath = Path.Join(nameof(ConvertSingleSimpleFile), "item.ts");
 
             Assert.True(File.Exists(generatedFilePath));
-            Assert.Equal("export interface Item {" + Environment.NewLine + Environment.NewLine + "}", File.ReadAllText(generatedFilePath));
+            Assert.Equal("export interface Item {\r\n\r\n}", File.ReadAllText(generatedFilePath));
         }
 
         [Fact]
@@ -155,9 +155,9 @@ namespace CSharpToTypeScript.CLITool.Tests
             var originalFilePath = Path.Join(nameof(UseAngularConventionsWhenRequested), "ShoppingCartItem.cs");
 
             File.WriteAllText(originalFilePath, @"class ShoppingCartItem 
-            {
-                public int Id { get; set; }
-            }");
+{
+    public int Id { get; set; }
+}");
 
             _cli.Input = originalFilePath;
             _cli.AngularMode = true;
@@ -167,10 +167,9 @@ namespace CSharpToTypeScript.CLITool.Tests
             var generatedFilePath = Path.Join(nameof(UseAngularConventionsWhenRequested), "shopping-cart-item.model.ts");
 
             Assert.True(File.Exists(generatedFilePath));
-            Assert.Equal(
-                "export interface ShoppingCartItem {" + Environment.NewLine
-                + "  id: number;" + Environment.NewLine
-                + "}",
+            Assert.Equal(@"export interface ShoppingCartItem {
+  id: number;
+}",
                 File.ReadAllText(generatedFilePath));
         }
 
