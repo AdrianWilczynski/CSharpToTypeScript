@@ -11,9 +11,8 @@ let serverRunning = false;
 let executingCommand = false;
 
 export function activate(context: vscode.ExtensionContext) {
-    const dllPath = context.asAbsolutePath(
-        path.join('server', 'CSharpToTypeScript.Server', 'bin', 'Release',
-            'netcoreapp2.2', 'publish', 'CSharpToTypeScript.Server.dll'));
+    const dllPath = context.asAbsolutePath(path.join(
+        'server', 'CSharpToTypeScript.Server', 'bin', 'Release', 'netcoreapp2.2', 'publish', 'CSharpToTypeScript.Server.dll'));
 
     serverRunning = true;
     server = cp.spawn('dotnet', [dllPath]);
