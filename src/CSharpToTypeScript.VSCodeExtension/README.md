@@ -1,6 +1,6 @@
 # C# to TypeScript
 
-*Checkout web-based version here: https://csharptotypescript.azurewebsites.net/*
+*Checkout web-based version here: https://csharptotypescript.azurewebsites.net/ and .NET Core CLI Tool here: https://www.nuget.org/packages/CSharpToTypeScript.CLITool/*
 
 Convert C# Models, ViewModels and DTOs into their TypeScript equivalents.
 
