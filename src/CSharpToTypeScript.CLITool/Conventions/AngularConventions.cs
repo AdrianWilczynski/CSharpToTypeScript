@@ -6,7 +6,7 @@ namespace CSharpToTypeScript.CLITool.Conventions
         {
             cli.UseTabs = false;
             cli.TabSize = 2;
-            cli.Export = true;
+            cli.SkipExport = false;
             cli.UseKebabCase = true;
             cli.AppendModelSuffix = true;
         }

@@ -33,11 +33,11 @@ namespace CSharpToTypeScript.CLITool
         [Option(ShortName = "t", Description = "Use tabs for indentation")]
         public bool UseTabs { get; set; }
 
-        [Option(ShortName = "s", Description = "Number of spaces per tab")]
+        [Option(ShortName = "ts", Description = "Number of spaces per tab")]
         public int TabSize { get; set; } = 4;
 
-        [Option(ShortName = "e", Description = "Emit 'export' keyword")]
-        public bool Export { get; set; } = true;
+        [Option(ShortName = "se", Description = "Skip 'export' keyword")]
+        public bool SkipExport { get; set; }
 
         [Option(ShortName = "k", Description = "Use kebab case for output file names")]
         public bool UseKebabCase { get; set; }
@@ -51,7 +51,7 @@ namespace CSharpToTypeScript.CLITool
         [Option(ShortName = "a", Description = "Use Angular style conventions")]
         public bool AngularMode { get; set; }
 
-        public CodeConversionOptions CodeConversionOptions => new CodeConversionOptions(Export, UseTabs, TabSize);
+        public CodeConversionOptions CodeConversionOptions => new CodeConversionOptions(!SkipExport, UseTabs, TabSize);
         public FileNameConversionOptions FileNameConversionOptions => new FileNameConversionOptions(UseKebabCase, AppendModelSuffix);
 
         public void OnExecute()
