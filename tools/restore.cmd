@@ -12,3 +12,9 @@ pushd ..\src\CSharpToTypeScript.VSCodeExtension
 call npm install
 call npm run compile-server
 popd
+
+pushd ..\test
+dotnet build CSharpToTypeScript.CLITool.Tests
+dotnet build CSharpToTypeScript.Core.Tests
+dotnet build CSharpToTypeScript.VSCodeExtension.Server.Tests
+popd
