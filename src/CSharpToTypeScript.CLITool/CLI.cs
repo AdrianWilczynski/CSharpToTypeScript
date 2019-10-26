@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using CSharpToTypeScript.CLITool.Conventions;
@@ -34,6 +35,7 @@ namespace CSharpToTypeScript.CLITool
         public bool UseTabs { get; set; }
 
         [Option(ShortName = "ts", Description = "Number of spaces per tab")]
+        [Range(1, 8)]
         public int TabSize { get; set; } = 4;
 
         [Option(ShortName = "se", Description = "Skip 'export' keyword")]
