@@ -10,6 +10,6 @@ namespace CSharpToTypeScript.Core.Models.TypeNodes
         public ITypeNode Of { get; }
 
         public string WriteTypeScript()
-            => Of.WriteTypeScript() + " | undefined";
+            => Of.WriteTypeScript() + " | null";
     }
 }

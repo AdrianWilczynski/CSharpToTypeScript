@@ -1,3 +1,4 @@
+using System.Linq;
 using CSharpToTypeScript.Core.Models.TypeNodes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -17,6 +18,11 @@ namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
             if (type is NullableTypeSyntax nullable)
             {
                 return new Nullable(of: _converter.Handle(nullable.ElementType));
+            }
+            else if (type is GenericNameSyntax generic && generic.Identifier.Text == "Nullable"
+                && generic.TypeArgumentList.Arguments.Count == 1)
+            {
+                return new Nullable(of: _converter.Handle(generic.TypeArgumentList.Arguments.Single()));
             }
 
             return base.Handle(type);
