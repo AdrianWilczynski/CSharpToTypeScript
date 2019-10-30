@@ -58,7 +58,7 @@ namespace CSharpToTypeScript.CLITool
         ValueName = nameof(DateOutputType.String) + "|" + nameof(DateOutputType.Date) + "|" + nameof(DateOutputType.Union))]
         public DateOutputType ConvertDatesTo { get; set; }
 
-        [Option(ShortName = "n", Description = "Set output type nullables",
+        [Option(ShortName = "n", Description = "Set output type for nullables",
         ValueName = nameof(NullableOutputType.Null) + "|" + nameof(NullableOutputType.Undefined))]
         public NullableOutputType ConvertNullablesTo { get; set; }
 

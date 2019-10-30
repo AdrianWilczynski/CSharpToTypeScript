@@ -18,5 +18,6 @@ Convert C# Models, ViewModels and DTOs into their TypeScript equivalents.
 | -m\|--append-model-suffix                          | Append '.model' suffix to output file names    |
 | -c\|--clear-output-directory                       | Clear output directory                         |
 | -a\|--angular-mode                                 | Use Angular style conventions                  |
-  -d\|--convert-dates-to \<String\|Date\|Union\>     | Set output type for dates                      |
+| -d\|--convert-dates-to \<String\|Date\|Union\>     | Set output type for dates                      |
+| -n\|--convert-nullables-to \<Null\|Undefined\>     | Set output type for nullables                  |
 | -?\|-h\|--help                                     | Show help information                          |
