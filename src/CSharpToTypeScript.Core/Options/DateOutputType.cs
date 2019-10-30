@@ -2,7 +2,7 @@ namespace CSharpToTypeScript.Core.Options
 {
     public enum DateOutputType
     {
-        String,
+        String = 0,
         Date,
         Union
     }

@@ -53,7 +53,11 @@ namespace CSharpToTypeScript.CLITool
         [Option(ShortName = "a", Description = "Use Angular style conventions")]
         public bool AngularMode { get; set; }
 
-        public CodeConversionOptions CodeConversionOptions => new CodeConversionOptions(!SkipExport, UseTabs, TabSize);
+        [Option(ShortName = "d", Description = "Set output type for dates",
+        ValueName = nameof(DateOutputType.String) + "|" + nameof(DateOutputType.Date) + "|" + nameof(DateOutputType.Union))]
+        public DateOutputType ConvertDatesTo { get; set; }
+
+        public CodeConversionOptions CodeConversionOptions => new CodeConversionOptions(!SkipExport, UseTabs, TabSize, ConvertDatesTo);
         public FileNameConversionOptions FileNameConversionOptions => new FileNameConversionOptions(UseKebabCase, AppendModelSuffix);
 
         public void OnExecute()
