@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
@@ -57,7 +58,11 @@ namespace CSharpToTypeScript.CLITool
         ValueName = nameof(DateOutputType.String) + "|" + nameof(DateOutputType.Date) + "|" + nameof(DateOutputType.Union))]
         public DateOutputType ConvertDatesTo { get; set; }
 
-        public CodeConversionOptions CodeConversionOptions => new CodeConversionOptions(!SkipExport, UseTabs, TabSize, ConvertDatesTo);
+        [Option(ShortName = "n", Description = "Set output type nullables",
+        ValueName = nameof(NullableOutputType.Null) + "|" + nameof(NullableOutputType.Undefined))]
+        public NullableOutputType ConvertNullablesTo { get; set; }
+
+        public CodeConversionOptions CodeConversionOptions => new CodeConversionOptions(!SkipExport, UseTabs, TabSize, ConvertDatesTo, ConvertNullablesTo);
         public FileNameConversionOptions FileNameConversionOptions => new FileNameConversionOptions(UseKebabCase, AppendModelSuffix);
 
         public void OnExecute()

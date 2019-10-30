@@ -26,7 +26,7 @@ namespace CSharpToTypeScript.Core.Models.TypeNodes
             public TypeNode Type { get; }
 
             public string WriteTypeScript(CodeConversionOptions options)
-                => Name.ToCamelCase() + "?".If(Type is Nullable) + ": " + (Type is Nullable nullable ? nullable.Of.WriteTypeScript(options) : Type.WriteTypeScript(options)) + ";";
+                => Name.ToCamelCase() + "?".If(Type.IsOptional(options, out _)) + ": " + (Type.IsOptional(options, out var of) ? of.WriteTypeScript(options) : Type.WriteTypeScript(options)) + ";";
         }
 
         public override string WriteTypeScript(CodeConversionOptions options)

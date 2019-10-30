@@ -265,11 +265,11 @@ export interface ImplementingItem {
     public int? Id { get; set; }
     public IEnumerable<int?> Collection { get; set; }
     public Nullable<float> Generic { get; set; }
-}", new CodeConversionOptions(export: true, useTabs: false, tabSize: 4));
+}", new CodeConversionOptions(export: true, useTabs: false, tabSize: 4, default, NullableOutputType.Undefined));
 
             Assert.Equal(@"export interface Item {
     id?: number;
-    collection: (number | null)[];
+    collection: (number | undefined)[];
     generic?: number;
 }", converted);
         }
@@ -284,7 +284,7 @@ export interface ImplementingItem {
 }", new CodeConversionOptions(export: true, useTabs: false, tabSize: 4));
 
             Assert.Equal(@"export interface Item {
-    wtf?: ({ [key: number]: { item1: string; item2?: number; }; } | null)[];
+    wtf: ({ [key: number]: { item1: string; item2: number | null; }; } | null)[] | null;
 }", converted);
         }
 

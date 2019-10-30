@@ -6,6 +6,12 @@ namespace CSharpToTypeScript.Core.Models.TypeNodes
     {
         public virtual bool IsUnionType(CodeConversionOptions options) => false;
 
+        public virtual bool IsOptional(CodeConversionOptions options, out TypeNode of)
+        {
+            of = null;
+            return false;
+        }
+
         public abstract string WriteTypeScript(CodeConversionOptions options);
     }
 }
