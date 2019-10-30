@@ -6,7 +6,7 @@ namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
 {
     internal class ByteArrayHandler : TypeConversionHandler
     {
-        public override ITypeNode Handle(TypeSyntax type)
+        public override TypeNode Handle(TypeSyntax type)
         {
             if (type is ArrayTypeSyntax array && array.RankSpecifiers.Last().Rank == 1
                 && ((array.ElementType is PredefinedTypeSyntax predefinedOf && predefinedOf.Keyword.Text == "byte")

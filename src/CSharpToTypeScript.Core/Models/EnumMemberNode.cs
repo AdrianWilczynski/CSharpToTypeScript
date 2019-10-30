@@ -1,8 +1,9 @@
+using CSharpToTypeScript.Core.Options;
 using CSharpToTypeScript.Core.Utilities;
 
 namespace CSharpToTypeScript.Core.Models
 {
-    internal class EnumMemberNode
+    internal class EnumMemberNode : IWritableNode
     {
         public EnumMemberNode(string name, string value)
         {
@@ -13,7 +14,7 @@ namespace CSharpToTypeScript.Core.Models
         public string Name { get; }
         public string Value { get; }
 
-        public string WriteTypeScript()
+        public string WriteTypeScript(CodeConversionOptions options)
             => Name + (" = " + Value?.SquashWhistespace()).If(!string.IsNullOrWhiteSpace(Value));
     }
 }

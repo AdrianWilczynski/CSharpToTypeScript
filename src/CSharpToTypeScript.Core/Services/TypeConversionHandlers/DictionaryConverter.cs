@@ -19,7 +19,7 @@ namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
             _converter = converter;
         }
 
-        public override ITypeNode Handle(TypeSyntax type)
+        public override TypeNode Handle(TypeSyntax type)
         {
             if (type is GenericNameSyntax generic && ConvertibleFrom.Contains(generic.Identifier.Text)
                 && generic.TypeArgumentList.Arguments.Count == 2)

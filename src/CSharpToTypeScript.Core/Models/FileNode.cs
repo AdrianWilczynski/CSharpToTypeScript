@@ -6,7 +6,7 @@ using static CSharpToTypeScript.Core.Utilities.StringUtilities;
 
 namespace CSharpToTypeScript.Core.Models
 {
-    internal class FileNode
+    internal class FileNode : IWritableNode
     {
         public FileNode(IEnumerable<IRootNode> rootNodes)
         {

@@ -3,11 +3,11 @@ using CSharpToTypeScript.Core.Models.TypeNodes;
 
 namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
 {
-    internal class StringConverter : BasicTypeConverterBase<String>
+    internal class DateConverter : BasicTypeConverterBase<Date>
     {
         protected override IEnumerable<string> ConvertibleFrom { get; } = new List<string>
         {
-            "String", "string", "Char", "char", "TimeSpan", "Guid"
+            "DateTime", "DateTimeOffset"
         };
     }
 }

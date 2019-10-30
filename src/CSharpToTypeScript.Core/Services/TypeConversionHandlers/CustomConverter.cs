@@ -5,7 +5,7 @@ namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
 {
     internal class CustomConverter : TypeConversionHandler
     {
-        public override ITypeNode Handle(TypeSyntax type)
+        public override TypeNode Handle(TypeSyntax type)
         {
             if (type is IdentifierNameSyntax identified && identified.Identifier.Text != "Object")
             {

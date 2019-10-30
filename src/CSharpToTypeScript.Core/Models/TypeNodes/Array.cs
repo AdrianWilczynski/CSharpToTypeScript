@@ -1,20 +1,20 @@
-using System.Linq;
+using CSharpToTypeScript.Core.Options;
 using CSharpToTypeScript.Core.Utilities;
 
 namespace CSharpToTypeScript.Core.Models.TypeNodes
 {
-    internal class Array : ITypeNode
+    internal class Array : TypeNode
     {
-        public Array(ITypeNode of, int rank)
+        public Array(TypeNode of, int rank)
         {
             Of = of;
             Rank = rank;
         }
 
-        public ITypeNode Of { get; }
+        public TypeNode Of { get; }
         public int Rank { get; }
 
-        public string WriteTypeScript()
-            => Of.WriteTypeScript().TransformIf(Of is Nullable, StringUtilities.Parenthesize) + "[]".Repeat(Rank);
+        public override string WriteTypeScript(CodeConversionOptions options)
+            => Of.WriteTypeScript(options).TransformIf(Of.IsUnionType(options), StringUtilities.Parenthesize) + "[]".Repeat(Rank);
     }
 }

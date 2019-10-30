@@ -13,7 +13,7 @@ namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
             _converter = converter;
         }
 
-        public override ITypeNode Handle(TypeSyntax type)
+        public override TypeNode Handle(TypeSyntax type)
         {
             string Name(int index) => $"Item{index + 1}";
 

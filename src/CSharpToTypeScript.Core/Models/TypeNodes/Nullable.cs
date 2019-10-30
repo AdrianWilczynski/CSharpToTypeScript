@@ -1,15 +1,19 @@
+using CSharpToTypeScript.Core.Options;
+
 namespace CSharpToTypeScript.Core.Models.TypeNodes
 {
-    internal class Nullable : ITypeNode
+    internal class Nullable : TypeNode
     {
-        public Nullable(ITypeNode of)
+        public Nullable(TypeNode of)
         {
             Of = of;
         }
 
-        public ITypeNode Of { get; }
+        public TypeNode Of { get; }
 
-        public string WriteTypeScript()
-            => Of.WriteTypeScript() + " | null";
+        public override bool IsUnionType(CodeConversionOptions options) => true;
+
+        public override string WriteTypeScript(CodeConversionOptions options)
+            => Of.WriteTypeScript(options) + " | null";
     }
 }

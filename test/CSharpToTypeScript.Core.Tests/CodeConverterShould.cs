@@ -324,5 +324,29 @@ export interface ImplementingItem {
     id: number;
 }", converted);
         }
+
+        [Fact]
+        public void LetYouChooseDateOutputType()
+        {
+            var converted = _codeConverter.ConvertToTypeScript(
+                @"class Item
+{
+    public DateTime CreatedAt { get; set; }
+}", new CodeConversionOptions(export: false, useTabs: false, tabSize: 4, convertDatesTo: DateOutputType.Date));
+
+            Assert.Equal(@"interface Item {
+    createdAt: Date;
+}", converted);
+
+            converted = _codeConverter.ConvertToTypeScript(
+                            @"class Item
+{
+    public IEnumerable<DateTimeOffset> Dates { get; set; }
+}", new CodeConversionOptions(export: false, useTabs: false, tabSize: 4, convertDatesTo: DateOutputType.Union));
+
+            Assert.Equal(@"interface Item {
+    dates: (string | Date)[];
+}", converted);
+        }
     }
 }

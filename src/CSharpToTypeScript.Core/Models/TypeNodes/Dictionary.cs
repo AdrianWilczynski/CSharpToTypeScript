@@ -1,17 +1,19 @@
+using CSharpToTypeScript.Core.Options;
+
 namespace CSharpToTypeScript.Core.Models.TypeNodes
 {
-    internal class Dictionary : ITypeNode
+    internal class Dictionary : TypeNode
     {
-        public Dictionary(ITypeNode key, ITypeNode value)
+        public Dictionary(TypeNode key, TypeNode value)
         {
             Key = key;
             Value = value;
         }
 
-        public ITypeNode Key { get; }
-        public ITypeNode Value { get; }
+        public TypeNode Key { get; }
+        public TypeNode Value { get; }
 
-        public string WriteTypeScript()
-            => "{ [key: " + Key.WriteTypeScript() + "]: " + Value.WriteTypeScript() + "; }";
+        public override string WriteTypeScript(CodeConversionOptions options)
+            => "{ [key: " + Key.WriteTypeScript(options) + "]: " + Value.WriteTypeScript(options) + "; }";
     }
 }

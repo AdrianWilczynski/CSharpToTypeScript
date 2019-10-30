@@ -1,7 +1,9 @@
+using CSharpToTypeScript.Core.Options;
+
 namespace CSharpToTypeScript.Core.Models.TypeNodes
 {
-    internal class String : ITypeNode
+    internal class String : TypeNode
     {
-        public string WriteTypeScript() => "string";
+        public override string WriteTypeScript(CodeConversionOptions options) => "string";
     }
 }

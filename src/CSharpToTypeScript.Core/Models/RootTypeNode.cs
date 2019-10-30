@@ -10,7 +10,7 @@ namespace CSharpToTypeScript.Core.Models
 {
     internal class RootTypeNode : IRootNode
     {
-        public RootTypeNode(string name, IEnumerable<FieldNode> fields, IEnumerable<string> genericTypeParameters, IEnumerable<ITypeNode> baseTypes)
+        public RootTypeNode(string name, IEnumerable<FieldNode> fields, IEnumerable<string> genericTypeParameters, IEnumerable<TypeNode> baseTypes)
         {
             Name = name;
             Fields = fields;
@@ -21,11 +21,11 @@ namespace CSharpToTypeScript.Core.Models
         public string Name { get; }
         public IEnumerable<FieldNode> Fields { get; }
         public IEnumerable<string> GenericTypeParameters { get; set; }
-        public IEnumerable<ITypeNode> BaseTypes { get; set; }
+        public IEnumerable<TypeNode> BaseTypes { get; set; }
 
         public string WriteTypeScript(CodeConversionOptions options)
-            => "export ".If(options.Export) + "interface " + Name.RemoveInterfacePrefix() + ("<" + GenericTypeParameters.ToCommaSepratedList() + ">").If(GenericTypeParameters.Any()) + (" extends " + BaseTypes.Select(e => e.WriteTypeScript()).ToCommaSepratedList()).If(BaseTypes.Any()) + " {" + NewLine
-            + Fields.Select(f => f.WriteTypeScript()).Indent(options.UseTabs, options.TabSize).LineByLine() + NewLine
+            => "export ".If(options.Export) + "interface " + Name.RemoveInterfacePrefix() + ("<" + GenericTypeParameters.ToCommaSepratedList() + ">").If(GenericTypeParameters.Any()) + (" extends " + BaseTypes.Select(e => e.WriteTypeScript(options)).ToCommaSepratedList()).If(BaseTypes.Any()) + " {" + NewLine
+            + Fields.Select(f => f.WriteTypeScript(options)).Indent(options.UseTabs, options.TabSize).LineByLine() + NewLine
             + "}";
     }
 }

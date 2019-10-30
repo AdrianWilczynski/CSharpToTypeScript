@@ -20,7 +20,7 @@ namespace CSharpToTypeScript.Core.Models
 
         public string WriteTypeScript(CodeConversionOptions options)
             => "export ".If(options.Export) + "enum " + Name + " {" + NewLine
-            + string.Join("," + NewLine, Members.Select(m => m.WriteTypeScript()).Indent(options.UseTabs, options.TabSize)) + NewLine
+            + string.Join("," + NewLine, Members.Select(m => m.WriteTypeScript(options)).Indent(options.UseTabs, options.TabSize)) + NewLine
             + "}";
     }
 }

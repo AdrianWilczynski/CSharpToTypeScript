@@ -1,16 +1,12 @@
+using CSharpToTypeScript.Core.Options;
 using CSharpToTypeScript.Core.Utilities;
 
 namespace CSharpToTypeScript.Core.Models.TypeNodes
 {
-    internal class Custom : INamedTypeNode
+    internal class Custom : NamedTypeNode
     {
-        public Custom(string name)
-        {
-            Name = name;
-        }
+        public Custom(string name) : base(name) { }
 
-        public string Name { get; }
-
-        public string WriteTypeScript() => Name.RemoveInterfacePrefix();
+        public override string WriteTypeScript(CodeConversionOptions options) => Name.RemoveInterfacePrefix();
     }
 }

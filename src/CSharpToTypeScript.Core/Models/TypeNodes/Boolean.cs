@@ -1,7 +1,9 @@
+using CSharpToTypeScript.Core.Options;
+
 namespace CSharpToTypeScript.Core.Models.TypeNodes
 {
-    internal class Boolean : ITypeNode
+    internal class Boolean : TypeNode
     {
-        public string WriteTypeScript() => "boolean";
+        public override string WriteTypeScript(CodeConversionOptions options) => "boolean";
     }
 }

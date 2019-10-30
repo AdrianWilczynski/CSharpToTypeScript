@@ -19,7 +19,7 @@ namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
             "List", "IList", "Collection", "ICollection", "Enumerable", "IEnumerable"
         };
 
-        public override ITypeNode Handle(TypeSyntax type)
+        public override TypeNode Handle(TypeSyntax type)
         {
             if (type is ArrayTypeSyntax array)
             {

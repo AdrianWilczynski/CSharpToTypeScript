@@ -38,7 +38,7 @@ namespace CSharpToTypeScript.Core.Services
                 name: p.Identifier.Text,
                 type: _typeConverter.Handle(p.Type)));
 
-        private IEnumerable<ITypeNode> ConvertBaseTypes(IEnumerable<BaseTypeSyntax> baseTypes, TypeDeclarationSyntax containingType)
+        private IEnumerable<TypeNode> ConvertBaseTypes(IEnumerable<BaseTypeSyntax> baseTypes, TypeDeclarationSyntax containingType)
         {
             var types = baseTypes;
             if (!(containingType is InterfaceDeclarationSyntax))
@@ -48,7 +48,7 @@ namespace CSharpToTypeScript.Core.Services
 
             var namedTypes = types
                 .Select(t => _typeConverter.Handle(t.Type))
-                .OfType<INamedTypeNode>();
+                .OfType<NamedTypeNode>();
 
             if (!(containingType is InterfaceDeclarationSyntax))
             {
