@@ -23,6 +23,12 @@ namespace CSharpToTypeScript.Web.Pages
             [Range(1, 8), Display(Name = "Tab Size")]
             public int? TabSize { get; set; } = 4;
 
+            [Required, Display(Name = "Convert Dates To")]
+            public DateOutputType ConvertDatesTo { get; set; }
+
+            [Required, Display(Name = "Convert Nullables To")]
+            public NullableOutputType ConvertNullablesTo { get; set; }
+
             public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
             {
                 if (!UseTabs && TabSize is null)
@@ -33,7 +39,8 @@ namespace CSharpToTypeScript.Web.Pages
                 }
             }
 
-            public CodeConversionOptions MapToCodeConversionOptions() => new CodeConversionOptions(Export, UseTabs, TabSize);
+            public CodeConversionOptions MapToCodeConversionOptions()
+                => new CodeConversionOptions(Export, UseTabs, TabSize, ConvertDatesTo, ConvertNullablesTo);
         }
 
         private readonly ICodeConverter _codeConverter;

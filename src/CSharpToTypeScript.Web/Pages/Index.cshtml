@@ -8,38 +8,54 @@
     </nav>
 
     <div class="container">
-        <div class="row">
-            <div class="col-12 col-md-5 col-lg-6">
-                <ul>
-                    <li><b>Tab</b> to indent</li>
-                    <li>
-                        Supported snippets:
-                        <ul>
-                            <li><b>class</b></li>
-                            <li><b>prop</b></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-6 col-md-4">
-                <div class="form-group">
+        <details>
+            <summary>Help</summary>
+            <ul class="mt-3">
+                <li><b>Tab</b> to indent</li>
+                <li>
+                    Supported snippets:
+                    <ul>
+                        <li><b>class</b></li>
+                        <li><b>prop</b></li>
+                    </ul>
+                </li>
+            </ul>
+        </details>
+
+        <details>
+            <summary>Settings</summary>
+            <div class="row mt-3">
+                <div class="form-group col-6 col-md-3">
                     <label asp-for="Settings.TabSize"></label>
-                    <input asp-for="Settings.TabSize" class="form-control" min="1" max="8" />
+                    <input asp-for="Settings.TabSize" class="form-control form-control-sm" min="1" max="8" />
                     <span asp-validation-for="Settings.TabSize" class="text-danger"></span>
                 </div>
-            </div>
-            <div class="col-6 col-md-3 col-lg-2">
-                <div class="custom-control custom-switch mt-4">
-                    <input asp-for="Settings.UseTabs" class="custom-control-input">
-                    <label asp-for="Settings.UseTabs" class="custom-control-label"></label>
+                <div class="form-group col-6 col-md-3">
+                    <label asp-for="Settings.ConvertDatesTo"></label>
+                    <select asp-for="Settings.ConvertDatesTo" asp-items="Html.GetEnumSelectList<DateOutputType>()"
+                        class="form-control form-control-sm"></select>
+                    <span asp-validation-for="Settings.ConvertDatesTo" class="text-danger"></span>
                 </div>
-                <div class="custom-control custom-switch mt-1">
-                    <input asp-for="Settings.Export" class="custom-control-input">
-                    <label asp-for="Settings.Export" class="custom-control-label"></label>
+                <div class="form-group col-6 col-md-3">
+                    <label asp-for="Settings.ConvertNullablesTo"></label>
+                    <select asp-for="Settings.ConvertNullablesTo" asp-items="Html.GetEnumSelectList<NullableOutputType>()"
+                        class="form-control form-control-sm"></select>
+                    <span asp-validation-for="Settings.ConvertNullablesTo" class="text-danger"></span>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="custom-control custom-switch mt-3">
+                        <input asp-for="Settings.UseTabs" class="custom-control-input">
+                        <label asp-for="Settings.UseTabs" class="custom-control-label"></label>
+                    </div>
+                    <div class="custom-control custom-switch mt-2">
+                        <input asp-for="Settings.Export" class="custom-control-input">
+                        <label asp-for="Settings.Export" class="custom-control-label"></label>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
+        </details>
+
+        <div class="row mt-3">
             <div class="form-group col-12 col-md-6">
                 <label asp-for="InputCode"></label>
                 <textarea asp-for="InputCode" class="form-control code-area" spellcheck="false"></textarea>
