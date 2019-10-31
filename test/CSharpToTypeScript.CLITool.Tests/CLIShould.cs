@@ -227,5 +227,37 @@ namespace CSharpToTypeScript.CLITool.Tests
 
             Assert.True(File.Exists(undesiredFilePath));
         }
+
+        [Fact]
+        public void PreserveContentOutsideOfMarkerComments()
+        {
+            Prepare(nameof(PreserveContentOutsideOfMarkerComments));
+
+            var inputFilePath = Path.Join(nameof(PreserveContentOutsideOfMarkerComments), "Item.cs");
+            var outputFilePath = Path.Join(nameof(PreserveContentOutsideOfMarkerComments), "item.ts");
+
+            File.WriteAllText(outputFilePath, @"// above
+
+// @cs2ts-begin-auto-generated
+export interface Item {
+
+}
+// @cs2ts-end-auto-generated
+
+// below");
+            File.WriteAllText(inputFilePath, "class UpdatedItem { }");
+
+            _cli.Input = inputFilePath;
+            _cli.Output = outputFilePath;
+            _cli.PartialOverride = true;
+
+            _cli.OnExecute();
+
+            var overriddenOutput = File.ReadAllText(outputFilePath);
+
+            Assert.Contains("// above", overriddenOutput);
+            Assert.Contains("// below", overriddenOutput);
+            Assert.Contains("interface UpdatedItem", overriddenOutput);
+        }
     }
 }
