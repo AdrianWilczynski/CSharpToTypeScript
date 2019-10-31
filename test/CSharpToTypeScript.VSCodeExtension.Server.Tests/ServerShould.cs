@@ -7,6 +7,7 @@ using Server.Services;
 using Newtonsoft.Json;
 using CSharpToTypeScript.Server.DTOs;
 using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json.Converters;
 
 namespace CSharpToTypeScript.VSCodeExtension.Server.Tests
 {
@@ -15,14 +16,18 @@ namespace CSharpToTypeScript.VSCodeExtension.Server.Tests
         [Fact]
         public void HandleRequests()
         {
-            var serializerSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
+            var serializerSettings = new JsonSerializerSettings
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver(),
+                Converters = new[] { new StringEnumConverter() }
+            };
 
             var firstRequest = JsonConvert.SerializeObject(
-                new Input { Code = "class First { }", Export = true, UseTabs = false, TabSize = 4 },
+                new Input { Code = "class First { }", Export = true, UseTabs = false, TabSize = 4, ConvertDatesTo = DateOutputType.String, ConvertNullablesTo = NullableOutputType.Undefined },
                 serializerSettings);
 
             var secondRequest = JsonConvert.SerializeObject(
-                new Input { Code = "class Second { }", Export = true, UseTabs = false, TabSize = 2 },
+                new Input { Code = "class Second { }", Export = true, UseTabs = false, TabSize = 2, ConvertDatesTo = DateOutputType.Date, ConvertNullablesTo = NullableOutputType.Undefined },
                 serializerSettings);
 
             var stdioMock = new Mock<IStdio>();
@@ -49,7 +54,7 @@ namespace CSharpToTypeScript.VSCodeExtension.Server.Tests
             stdioMock.Verify(s => s.WriteLine(It.IsAny<string>()), Times.Exactly(2));
 
             codeConverterMock.Verify(c =>
-                c.ConvertToTypeScript("class Second { }", It.Is<CodeConversionOptions>(options => options.TabSize == 2)),
+                c.ConvertToTypeScript("class Second { }", It.Is<CodeConversionOptions>(options => options.TabSize == 2 && options.ConvertDatesTo == DateOutputType.Date)),
                 Times.Once);
 
             codeConverterMock.Verify(c =>

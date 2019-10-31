@@ -22,8 +22,7 @@ namespace CSharpToTypeScript.Core.Tests
         [Fact]
         public void ConvertClass()
         {
-            var converted = _codeConverter.ConvertToTypeScript(
-                @"class Item
+            var converted = _codeConverter.ConvertToTypeScript(@"class Item
 {
     public int Id { get; set; }
     public string Name { get; set; }
@@ -38,8 +37,7 @@ namespace CSharpToTypeScript.Core.Tests
         [Fact]
         public void ConvertInterface()
         {
-            var converted = _codeConverter.ConvertToTypeScript(
-                @"interface IItem
+            var converted = _codeConverter.ConvertToTypeScript(@"interface IItem
 {
     int Id { get; set; }
     string Name { get; set; }
@@ -54,8 +52,7 @@ namespace CSharpToTypeScript.Core.Tests
         [Fact]
         public void ConvertEnum()
         {
-            var converted = _codeConverter.ConvertToTypeScript(
-                @"enum Color
+            var converted = _codeConverter.ConvertToTypeScript(@"enum Color
 {
     Red, Blue
 }", new CodeConversionOptions(export: true, useTabs: false, tabSize: 4));
@@ -69,8 +66,7 @@ namespace CSharpToTypeScript.Core.Tests
         [Fact]
         public void ConvertGenericType()
         {
-            var converted = _codeConverter.ConvertToTypeScript(
-                @"class Item<T>
+            var converted = _codeConverter.ConvertToTypeScript(@"class Item<T>
 {
     public int Id { get; set; }
     public T SomeT { get; set; }
@@ -85,8 +81,7 @@ namespace CSharpToTypeScript.Core.Tests
         [Fact]
         public void ConvertMultipleTypes()
         {
-            var converted = _codeConverter.ConvertToTypeScript(
-                @"interface IItem
+            var converted = _codeConverter.ConvertToTypeScript(@"interface IItem
 {
     int Id { get; set; }
     string Name { get; set; }
@@ -112,8 +107,7 @@ export interface MyItem {
         [Fact]
         public void SupportInheritance()
         {
-            var converted = _codeConverter.ConvertToTypeScript(
-                @"interface IItem : IItemInterfaceBase
+            var converted = _codeConverter.ConvertToTypeScript(@"interface IItem : IItemInterfaceBase
 {
     string Name { get; set;}
 }                
@@ -146,8 +140,7 @@ export interface ImplementingItem {
         [Fact]
         public void IgnoreNotSerializableMembers()
         {
-            var converted = _codeConverter.ConvertToTypeScript(
-                @"class Item
+            var converted = _codeConverter.ConvertToTypeScript(@"class Item
 {
     public int Id { get; set; }
     private string Name { get; set; }
@@ -168,8 +161,7 @@ export interface ImplementingItem {
         [Fact]
         public void IgnoreStaticTypes()
         {
-            var converted = _codeConverter.ConvertToTypeScript(
-                @"public static class Item
+            var converted = _codeConverter.ConvertToTypeScript(@"public static class Item
 {
     public int Id { get; set; }
     public string Name { get; set; }
@@ -181,8 +173,7 @@ export interface ImplementingItem {
         [Fact]
         public void ConvertBasicTypes()
         {
-            var converted = _codeConverter.ConvertToTypeScript(
-                @"class Item
+            var converted = _codeConverter.ConvertToTypeScript(@"class Item
 {
     public int Integer { get; set; }
     public double Double { get; set; }
@@ -207,8 +198,7 @@ export interface ImplementingItem {
         [Fact]
         public void ConvertTuples()
         {
-            var converted = _codeConverter.ConvertToTypeScript(
-                @"class Item
+            var converted = _codeConverter.ConvertToTypeScript(@"class Item
 {
     public (int, int, string) TupleA { get; set; }
     public (int id, string name) TupleB { get; set; }
@@ -225,8 +215,7 @@ export interface ImplementingItem {
         [Fact]
         public void ConvertDictionaries()
         {
-            var converted = _codeConverter.ConvertToTypeScript(
-                @"class Item
+            var converted = _codeConverter.ConvertToTypeScript(@"class Item
 {
     public Dictionary<string, int> Dict { get; set; }
     public Dictionary<bool, string> IllegalDict { get; set; }
@@ -241,8 +230,7 @@ export interface ImplementingItem {
         [Fact]
         public void ConvertCollections()
         {
-            var converted = _codeConverter.ConvertToTypeScript(
-                @"class Item
+            var converted = _codeConverter.ConvertToTypeScript(@"class Item
 {
     public int[] Array { get; set; }
     public string[,] Array2D { get; set; }
@@ -259,8 +247,7 @@ export interface ImplementingItem {
         [Fact]
         public void ConvertNullableTypes()
         {
-            var converted = _codeConverter.ConvertToTypeScript(
-                @"class Item
+            var converted = _codeConverter.ConvertToTypeScript(@"class Item
 {
     public int? Id { get; set; }
     public IEnumerable<int?> Collection { get; set; }
@@ -277,8 +264,7 @@ export interface ImplementingItem {
         [Fact]
         public void ConvertComplexTypes()
         {
-            var converted = _codeConverter.ConvertToTypeScript(
-                @"class Item
+            var converted = _codeConverter.ConvertToTypeScript(@"class Item
 {
     public IEnumerable<Dictionary<int, (string, int?)>?>? Wtf { get; set; }
 }", new CodeConversionOptions(export: true, useTabs: false, tabSize: 4));
@@ -314,8 +300,7 @@ export interface ImplementingItem {
         [Fact]
         public void RespectExportSettings()
         {
-            var converted = _codeConverter.ConvertToTypeScript(
-                @"class Item
+            var converted = _codeConverter.ConvertToTypeScript(@"class Item
 {
     public int Id => 4;
 }", new CodeConversionOptions(export: false, useTabs: false, tabSize: 4));
@@ -328,8 +313,7 @@ export interface ImplementingItem {
         [Fact]
         public void LetYouChooseDateOutputType()
         {
-            var converted = _codeConverter.ConvertToTypeScript(
-                @"class Item
+            var converted = _codeConverter.ConvertToTypeScript(@"class Item
 {
     public DateTime CreatedAt { get; set; }
 }", new CodeConversionOptions(export: false, useTabs: false, tabSize: 4, convertDatesTo: DateOutputType.Date));
@@ -338,8 +322,7 @@ export interface ImplementingItem {
     createdAt: Date;
 }", converted);
 
-            converted = _codeConverter.ConvertToTypeScript(
-                            @"class Item
+            converted = _codeConverter.ConvertToTypeScript(@"class Item
 {
     public IEnumerable<DateTimeOffset> Dates { get; set; }
 }", new CodeConversionOptions(export: false, useTabs: false, tabSize: 4, convertDatesTo: DateOutputType.Union));
