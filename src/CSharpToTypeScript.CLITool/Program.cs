@@ -7,7 +7,7 @@ namespace CSharpToTypeScript.CLITool
 {
     public static class Program
     {
-        public static void Main(string[] args)
+        public static int Main(string[] args)
         {
             try
             {
@@ -20,7 +20,7 @@ namespace CSharpToTypeScript.CLITool
                     cli.Conventions.UseDefaultConventions()
                         .UseConstructorInjection(services);
 
-                    cli.Execute(args);
+                    return cli.Execute(args);
                 }
             }
 #pragma warning disable CS0168
@@ -28,6 +28,7 @@ namespace CSharpToTypeScript.CLITool
             {
 #if RELEASE
                 Console.Error.WriteLine(ex.Message);
+                return 1;
 #else 
                 throw;
 #endif
