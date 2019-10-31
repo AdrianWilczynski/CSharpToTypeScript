@@ -2,6 +2,7 @@ using System;
 using CSharpToTypeScript.Core.Services;
 using CSharpToTypeScript.Server.DTOs;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using Server.Services;
 
@@ -20,7 +21,8 @@ namespace CSharpToTypeScript.Server
 
         private readonly JsonSerializerSettings _serializerSettings = new JsonSerializerSettings
         {
-            ContractResolver = new CamelCasePropertyNamesContractResolver()
+            ContractResolver = new CamelCasePropertyNamesContractResolver(),
+            Converters = new[] { new StringEnumConverter() }
         };
 
         public void Handle()

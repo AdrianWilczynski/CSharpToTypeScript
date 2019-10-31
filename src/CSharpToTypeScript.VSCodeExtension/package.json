@@ -71,6 +71,25 @@
 						"type": "boolean",
 						"default": true,
 						"description": "Add \"export\" keyword to emitted type."
+					},
+					"csharpToTypeScript.convertDatesTo": {
+						"type": "string",
+						"default": "string",
+						"enum": [
+							"string",
+							"date",
+							"union"
+						],
+						"description": "Sets output type for dates"
+					},
+					"csharpToTypeScript.convertNullablesTo": {
+						"type": "string",
+						"default": "null",
+						"enum": [
+							"null",
+							"undefined"
+						],
+						"description": "Sets output type for nullables"
 					}
 				}
 			}

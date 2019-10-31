@@ -3,7 +3,8 @@ import * as cp from 'child_process';
 import * as readline from 'readline';
 import * as path from 'path';
 import { Output } from './output';
-import { Input } from './input';
+import { Input, dateOutputTypes, nullableOutputTypes } from './input';
+import { allowedOrDefault } from './utilities';
 
 let server: cp.ChildProcess | undefined;
 let rl: readline.Interface | undefined;
@@ -60,12 +61,17 @@ export async function convert(target: 'document' | 'clipboard') {
         0, 0,
         document.lineCount - 1, document.lineAt(document.lineCount - 1).range.end.character);
 
+    const configuration = vscode.workspace.getConfiguration();
+
     const input: Input = {
         code: !selection.isEmpty ? document.getText(selection) : document.getText(),
         useTabs: !vscode.window.activeTextEditor.options.insertSpaces,
         tabSize: vscode.window.activeTextEditor.options.tabSize as number,
-        export: !!vscode.workspace.getConfiguration().get('csharpToTypeScript.export')
+        export: !!configuration.get('csharpToTypeScript.export'),
+        convertDatesTo: allowedOrDefault(configuration.get('csharpToTypeScript.convertDatesTo'), dateOutputTypes, 'string'),
+        convertNullablesTo: allowedOrDefault(configuration.get('csharpToTypeScript.convertNullablesTo'), nullableOutputTypes, 'null')
     };
+
     const inputLine = JSON.stringify(input) + '\n';
 
     rl.question(inputLine, async outputLine => {

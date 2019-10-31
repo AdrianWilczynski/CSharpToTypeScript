@@ -8,7 +8,10 @@ namespace CSharpToTypeScript.Server.DTOs
         public bool UseTabs { get; set; }
         public int? TabSize { get; set; }
         public bool Export { get; set; }
+        public DateOutputType ConvertDatesTo { get; set; }
+        public NullableOutputType ConvertNullablesTo { get; set; }
 
-        public CodeConversionOptions MapToCodeConversionOptions() => new CodeConversionOptions(Export, UseTabs, TabSize);
+        public CodeConversionOptions MapToCodeConversionOptions()
+            => new CodeConversionOptions(Export, UseTabs, TabSize, ConvertDatesTo, ConvertNullablesTo);
     }
 }
