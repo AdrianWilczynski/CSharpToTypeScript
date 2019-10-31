@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
@@ -54,6 +53,9 @@ namespace CSharpToTypeScript.CLITool
         [Option(ShortName = "a", Description = "Use Angular style conventions")]
         public bool AngularMode { get; set; }
 
+        [Option(ShortName = "p", Description = "Override only part of output file between marker comments")]
+        public bool PartialOverride { get; set; }
+
         [Option(ShortName = "d", Description = "Set output type for dates",
         ValueName = nameof(DateOutputType.String) + "|" + nameof(DateOutputType.Date) + "|" + nameof(DateOutputType.Union))]
         public DateOutputType ConvertDatesTo { get; set; }
@@ -94,8 +96,7 @@ namespace CSharpToTypeScript.CLITool
             var converted = _codeConverter.ConvertToTypeScript(content, CodeConversionOptions);
             var outputPath = GetOutputFilePath(Input, Output, FileNameConversionOptions);
 
-            FileSystem.EnsureDirectoryExists(outputPath.ContainingDirectory());
-            File.WriteAllText(outputPath, converted);
+            CreateOrUpdateFile(outputPath, converted, PartialOverride);
         }
 
         private void OnInputIsDirectory()
@@ -112,9 +113,20 @@ namespace CSharpToTypeScript.CLITool
 
             foreach (var file in files)
             {
-                FileSystem.EnsureDirectoryExists(file.OutputPath.ContainingDirectory());
-                File.WriteAllText(file.OutputPath, file.Content);
+                CreateOrUpdateFile(file.OutputPath, file.Content, PartialOverride);
             }
+        }
+
+        private void CreateOrUpdateFile(string path, string content, bool partialOverride)
+        {
+            FileSystem.EnsureDirectoryExists(path.ContainingDirectory());
+
+            if (partialOverride)
+            {
+                content = Marker.Update(File.Exists(path) ? File.ReadAllText(path) : string.Empty, content);
+            }
+
+            File.WriteAllText(path, content);
         }
 
         private string GetOutputFilePath(string input, string output, FileNameConversionOptions options)
