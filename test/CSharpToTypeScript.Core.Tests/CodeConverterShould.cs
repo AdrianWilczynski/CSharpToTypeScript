@@ -331,5 +331,20 @@ export interface ImplementingItem {
     dates: (string | Date)[];
 }", converted);
         }
+
+        [Fact]
+        public void RespectCasingSettings()
+        {
+            var converted = _codeConverter.ConvertToTypeScript(@"class Item
+{
+    public int Id => 4;
+    public (int, int) Tuple { get; set; }
+}", new CodeConversionOptions(export: false, useTabs: false, tabSize: 4, toCamelCase: false));
+
+            Assert.Equal(@"interface Item {
+    Id: number;
+    Tuple: { Item1: number; Item2: number; };
+}", converted);
+        }
     }
 }

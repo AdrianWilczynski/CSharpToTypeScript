@@ -18,14 +18,13 @@ Convert C# Models, ViewModels and DTOs into their TypeScript equivalents.
 ## Configuration
 
 - Uses VS Code's indentation settings.
-- `"csharpToTypeScript.export": true` property controls exporting.
+- `"csharpToTypeScript.export": true` controls exporting.
 - `"csharpToTypeScript.convertDatesTo": string` sets output type for dates. You can pick between `string`, `Date` and `string | Date`.
-- `csharpToTypeScript.convertNullablesTo: null` sets output type for nullables (`int?`) to either `null` or `undefined`.
+- `"csharpToTypeScript.convertNullablesTo": null` sets output type for nullables (`int?`) to either `null` or `undefined`.
+- `"csharpToTypeScript.toCamelCase": true` toggles field name conversion to camel case.
 
 ## Known limitations / design choices
 
 - Always outputs interface type.
-- Converts names to camel case.
 - Drops interface prefix: IType -> Type.
 - Only includes public, non-static properties - not fields, not methods, not private members.
-- Exports emitted type by default.

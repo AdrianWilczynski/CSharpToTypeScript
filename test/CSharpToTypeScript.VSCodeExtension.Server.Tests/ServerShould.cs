@@ -23,11 +23,11 @@ namespace CSharpToTypeScript.VSCodeExtension.Server.Tests
             };
 
             var firstRequest = JsonConvert.SerializeObject(
-                new Input { Code = "class First { }", Export = true, UseTabs = false, TabSize = 4, ConvertDatesTo = DateOutputType.String, ConvertNullablesTo = NullableOutputType.Undefined },
+                new Input { Code = "class First { }", Export = true, UseTabs = false, TabSize = 4, ConvertDatesTo = DateOutputType.String, ConvertNullablesTo = NullableOutputType.Undefined, ToCamelCase = true },
                 serializerSettings);
 
             var secondRequest = JsonConvert.SerializeObject(
-                new Input { Code = "class Second { }", Export = true, UseTabs = false, TabSize = 2, ConvertDatesTo = DateOutputType.Date, ConvertNullablesTo = NullableOutputType.Undefined },
+                new Input { Code = "class Second { }", Export = true, UseTabs = false, TabSize = 2, ConvertDatesTo = DateOutputType.Date, ConvertNullablesTo = NullableOutputType.Undefined, ToCamelCase = true },
                 serializerSettings);
 
             var stdioMock = new Mock<IStdio>();

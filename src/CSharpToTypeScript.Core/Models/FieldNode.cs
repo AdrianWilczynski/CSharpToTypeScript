@@ -16,6 +16,6 @@ namespace CSharpToTypeScript.Core.Models
         public TypeNode Type { get; }
 
         public string WriteTypeScript(CodeConversionOptions options)
-            => Name.ToCamelCase() + "?".If(Type.IsOptional(options, out _)) + ": " + (Type.IsOptional(options, out var of) ? of.WriteTypeScript(options) : Type.WriteTypeScript(options)) + ";";
+            => Name.TransformIf(options.ToCamelCase, StringUtilities.ToCamelCase) + "?".If(Type.IsOptional(options, out _)) + ": " + (Type.IsOptional(options, out var of) ? of.WriteTypeScript(options) : Type.WriteTypeScript(options)) + ";";
     }
 }

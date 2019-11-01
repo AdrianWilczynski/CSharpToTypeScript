@@ -4,7 +4,7 @@ import * as readline from 'readline';
 import * as path from 'path';
 import { Output } from './output';
 import { Input, dateOutputTypes, nullableOutputTypes } from './input';
-import { allowedOrDefault } from './utilities';
+import { allowedOrDefault, fullRange } from './utilities';
 
 let server: cp.ChildProcess | undefined;
 let rl: readline.Interface | undefined;
@@ -12,11 +12,9 @@ let serverRunning = false;
 let executingCommand = false;
 
 export function activate(context: vscode.ExtensionContext) {
-    const dllPath = context.asAbsolutePath(path.join(
-        'server', 'CSharpToTypeScript.Server', 'bin', 'Release', 'netcoreapp2.2', 'publish', 'CSharpToTypeScript.Server.dll'));
-
     serverRunning = true;
-    server = cp.spawn('dotnet', [dllPath]);
+    server = cp.spawn('dotnet', [context.asAbsolutePath(path.join(
+        'server', 'CSharpToTypeScript.Server', 'bin', 'Release', 'netcoreapp2.2', 'publish', 'CSharpToTypeScript.Server.dll'))]);
 
     server.on('error', err => {
         serverRunning = false;
@@ -41,25 +39,19 @@ export function deactivate() {
 }
 
 export async function convert(target: 'document' | 'clipboard') {
-    if (!vscode.window.activeTextEditor || !rl) {
-        return;
-    }
-
     if (!serverRunning) {
         vscode.window.showErrorMessage(`"C# to TypeScript" server isn't running! Reload Window to restart it.`);
         return;
     }
 
-    if (executingCommand) {
+    if (!vscode.window.activeTextEditor || !rl || executingCommand) {
         return;
     }
+
     executingCommand = true;
 
     const document = vscode.window.activeTextEditor.document;
     const selection = vscode.window.activeTextEditor.selection;
-    const fullRange = new vscode.Range(
-        0, 0,
-        document.lineCount - 1, document.lineAt(document.lineCount - 1).range.end.character);
 
     const configuration = vscode.workspace.getConfiguration();
 
@@ -69,7 +61,8 @@ export async function convert(target: 'document' | 'clipboard') {
         tabSize: vscode.window.activeTextEditor.options.tabSize as number,
         export: !!configuration.get('csharpToTypeScript.export'),
         convertDatesTo: allowedOrDefault(configuration.get('csharpToTypeScript.convertDatesTo'), dateOutputTypes, 'string'),
-        convertNullablesTo: allowedOrDefault(configuration.get('csharpToTypeScript.convertNullablesTo'), nullableOutputTypes, 'null')
+        convertNullablesTo: allowedOrDefault(configuration.get('csharpToTypeScript.convertNullablesTo'), nullableOutputTypes, 'null'),
+        toCamelCase: !!configuration.get('csharpToTypeScript.toCamelCase')
     };
 
     const inputLine = JSON.stringify(input) + '\n';
@@ -77,19 +70,12 @@ export async function convert(target: 'document' | 'clipboard') {
     rl.question(inputLine, async outputLine => {
         const { convertedCode, succeeded, errorMessage } = JSON.parse(outputLine) as Output;
 
-        if (!succeeded || !convertedCode) {
-            if (errorMessage) {
-                vscode.window.showErrorMessage(`"C# to TypeScript" extension encountered an error while converting your code: "${errorMessage}".`);
-            }
-
-            executingCommand = false;
-            return;
-        }
-
-        if (target === 'document' && vscode.window.activeTextEditor) {
+        if (!succeeded && errorMessage) {
+            vscode.window.showErrorMessage(`"C# to TypeScript" extension encountered an error while converting your code: "${errorMessage}".`);
+        } else if (convertedCode && target === 'document' && vscode.window.activeTextEditor) {
             await vscode.window.activeTextEditor.edit(
-                builder => builder.replace(!selection.isEmpty ? selection : fullRange, convertedCode));
-        } else if (target === 'clipboard') {
+                builder => builder.replace(!selection.isEmpty ? selection : fullRange(document), convertedCode));
+        } else if (convertedCode && target === 'clipboard') {
             await vscode.env.clipboard.writeText(convertedCode);
         }
 

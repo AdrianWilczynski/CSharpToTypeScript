@@ -29,6 +29,9 @@ namespace CSharpToTypeScript.Web.Pages
             [Required, Display(Name = "Convert Nullables To")]
             public NullableOutputType ConvertNullablesTo { get; set; }
 
+            [Required, Display(Name = "To Camel Case")]
+            public bool ToCamelCase { get; set; } = true;
+
             public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
             {
                 if (!UseTabs && TabSize is null)
@@ -40,7 +43,7 @@ namespace CSharpToTypeScript.Web.Pages
             }
 
             public CodeConversionOptions MapToCodeConversionOptions()
-                => new CodeConversionOptions(Export, UseTabs, TabSize, ConvertDatesTo, ConvertNullablesTo);
+                => new CodeConversionOptions(Export, UseTabs, TabSize, ConvertDatesTo, ConvertNullablesTo, ToCamelCase);
         }
 
         private readonly ICodeConverter _codeConverter;

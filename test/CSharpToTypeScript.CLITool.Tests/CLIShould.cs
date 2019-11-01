@@ -259,5 +259,27 @@ export interface Item {
             Assert.Contains("// below", overriddenOutput);
             Assert.Contains("interface UpdatedItem", overriddenOutput);
         }
+
+        [Fact]
+        public void PreserveCasing()
+        {
+            Prepare(nameof(PreserveCasing));
+
+            var originalFilePath = Path.Join(nameof(PreserveCasing), "Item.cs");
+            var outputFilePath = Path.Join(nameof(PreserveCasing), "item.ts");
+
+            File.WriteAllText(originalFilePath, @"class Item12
+{ 
+    public int MyProperty { get; set; }
+}");
+
+            _cli.Input = originalFilePath;
+            _cli.Output = outputFilePath;
+            _cli.PreserveCasing = true;
+
+            _cli.OnExecute();
+
+            Assert.Contains("MyProperty: number;", File.ReadAllText(outputFilePath));
+        }
     }
 }

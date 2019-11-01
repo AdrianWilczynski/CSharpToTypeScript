@@ -5,6 +5,7 @@ export interface Input {
     export: boolean;
     convertDatesTo: string;
     convertNullablesTo: string;
+    toCamelCase: boolean;
 }
 
 export const dateOutputTypes = ['string', 'date', 'union'];

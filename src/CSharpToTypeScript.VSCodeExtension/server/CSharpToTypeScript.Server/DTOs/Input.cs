@@ -10,8 +10,9 @@ namespace CSharpToTypeScript.Server.DTOs
         public bool Export { get; set; }
         public DateOutputType ConvertDatesTo { get; set; }
         public NullableOutputType ConvertNullablesTo { get; set; }
+        public bool ToCamelCase { get; set; }
 
         public CodeConversionOptions MapToCodeConversionOptions()
-            => new CodeConversionOptions(Export, UseTabs, TabSize, ConvertDatesTo, ConvertNullablesTo);
+            => new CodeConversionOptions(Export, UseTabs, TabSize, ConvertDatesTo, ConvertNullablesTo, ToCamelCase);
     }
 }

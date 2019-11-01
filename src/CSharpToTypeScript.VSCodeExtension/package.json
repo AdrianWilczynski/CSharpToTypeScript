@@ -90,6 +90,11 @@
 							"undefined"
 						],
 						"description": "Sets output type for nullables"
+					},
+					"csharpToTypeScript.toCamelCase": {
+						"type": "boolean",
+						"default": true,
+						"description": "Convert field names to camel case."
 					}
 				}
 			}
