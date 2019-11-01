@@ -9,7 +9,7 @@
     <PackageOutputPath>./nupkg</PackageOutputPath>
 
     <PackageId>CSharpToTypeScript.CLITool</PackageId>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <Authors>AdrianWilczynski</Authors>
     <PackageDescription>Convert C# Models, ViewModels and DTOs into their TypeScript equivalents.</PackageDescription>
     <RepositoryUrl>https://github.com/AdrianWilczynski/CSharpToTypeScript.git</RepositoryUrl>
