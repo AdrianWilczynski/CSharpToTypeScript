@@ -13,8 +13,7 @@ Convert C# Models, ViewModels and DTOs into their TypeScript equivalents.
 
 ## Requirements
 
-- .NET Core (2.2 or newer*)\
-*\* uses Roll Forward*
+- .NET Core (2.2 or newer)
 
 ## Configuration
 
