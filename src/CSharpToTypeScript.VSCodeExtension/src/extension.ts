@@ -77,10 +77,10 @@ export async function convert(target: 'document' | 'clipboard') {
 
         if (!succeeded && errorMessage) {
             vscode.window.showErrorMessage(`"C# to TypeScript" extension encountered an error while converting your code: "${errorMessage}".`);
-        } else if (convertedCode && target === 'document' && vscode.window.activeTextEditor) {
+        } else if (succeeded && convertedCode && target === 'document' && vscode.window.activeTextEditor) {
             await vscode.window.activeTextEditor.edit(
                 builder => builder.replace(!selection.isEmpty ? selection : fullRange(document), convertedCode));
-        } else if (convertedCode && target === 'clipboard') {
+        } else if (succeeded && convertedCode && target === 'clipboard') {
             await vscode.env.clipboard.writeText(convertedCode);
         }
 
