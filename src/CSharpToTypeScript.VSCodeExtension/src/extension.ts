@@ -12,7 +12,9 @@ let serverRunning = false;
 let executingCommand = false;
 
 export function activate(context: vscode.ExtensionContext) {
+    let standardError = '';
     serverRunning = true;
+
     server = cp.spawn('dotnet', [context.asAbsolutePath(path.join(
         'server', 'CSharpToTypeScript.Server', 'bin', 'Release', 'netcoreapp2.2', 'publish', 'CSharpToTypeScript.Server.dll'))]);
 
@@ -20,9 +22,12 @@ export function activate(context: vscode.ExtensionContext) {
         serverRunning = false;
         vscode.window.showErrorMessage(`"C# to TypeScript" server related error occurred: "${err.message}".`);
     });
+    server.stderr.on('data', data => {
+        standardError += data;
+    });
     server.on('exit', code => {
         serverRunning = false;
-        vscode.window.showWarningMessage(`"C# to TypeScript" server shutdown with code: "${code}".`);
+        vscode.window.showWarningMessage(`"C# to TypeScript" server shutdown with code: "${code}". Standard error: "${standardError}".`);
     });
 
     rl = readline.createInterface(server.stdout, server.stdin);
