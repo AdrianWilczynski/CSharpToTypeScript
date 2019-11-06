@@ -7,6 +7,7 @@ namespace CSharpToTypeScript.Core.Models.TypeNodes
     {
         public Custom(string name) : base(name) { }
 
-        public override string WriteTypeScript(CodeConversionOptions options) => Name.RemoveInterfacePrefix();
+        public override string WriteTypeScript(CodeConversionOptions options)
+            => Name.TransformIf(options.RemoveInterfacePrefix, StringUtilities.RemoveInterfacePrefix);
     }
 }

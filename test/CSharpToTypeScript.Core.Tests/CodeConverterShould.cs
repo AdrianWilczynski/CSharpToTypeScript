@@ -346,5 +346,23 @@ export interface ImplementingItem {
     Tuple: { Item1: number; Item2: number; };
 }", converted);
         }
+
+        [Fact]
+        public void RespectInterfacePrefixSettings()
+        {
+            const string source = "interface IItem { }";
+
+            var converted = _codeConverter.ConvertToTypeScript(source, new CodeConversionOptions(export: false, useTabs: false, tabSize: 4, toCamelCase: false, removeInterfacePrefix: true));
+
+            Assert.Equal(@"interface Item {
+
+}", converted);
+
+            converted = _codeConverter.ConvertToTypeScript(source, new CodeConversionOptions(export: false, useTabs: false, tabSize: 4, toCamelCase: false, removeInterfacePrefix: false));
+
+            Assert.Equal(@"interface IItem {
+
+}", converted);
+        }
     }
 }

@@ -32,6 +32,9 @@ namespace CSharpToTypeScript.Web.Pages
             [Required, Display(Name = "To Camel Case")]
             public bool ToCamelCase { get; set; } = true;
 
+            [Required, Display(Name = "Remove Interface Prefix")]
+            public bool RemoveInterfacePrefix { get; set; } = true;
+
             public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
             {
                 if (!UseTabs && TabSize is null)
@@ -43,7 +46,7 @@ namespace CSharpToTypeScript.Web.Pages
             }
 
             public CodeConversionOptions MapToCodeConversionOptions()
-                => new CodeConversionOptions(Export, UseTabs, TabSize, ConvertDatesTo, ConvertNullablesTo, ToCamelCase);
+                => new CodeConversionOptions(Export, UseTabs, TabSize, ConvertDatesTo, ConvertNullablesTo, ToCamelCase, RemoveInterfacePrefix);
         }
 
         private readonly ICodeConverter _codeConverter;

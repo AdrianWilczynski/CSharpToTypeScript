@@ -58,5 +58,25 @@ namespace CSharpToTypeScript.Core.Tests
 
             Assert.Equal("myItemDto.model.ts", converted);
         }
+
+        [Fact]
+        public void RemoveInterfacePrefix()
+        {
+            var converted = _fileNameConverter.ConvertToTypeScript(
+                "IMyItemDto.cs",
+                new FileNameConversionOptions(useKebabCase: false, appendModelSuffix: true, removeInterfacePrefix: true));
+
+            Assert.Equal("myItemDto.model.ts", converted);
+        }
+
+        [Fact]
+        public void PreserveInterfacePrefix()
+        {
+            var converted = _fileNameConverter.ConvertToTypeScript(
+                "IMyItemDto.cs",
+                new FileNameConversionOptions(useKebabCase: false, appendModelSuffix: true, removeInterfacePrefix: false));
+
+            Assert.Equal("iMyItemDto.model.ts", converted);
+        }
     }
 }

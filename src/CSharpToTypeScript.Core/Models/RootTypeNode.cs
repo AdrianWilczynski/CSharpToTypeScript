@@ -24,7 +24,7 @@ namespace CSharpToTypeScript.Core.Models
         public IEnumerable<TypeNode> BaseTypes { get; set; }
 
         public string WriteTypeScript(CodeConversionOptions options)
-            => "export ".If(options.Export) + "interface " + Name.RemoveInterfacePrefix() + ("<" + GenericTypeParameters.ToCommaSepratedList() + ">").If(GenericTypeParameters.Any()) + (" extends " + BaseTypes.Select(e => e.WriteTypeScript(options)).ToCommaSepratedList()).If(BaseTypes.Any()) + " {" + NewLine
+            => "export ".If(options.Export) + "interface " + Name.TransformIf(options.RemoveInterfacePrefix, StringUtilities.RemoveInterfacePrefix) + ("<" + GenericTypeParameters.ToCommaSepratedList() + ">").If(GenericTypeParameters.Any()) + (" extends " + BaseTypes.Select(e => e.WriteTypeScript(options)).ToCommaSepratedList()).If(BaseTypes.Any()) + " {" + NewLine
             + Fields.Select(f => f.WriteTypeScript(options)).Indent(options.UseTabs, options.TabSize).LineByLine() + NewLine
             + "}";
     }

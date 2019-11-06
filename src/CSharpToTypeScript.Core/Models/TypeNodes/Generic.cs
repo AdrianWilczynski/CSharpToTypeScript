@@ -15,6 +15,6 @@ namespace CSharpToTypeScript.Core.Models.TypeNodes
         public IEnumerable<TypeNode> Arguments { get; }
 
         public override string WriteTypeScript(CodeConversionOptions options)
-            => Name.RemoveInterfacePrefix() + "<" + Arguments.Select(a => a.WriteTypeScript(options)).ToCommaSepratedList() + ">";
+            => Name.TransformIf(options.RemoveInterfacePrefix, StringUtilities.RemoveInterfacePrefix) + "<" + Arguments.Select(a => a.WriteTypeScript(options)).ToCommaSepratedList() + ">";
     }
 }

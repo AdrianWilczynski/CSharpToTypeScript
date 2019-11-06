@@ -43,7 +43,7 @@
                     <span asp-validation-for="Settings.ConvertNullablesTo" class="text-danger"></span>
                 </div>
                 <div class="col-6 col-md-3">
-                    <div class="custom-control custom-switch mt-2">
+                    <div class="custom-control custom-switch">
                         <input asp-for="Settings.UseTabs" class="custom-control-input">
                         <label asp-for="Settings.UseTabs" class="custom-control-label"></label>
                     </div>
@@ -54,6 +54,10 @@
                     <div class="custom-control custom-switch">
                         <input asp-for="Settings.ToCamelCase" class="custom-control-input">
                         <label asp-for="Settings.ToCamelCase" class="custom-control-label"></label>
+                    </div>
+                    <div class="custom-control custom-switch">
+                        <input asp-for="Settings.RemoveInterfacePrefix" class="custom-control-input">
+                        <label asp-for="Settings.RemoveInterfacePrefix" class="custom-control-label"></label>
                     </div>
                 </div>
             </div>

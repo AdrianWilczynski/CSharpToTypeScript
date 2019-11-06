@@ -281,5 +281,25 @@ export interface Item {
 
             Assert.Contains("MyProperty: number;", File.ReadAllText(outputFilePath));
         }
+
+        [Fact]
+        public void PreserveInterfacePrefix()
+        {
+            Prepare(nameof(PreserveInterfacePrefix));
+
+            var originalFilePath = Path.Join(nameof(PreserveInterfacePrefix), "IItemBase.cs");
+
+            File.WriteAllText(originalFilePath, "interface IItemBase { }");
+
+            _cli.Input = originalFilePath;
+            _cli.PreserveInterfacePrefix = true;
+
+            _cli.OnExecute();
+
+            var outputFilePath = Path.Join(nameof(PreserveInterfacePrefix), "iItemBase.ts");
+
+            Assert.True(File.Exists(outputFilePath));
+            Assert.Contains("export interface IItemBase", File.ReadAllText(outputFilePath));
+        }
     }
 }

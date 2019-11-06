@@ -11,8 +11,9 @@ namespace CSharpToTypeScript.Server.DTOs
         public DateOutputType ConvertDatesTo { get; set; }
         public NullableOutputType ConvertNullablesTo { get; set; }
         public bool ToCamelCase { get; set; }
+        public bool RemoveInterfacePrefix { get; set; }
 
         public CodeConversionOptions MapToCodeConversionOptions()
-            => new CodeConversionOptions(Export, UseTabs, TabSize, ConvertDatesTo, ConvertNullablesTo, ToCamelCase);
+            => new CodeConversionOptions(Export, UseTabs, TabSize, ConvertDatesTo, ConvertNullablesTo, ToCamelCase, RemoveInterfacePrefix);
     }
 }

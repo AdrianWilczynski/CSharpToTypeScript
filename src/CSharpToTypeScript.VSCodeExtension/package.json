@@ -95,6 +95,11 @@
 						"type": "boolean",
 						"default": true,
 						"description": "Convert field names to camel case."
+					},
+					"csharpToTypeScript.removeInterfacePrefix": {
+						"type": "boolean",
+						"default": true,
+						"description": "Remove \"I\" prefixes."
 					}
 				}
 			}

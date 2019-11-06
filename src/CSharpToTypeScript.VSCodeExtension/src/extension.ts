@@ -67,7 +67,8 @@ export async function convert(target: 'document' | 'clipboard') {
         export: !!configuration.get('csharpToTypeScript.export'),
         convertDatesTo: allowedOrDefault(configuration.get('csharpToTypeScript.convertDatesTo'), dateOutputTypes, 'string'),
         convertNullablesTo: allowedOrDefault(configuration.get('csharpToTypeScript.convertNullablesTo'), nullableOutputTypes, 'null'),
-        toCamelCase: !!configuration.get('csharpToTypeScript.toCamelCase')
+        toCamelCase: !!configuration.get('csharpToTypeScript.toCamelCase'),
+        removeInterfacePrefix: !!configuration.get('csharpToTypeScript.removeInterfacePrefix')
     };
 
     const inputLine = JSON.stringify(input) + '\n';

@@ -59,6 +59,9 @@ namespace CSharpToTypeScript.CLITool
         [Option(ShortName = "pc", Description = "Don't convert field names to camel case")]
         public bool PreserveCasing { get; set; }
 
+        [Option(ShortName = "pip", Description = "Don't remove interface prefixes")]
+        public bool PreserveInterfacePrefix { get; set; }
+
         [Option(ShortName = "d", Description = "Set output type for dates",
         ValueName = nameof(DateOutputType.String) + "|" + nameof(DateOutputType.Date) + "|" + nameof(DateOutputType.Union))]
         public DateOutputType ConvertDatesTo { get; set; }
@@ -67,8 +70,8 @@ namespace CSharpToTypeScript.CLITool
         ValueName = nameof(NullableOutputType.Null) + "|" + nameof(NullableOutputType.Undefined))]
         public NullableOutputType ConvertNullablesTo { get; set; }
 
-        public CodeConversionOptions CodeConversionOptions => new CodeConversionOptions(!SkipExport, UseTabs, TabSize, ConvertDatesTo, ConvertNullablesTo, !PreserveCasing);
-        public FileNameConversionOptions FileNameConversionOptions => new FileNameConversionOptions(UseKebabCase, AppendModelSuffix);
+        public CodeConversionOptions CodeConversionOptions => new CodeConversionOptions(!SkipExport, UseTabs, TabSize, ConvertDatesTo, ConvertNullablesTo, !PreserveCasing, !PreserveInterfacePrefix);
+        public FileNameConversionOptions FileNameConversionOptions => new FileNameConversionOptions(UseKebabCase, AppendModelSuffix, !PreserveInterfacePrefix);
 
         public void OnExecute()
         {

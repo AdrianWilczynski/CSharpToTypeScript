@@ -9,7 +9,7 @@ namespace CSharpToTypeScript.Core.Services
         public string ConvertToTypeScript(string fileName, FileNameConversionOptions options)
         {
             var convertedName = Path.GetFileNameWithoutExtension(fileName);
-            convertedName = convertedName.HasInterfacePrefix() ? convertedName.RemoveInterfacePrefix() : convertedName;
+            convertedName = options.RemoveInterfacePrefix ? convertedName.RemoveInterfacePrefix() : convertedName;
             convertedName = options.UseKebabCase ? convertedName.ToKebabCase() : convertedName.ToCamelCase();
             convertedName = options.AppendModelSuffix ? convertedName + ".model" : convertedName;
             convertedName += ".ts";

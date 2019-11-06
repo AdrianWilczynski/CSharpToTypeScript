@@ -22,9 +22,9 @@ Convert C# Models, ViewModels and DTOs into their TypeScript equivalents.
 - `"csharpToTypeScript.convertDatesTo": string` sets output type for dates. You can pick between `string`, `Date` and `string | Date`.
 - `"csharpToTypeScript.convertNullablesTo": null` sets output type for nullables (`int?`) to either `null` or `undefined`.
 - `"csharpToTypeScript.toCamelCase": true` toggles field name conversion to camel case.
+- `"csharpToTypeScript.removeInterfacePrefix": true` - controls whether to remove interface prefixes (`IType` -> `Type`) 
 
 ## Known limitations / design choices
 
 - Always outputs interface type.
-- Drops interface prefix: IType -> Type.
 - Only includes public, non-static properties - not fields, not methods, not private members.
