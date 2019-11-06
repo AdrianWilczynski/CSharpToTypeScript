@@ -20,7 +20,7 @@ Convert C# Models, ViewModels and DTOs into their TypeScript equivalents.
 | -a\|--angular-mode                                 | Use Angular style conventions                             |
 | -p\|--partial-override                             | Override only part of output file between marker comments |
 | -pc\|--preserve-casing                             | Don't convert field names to camel case                   |
-| -pip\|--preserve-interface-prefixes                | Don't remove interface prefixes                           |
+| -pip\|--preserve-interface-prefix                  | Don't remove interface prefixes                           |
 | -d\|--convert-dates-to \<String\|Date\|Union\>     | Set output type for dates                                 |
 | -n\|--convert-nullables-to \<Null\|Undefined\>     | Set output type for nullables                             |
 | -?\|-h\|--help                                     | Show help information                                     |
