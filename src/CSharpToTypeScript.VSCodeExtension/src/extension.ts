@@ -13,7 +13,7 @@ let executingCommand = false;
 
 export function activate(context: vscode.ExtensionContext) {
     serverRunning = true;
-    server = cp.spawn('dotnet', ['--roll-forward', 'Major', context.asAbsolutePath(path.join(
+    server = cp.spawn('dotnet', [context.asAbsolutePath(path.join(
         'server', 'CSharpToTypeScript.Server', 'bin', 'Release', 'netcoreapp2.2', 'publish', 'CSharpToTypeScript.Server.dll'))]);
 
     server.on('error', err => {
