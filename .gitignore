@@ -366,3 +366,5 @@ nupkg/
 !**/scenarios/.gitkeep
 
 **/CSharpToTypeScript.CLITool/**/*.ts
+
+**/temp/**
