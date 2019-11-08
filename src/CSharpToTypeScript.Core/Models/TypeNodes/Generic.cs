@@ -20,7 +20,7 @@ namespace CSharpToTypeScript.Core.Models.TypeNodes
         public override string WriteTypeScript(CodeConversionOptions options)
             => // name
             Name.TransformIf(options.RemoveInterfacePrefix, StringUtilities.RemoveInterfacePrefix)
-            // generic arguments
+            // generic type parameters
             + "<" + Arguments.WriteTypeScript(options).ToCommaSepratedList() + ">";
     }
 }

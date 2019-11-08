@@ -34,7 +34,7 @@ namespace CSharpToTypeScript.Core.Models
             "export ".If(options.Export) + "interface "
             // name
             + Name.TransformIf(options.RemoveInterfacePrefix, StringUtilities.RemoveInterfacePrefix)
-            // generic arguments
+            // generic type parameters
             + ("<" + GenericTypeParameters.ToCommaSepratedList() + ">").If(GenericTypeParameters.Any())
             // base types
             + (" extends " + BaseTypes.WriteTypeScript(options).ToCommaSepratedList()).If(BaseTypes.Any())
