@@ -315,7 +315,7 @@ export interface Item {
             File.WriteAllText(sourceFilePath, "class Item13 { }");
 
             Directory.CreateDirectory(nestedDirectoryPath);
-            File.WriteAllText(nestedSourceFilePath, "class Item 14 { }");
+            File.WriteAllText(nestedSourceFilePath, "class Item14 { }");
 
             _cli.Input = nameof(ConvertFilesInNestedDirecotories);
 
