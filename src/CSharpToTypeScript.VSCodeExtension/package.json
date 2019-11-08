@@ -109,12 +109,12 @@
 					"csharpToTypeScript.useKebabCase": {
 						"type": "boolean",
 						"default": false,
-						"description": "Use kebab case for file names in import statements."
+						"description": "Use kebab case for module names in import statements."
 					},
 					"csharpToTypeScript.appendModelSuffix": {
 						"type": "boolean",
 						"default": false,
-						"description": "Append \".model\" suffix to file names in import statements."
+						"description": "Append \".model\" suffix to module names in import statements."
 					}
 				}
 			}
