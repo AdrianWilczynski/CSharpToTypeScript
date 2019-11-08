@@ -8,7 +8,7 @@ using static CSharpToTypeScript.Core.Utilities.StringUtilities;
 
 namespace CSharpToTypeScript.Core.Models
 {
-    internal class RootTypeNode : IRootNode
+    internal class RootTypeNode : RootNode
     {
         public RootTypeNode(string name, IEnumerable<FieldNode> fields, IEnumerable<string> genericTypeParameters, IEnumerable<TypeNode> baseTypes)
         {
@@ -18,14 +18,27 @@ namespace CSharpToTypeScript.Core.Models
             BaseTypes = baseTypes;
         }
 
-        public string Name { get; }
+        public override string Name { get; }
         public IEnumerable<FieldNode> Fields { get; }
         public IEnumerable<string> GenericTypeParameters { get; set; }
         public IEnumerable<TypeNode> BaseTypes { get; set; }
 
-        public string WriteTypeScript(CodeConversionOptions options)
-            => "export ".If(options.Export) + "interface " + Name.TransformIf(options.RemoveInterfacePrefix, StringUtilities.RemoveInterfacePrefix) + ("<" + GenericTypeParameters.ToCommaSepratedList() + ">").If(GenericTypeParameters.Any()) + (" extends " + BaseTypes.Select(e => e.WriteTypeScript(options)).ToCommaSepratedList()).If(BaseTypes.Any()) + " {" + NewLine
-            + Fields.Select(f => f.WriteTypeScript(options)).Indent(options.UseTabs, options.TabSize).LineByLine() + NewLine
+        public override IEnumerable<string> Requires
+            => Fields.SelectMany(f => f.Requires).Concat(BaseTypes.SelectMany(b => b.Requires)).Distinct();
+
+        public override string WriteTypeScript(CodeConversionOptions options)
+            =>  // keywords
+            "export ".If(options.Export) + "interface "
+            // name
+            + Name.TransformIf(options.RemoveInterfacePrefix, StringUtilities.RemoveInterfacePrefix)
+            // generic arguments
+            + ("<" + GenericTypeParameters.ToCommaSepratedList() + ">").If(GenericTypeParameters.Any())
+            // base types
+            + (" extends " + BaseTypes.WriteTypeScript(options).ToCommaSepratedList()).If(BaseTypes.Any())
+            // body
+            + " {" + NewLine
+            // fields
+            + Fields.WriteTypeScript(options).Indent(options.UseTabs, options.TabSize).LineByLine() + NewLine
             + "}";
     }
 }

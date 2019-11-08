@@ -21,12 +21,15 @@ namespace CSharpToTypeScript.Core.Services
         public FileNode Convert(CompilationUnitSyntax root)
             => new FileNode(ConvertRootNodes(root));
 
-        private IEnumerable<IRootNode> ConvertRootNodes(CompilationUnitSyntax root)
+        private IEnumerable<RootNode> ConvertRootNodes(CompilationUnitSyntax root)
             => root.DescendantNodes()
                 .Where(node => (node is TypeDeclarationSyntax type && IsNotStatic(type)) || node is EnumDeclarationSyntax)
-                .Select(node => node is TypeDeclarationSyntax type ? (IRootNode)_rootTypeConverter.Convert(type)
-                    : node is EnumDeclarationSyntax @enum ? _rootEnumConverter.Convert(@enum)
-                    : throw new ArgumentException());
+                .Select(node => node switch
+                {
+                    TypeDeclarationSyntax type => (RootNode)_rootTypeConverter.Convert(type),
+                    EnumDeclarationSyntax @enum => _rootEnumConverter.Convert(@enum),
+                    _ => throw new ArgumentException()
+                });
 
         private bool IsNotStatic(TypeDeclarationSyntax type)
             => type.Modifiers.All(m => m.Kind() != SyntaxKind.StaticKeyword);

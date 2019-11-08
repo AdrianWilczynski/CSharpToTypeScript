@@ -1,5 +1,5 @@
 ﻿using System;
-using CSharpToTypeScript.Core.DI;
+using CSharpToTypeScript.Core.DependencyInjection;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.DependencyInjection;
 

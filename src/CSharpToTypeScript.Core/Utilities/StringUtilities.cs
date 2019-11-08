@@ -24,8 +24,8 @@ namespace CSharpToTypeScript.Core.Utilities
         public static string Repeat(this string text, int count)
             => string.Concat(Enumerable.Repeat(text, count));
 
-        public static string LineByLine(this IEnumerable<string> lines)
-            => string.Join(NewLine, lines);
+        public static string LineByLine(this IEnumerable<string> lines, string separator = "")
+            => string.Join(separator + NewLine, lines);
 
         public static string Parenthesize(this string text)
             => "(" + text + ")";
@@ -36,11 +36,17 @@ namespace CSharpToTypeScript.Core.Utilities
         public static string ToSpaceSepratedList(this IEnumerable<string> texts)
             => string.Join(" ", texts);
 
+        public static string ToEmptyLineSeparatedList(this IEnumerable<string> texts)
+            => string.Join(EmptyLine, texts);
+
         public static string If(this string text, bool condition)
             => condition ? text : string.Empty;
 
         public static string TransformIf(this string text, bool condition, Func<string, string> transformation)
             => condition ? transformation(text) : text;
+
+        public static string TransformIfElse(this string text, bool condition, Func<string, string> transformationIf, Func<string, string> transformationElse)
+            => condition ? transformationIf(text) : transformationElse(text);
 
         public static string SquashWhistespace(this string text)
             => Regex.Replace(text, @"\s+", " ");

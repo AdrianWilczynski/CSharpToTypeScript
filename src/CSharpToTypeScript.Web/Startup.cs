@@ -1,4 +1,4 @@
-using CSharpToTypeScript.Core.DI;
+using CSharpToTypeScript.Core.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;

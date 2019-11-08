@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using CSharpToTypeScript.Core.Options;
 
 namespace CSharpToTypeScript.Core.Models.TypeNodes
@@ -11,6 +12,8 @@ namespace CSharpToTypeScript.Core.Models.TypeNodes
 
         public TypeNode Of { get; }
 
+        public override IEnumerable<string> Requires => Of.Requires;
+
         public override bool IsUnionType(CodeConversionOptions options) => true;
 
         public override bool IsOptional(CodeConversionOptions options, out TypeNode of)
@@ -20,6 +23,10 @@ namespace CSharpToTypeScript.Core.Models.TypeNodes
         }
 
         public override string WriteTypeScript(CodeConversionOptions options)
-            => Of.WriteTypeScript(options) + " | " + (options.ConvertNullablesTo == NullableOutputType.Undefined ? "undefined" : "null");
+            => // underlying type
+            Of.WriteTypeScript(options)
+            + " | "
+            // "null" type
+            + (options.ConvertNullablesTo == NullableOutputType.Undefined ? "undefined" : "null");
     }
 }

@@ -1,4 +1,4 @@
-﻿using CSharpToTypeScript.Core.DI;
+﻿using CSharpToTypeScript.Core.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Server.Services;
 

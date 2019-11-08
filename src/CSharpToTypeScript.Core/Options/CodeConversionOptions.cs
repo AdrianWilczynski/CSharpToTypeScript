@@ -1,10 +1,12 @@
 namespace CSharpToTypeScript.Core.Options
 {
-    public class CodeConversionOptions
+    public class CodeConversionOptions : ModuleNameConversionOptions
     {
         public CodeConversionOptions(bool export, bool useTabs, int? tabSize = null,
-            DateOutputType convertDatesTo = default, NullableOutputType convertNullablesTo = default,
-            bool toCamelCase = true, bool removeInterfacePrefix = true)
+            DateOutputType convertDatesTo = DateOutputType.String, NullableOutputType convertNullablesTo = NullableOutputType.Null,
+            bool toCamelCase = true, bool removeInterfacePrefix = true, ImportGenerationMode importGenerationMode = ImportGenerationMode.None,
+            bool useKebabCase = false, bool appendModelSuffix = false)
+        : base(useKebabCase, appendModelSuffix, removeInterfacePrefix)
         {
             Export = export;
             UseTabs = useTabs;
@@ -12,7 +14,7 @@ namespace CSharpToTypeScript.Core.Options
             ConvertDatesTo = convertDatesTo;
             ConvertNullablesTo = convertNullablesTo;
             ToCamelCase = toCamelCase;
-            RemoveInterfacePrefix = removeInterfacePrefix;
+            ImportGenerationMode = importGenerationMode;
         }
 
         public bool Export { get; set; }
@@ -21,6 +23,6 @@ namespace CSharpToTypeScript.Core.Options
         public DateOutputType ConvertDatesTo { get; set; }
         public NullableOutputType ConvertNullablesTo { get; set; }
         public bool ToCamelCase { get; set; }
-        public bool RemoveInterfacePrefix { get; set; }
+        public ImportGenerationMode ImportGenerationMode { get; set; }
     }
 }

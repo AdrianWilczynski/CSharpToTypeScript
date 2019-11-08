@@ -1,5 +1,6 @@
 using System.IO;
 using System.Linq;
+using CSharpToTypeScript.Core.Options;
 using Xunit;
 
 namespace CSharpToTypeScript.CLITool.Tests
@@ -326,6 +327,29 @@ export interface Item {
 
             Assert.True(File.Exists(outputFilePath));
             Assert.True(File.Exists(nestedOutputFilePath));
+        }
+
+        [Fact]
+        public void GenerateSimpleImports()
+        {
+            Prepare(nameof(GenerateSimpleImports));
+
+            var sourceFilePath = Path.Join(nameof(GenerateSimpleImports), "Item.cs");
+
+            File.WriteAllText(sourceFilePath, @"class Item15
+{
+    public ShoppingCartItem MyProperty { get; set; }
+}");
+
+            _cli.Input = sourceFilePath;
+            _cli.ImportGeneration = ImportGenerationMode.Simple;
+            _cli.UseKebabCase = true;
+            _cli.AppendModelSuffix = true;
+
+            _cli.OnExecute();
+
+            Assert.StartsWith("import { ShoppingCartItem } from \"./shopping-cart-item.model\";",
+                File.ReadAllText(Path.Join(nameof(GenerateSimpleImports), "item.model.ts")));
         }
     }
 }

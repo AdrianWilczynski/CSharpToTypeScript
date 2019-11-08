@@ -25,24 +25,26 @@
         <details>
             <summary>Settings</summary>
             <div class="row mt-3">
-                <div class="form-group col-6 col-md-3">
+                <div class="form-group col-12 col-md-3">
                     <label asp-for="Settings.TabSize"></label>
                     <input asp-for="Settings.TabSize" class="form-control form-control-sm" min="1" max="8" />
                     <span asp-validation-for="Settings.TabSize" class="text-danger"></span>
                 </div>
-                <div class="form-group col-6 col-md-3">
-                    <label asp-for="Settings.ConvertDatesTo"></label>
-                    <select asp-for="Settings.ConvertDatesTo" asp-items="Html.GetEnumSelectList<DateOutputType>()"
-                        class="form-control form-control-sm"></select>
-                    <span asp-validation-for="Settings.ConvertDatesTo" class="text-danger"></span>
+                <div class="col-12 col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Settings.ConvertDatesTo"></label>
+                        <select asp-for="Settings.ConvertDatesTo" asp-items="Html.GetEnumSelectList<DateOutputType>()"
+                            class="form-control form-control-sm"></select>
+                        <span asp-validation-for="Settings.ConvertDatesTo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Settings.ConvertNullablesTo"></label>
+                        <select asp-for="Settings.ConvertNullablesTo" asp-items="Html.GetEnumSelectList<NullableOutputType>()"
+                            class="form-control form-control-sm"></select>
+                        <span asp-validation-for="Settings.ConvertNullablesTo" class="text-danger"></span>
+                    </div>
                 </div>
-                <div class="form-group col-6 col-md-3">
-                    <label asp-for="Settings.ConvertNullablesTo"></label>
-                    <select asp-for="Settings.ConvertNullablesTo" asp-items="Html.GetEnumSelectList<NullableOutputType>()"
-                        class="form-control form-control-sm"></select>
-                    <span asp-validation-for="Settings.ConvertNullablesTo" class="text-danger"></span>
-                </div>
-                <div class="col-6 col-md-3">
+                <div class="col-12 col-md-3 mt-0 mt-md-4">
                     <div class="custom-control custom-switch">
                         <input asp-for="Settings.UseTabs" class="custom-control-input">
                         <label asp-for="Settings.UseTabs" class="custom-control-label"></label>
@@ -59,6 +61,21 @@
                         <input asp-for="Settings.RemoveInterfacePrefix" class="custom-control-input">
                         <label asp-for="Settings.RemoveInterfacePrefix" class="custom-control-label"></label>
                     </div>
+                    <div class="custom-control custom-switch mt-1">
+                        <input asp-for="Settings.GenerateImports" class="custom-control-input">
+                        <label asp-for="Settings.GenerateImports" class="custom-control-label"></label>
+                    </div>
+                    <details class="ml-3">
+                        <summary>File Name Settings</summary>
+                            <div class="custom-control custom-switch">
+                                <input asp-for="Settings.UseKebabCase" class="custom-control-input">
+                                <label asp-for="Settings.UseKebabCase" class="custom-control-label"></label>
+                            </div>
+                            <div class="custom-control custom-switch">
+                                <input asp-for="Settings.AppendModelSuffix" class="custom-control-input">
+                                <label asp-for="Settings.AppendModelSuffix" class="custom-control-label"></label>
+                            </div>
+                    </details>
                 </div>
             </div>
         </details>

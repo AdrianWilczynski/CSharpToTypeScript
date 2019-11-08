@@ -362,9 +362,6 @@ node_modules
 
 nupkg/
 
-**/scenarios/**
-!**/scenarios/.gitkeep
-
 **/CSharpToTypeScript.CLITool/**/*.ts
 
 **/temp/**

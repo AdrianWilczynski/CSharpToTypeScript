@@ -70,8 +70,14 @@ namespace CSharpToTypeScript.CLITool
         ValueName = nameof(NullableOutputType.Null) + "|" + nameof(NullableOutputType.Undefined))]
         public NullableOutputType ConvertNullablesTo { get; set; }
 
-        public CodeConversionOptions CodeConversionOptions => new CodeConversionOptions(!SkipExport, UseTabs, TabSize, ConvertDatesTo, ConvertNullablesTo, !PreserveCasing, !PreserveInterfacePrefix);
-        public FileNameConversionOptions FileNameConversionOptions => new FileNameConversionOptions(UseKebabCase, AppendModelSuffix, !PreserveInterfacePrefix);
+        [Option(ShortName = "i", Description = "Enable import generation",
+        ValueName = nameof(ImportGenerationMode.None) + "|" + nameof(ImportGenerationMode.Simple))]
+        public ImportGenerationMode ImportGeneration { get; set; }
+
+        public CodeConversionOptions CodeConversionOptions
+            => new CodeConversionOptions(!SkipExport, UseTabs, TabSize, ConvertDatesTo, ConvertNullablesTo,
+                !PreserveCasing, !PreserveInterfacePrefix,
+                ImportGeneration, UseKebabCase, AppendModelSuffix);
 
         public void OnExecute()
         {
@@ -100,7 +106,7 @@ namespace CSharpToTypeScript.CLITool
         {
             var content = File.ReadAllText(Input);
             var converted = _codeConverter.ConvertToTypeScript(content, CodeConversionOptions);
-            var outputPath = GetOutputFilePath(Input, Output, FileNameConversionOptions);
+            var outputPath = GetOutputFilePath(Input, Output, CodeConversionOptions);
 
             CreateOrUpdateFile(outputPath, converted, PartialOverride);
         }
@@ -110,7 +116,7 @@ namespace CSharpToTypeScript.CLITool
             var files = FileSystem.GetFilesWithExtension(Input, "cs")
                 .Select(f => new
                 {
-                    OutputPath = GetOutputFilePath(f, Output, FileNameConversionOptions),
+                    OutputPath = GetOutputFilePath(f, Output, CodeConversionOptions),
                     Content = _codeConverter.ConvertToTypeScript(File.ReadAllText(f), CodeConversionOptions)
                 })
                 .Where(f => !string.IsNullOrWhiteSpace(f.Content))
@@ -135,7 +141,7 @@ namespace CSharpToTypeScript.CLITool
             File.WriteAllText(path, content);
         }
 
-        private string GetOutputFilePath(string input, string output, FileNameConversionOptions options)
+        private string GetOutputFilePath(string input, string output, ModuleNameConversionOptions options)
             => !input.EndsWithFileExtension() ? throw new ArgumentException()
             : output?.EndsWithFileExtension() == true ? output
             : !string.IsNullOrWhiteSpace(output) ? Path.Join(output, _fileNameConverter.ConvertToTypeScript(input, options))

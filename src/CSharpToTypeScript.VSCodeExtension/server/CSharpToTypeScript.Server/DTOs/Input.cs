@@ -12,8 +12,14 @@ namespace CSharpToTypeScript.Server.DTOs
         public NullableOutputType ConvertNullablesTo { get; set; }
         public bool ToCamelCase { get; set; }
         public bool RemoveInterfacePrefix { get; set; }
+        public bool GenerateImports { get; set; }
+        public bool UseKebabCase { get; set; }
+        public bool AppendModelSuffix { get; set; }
 
         public CodeConversionOptions MapToCodeConversionOptions()
-            => new CodeConversionOptions(Export, UseTabs, TabSize, ConvertDatesTo, ConvertNullablesTo, ToCamelCase, RemoveInterfacePrefix);
+            => new CodeConversionOptions(Export, UseTabs, TabSize,
+                ConvertDatesTo, ConvertNullablesTo, ToCamelCase, RemoveInterfacePrefix,
+                GenerateImports ? ImportGenerationMode.Simple : ImportGenerationMode.None,
+                UseKebabCase, AppendModelSuffix);
     }
 }

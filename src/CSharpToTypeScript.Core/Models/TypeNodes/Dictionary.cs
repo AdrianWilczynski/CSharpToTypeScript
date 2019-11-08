@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using CSharpToTypeScript.Core.Options;
 
 namespace CSharpToTypeScript.Core.Models.TypeNodes
@@ -12,6 +14,8 @@ namespace CSharpToTypeScript.Core.Models.TypeNodes
 
         public TypeNode Key { get; }
         public TypeNode Value { get; }
+
+        public override IEnumerable<string> Requires => Key.Requires.Concat(Value.Requires).Distinct();
 
         public override string WriteTypeScript(CodeConversionOptions options)
             => "{ [key: " + Key.WriteTypeScript(options) + "]: " + Value.WriteTypeScript(options) + "; }";

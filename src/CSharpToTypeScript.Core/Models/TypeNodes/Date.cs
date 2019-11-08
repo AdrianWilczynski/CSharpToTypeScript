@@ -9,9 +9,12 @@ namespace CSharpToTypeScript.Core.Models.TypeNodes
             => options.ConvertDatesTo == DateOutputType.Union;
 
         public override string WriteTypeScript(CodeConversionOptions options)
-            => options.ConvertDatesTo == DateOutputType.String ? "string"
-            : options.ConvertDatesTo == DateOutputType.Date ? "Date"
-            : options.ConvertDatesTo == DateOutputType.Union ? "string | Date"
-            : throw new ArgumentException();
+            => options.ConvertDatesTo switch
+            {
+                DateOutputType.String => "string",
+                DateOutputType.Date => "Date",
+                DateOutputType.Union => "string | Date",
+                _ => throw new ArgumentException()
+            };
     }
 }

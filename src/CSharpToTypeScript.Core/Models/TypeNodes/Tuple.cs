@@ -14,7 +14,7 @@ namespace CSharpToTypeScript.Core.Models.TypeNodes
 
         public IEnumerable<Element> Elements { get; }
 
-        public class Element : IWritableNode
+        public class Element : IWritableNode, IDependentNode
         {
             public Element(string name, TypeNode type)
             {
@@ -25,11 +25,20 @@ namespace CSharpToTypeScript.Core.Models.TypeNodes
             public string Name { get; }
             public TypeNode Type { get; }
 
+            public IEnumerable<string> Requires => Type.Requires;
+
             public string WriteTypeScript(CodeConversionOptions options)
-                => Name.TransformIf(options.ToCamelCase, StringUtilities.ToCamelCase) + "?".If(Type.IsOptional(options, out _)) + ": " + (Type.IsOptional(options, out var of) ? of.WriteTypeScript(options) : Type.WriteTypeScript(options)) + ";";
+                => // name
+                Name.TransformIf(options.ToCamelCase, StringUtilities.ToCamelCase)
+                // separator
+                + "?".If(Type.IsOptional(options, out _)) + ": "
+                // type
+                + (Type.IsOptional(options, out var of) ? of.WriteTypeScript(options) : Type.WriteTypeScript(options)) + ";";
         }
 
+        public override IEnumerable<string> Requires => Elements.SelectMany(e => e.Requires).Distinct();
+
         public override string WriteTypeScript(CodeConversionOptions options)
-            => "{ " + Elements.Select(e => e.WriteTypeScript(options)).ToSpaceSepratedList() + " }";
+            => "{ " + Elements.WriteTypeScript(options).ToSpaceSepratedList() + " }";
     }
 }

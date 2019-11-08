@@ -13,12 +13,7 @@ namespace CSharpToTypeScript.Core.Services
         }
 
         public string ConvertToTypeScript(string code, CodeConversionOptions options)
-        {
-            var root = CSharpSyntaxTree.ParseText(code).GetCompilationUnitRoot();
-
-            var converted = _syntaxTreeConverter.Convert(root);
-
-            return converted.WriteTypeScript(options);
-        }
+            => _syntaxTreeConverter.Convert(CSharpSyntaxTree.ParseText(code).GetCompilationUnitRoot())
+                .WriteTypeScript(options);
     }
 }

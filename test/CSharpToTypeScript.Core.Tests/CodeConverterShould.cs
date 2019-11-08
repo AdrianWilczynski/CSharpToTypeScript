@@ -1,4 +1,4 @@
-using CSharpToTypeScript.Core.DI;
+using CSharpToTypeScript.Core.DependencyInjection;
 using CSharpToTypeScript.Core.Options;
 using CSharpToTypeScript.Core.Services;
 using Microsoft.Extensions.DependencyInjection;
@@ -363,6 +363,29 @@ export interface ImplementingItem {
             Assert.Equal(@"interface IItem {
 
 }", converted);
+        }
+
+        [Fact]
+        public void GenerateImportStatements()
+        {
+            var converted = _codeConverter.ConvertToTypeScript(@"class Item
+{
+    public ImportMe MyProperty { get; set; }
+}", new CodeConversionOptions(export: false, useTabs: true, importGenerationMode: ImportGenerationMode.Simple));
+
+            Assert.StartsWith("import { ImportMe } from \"./importMe\";", converted);
+        }
+
+        [Fact]
+        public void RespectModuleNameSettingsWhenGeneratingImports()
+        {
+            var converted = _codeConverter.ConvertToTypeScript(@"class Item
+{
+    public ImportMe MyProperty { get; set; }
+}", new CodeConversionOptions(export: false, useTabs: true, importGenerationMode: ImportGenerationMode.Simple,
+        useKebabCase: true, appendModelSuffix: true));
+
+            Assert.StartsWith("import { ImportMe } from \"./import-me.model\";", converted);
         }
     }
 }

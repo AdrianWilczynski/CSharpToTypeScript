@@ -15,7 +15,7 @@ namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
 
         public override TypeNode Handle(TypeSyntax type)
         {
-            string Name(int index) => $"Item{index + 1}";
+            static string Name(int index) => $"Item{index + 1}";
 
             if (type is TupleTypeSyntax tuple)
             {

@@ -7,6 +7,9 @@ export interface Input {
     convertNullablesTo: string;
     toCamelCase: boolean;
     removeInterfacePrefix: boolean;
+    generateImports: boolean;
+    useKebabCase: boolean;
+    appendModelSuffix: boolean;
 }
 
 export const dateOutputTypes = ['string', 'date', 'union'];

@@ -12,9 +12,15 @@ namespace CSharpToTypeScript.Core.Models.TypeNodes
             Arguments = arguments;
         }
 
+        public override IEnumerable<string> Requires
+            => new[] { Name }.Concat(Arguments.SelectMany(a => a.Requires)).Distinct();
+
         public IEnumerable<TypeNode> Arguments { get; }
 
         public override string WriteTypeScript(CodeConversionOptions options)
-            => Name.TransformIf(options.RemoveInterfacePrefix, StringUtilities.RemoveInterfacePrefix) + "<" + Arguments.Select(a => a.WriteTypeScript(options)).ToCommaSepratedList() + ">";
+            => // name
+            Name.TransformIf(options.RemoveInterfacePrefix, StringUtilities.RemoveInterfacePrefix)
+            // generic arguments
+            + "<" + Arguments.WriteTypeScript(options).ToCommaSepratedList() + ">";
     }
 }

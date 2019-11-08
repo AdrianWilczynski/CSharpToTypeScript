@@ -1,9 +1,9 @@
-import * as vscode from 'vscode';
 import * as cp from 'child_process';
-import * as readline from 'readline';
 import * as path from 'path';
+import * as readline from 'readline';
+import * as vscode from 'vscode';
+import { dateOutputTypes, Input, nullableOutputTypes } from './input';
 import { Output } from './output';
-import { Input, dateOutputTypes, nullableOutputTypes } from './input';
 import { allowedOrDefault, fullRange } from './utilities';
 
 let server: cp.ChildProcess | undefined;
@@ -68,7 +68,10 @@ export async function convert(target: 'document' | 'clipboard') {
         convertDatesTo: allowedOrDefault(configuration.get('csharpToTypeScript.convertDatesTo'), dateOutputTypes, 'string'),
         convertNullablesTo: allowedOrDefault(configuration.get('csharpToTypeScript.convertNullablesTo'), nullableOutputTypes, 'null'),
         toCamelCase: !!configuration.get('csharpToTypeScript.toCamelCase'),
-        removeInterfacePrefix: !!configuration.get('csharpToTypeScript.removeInterfacePrefix')
+        removeInterfacePrefix: !!configuration.get('csharpToTypeScript.removeInterfacePrefix'),
+        generateImports: !!configuration.get('csharpToTypeScript.generateImports'),
+        useKebabCase: !!configuration.get('csharpToTypeScript.useKebabCase'),
+        appendModelSuffix: !!configuration.get('csharpToTypeScript.appendModelSuffix')
     };
 
     const inputLine = JSON.stringify(input) + '\n';

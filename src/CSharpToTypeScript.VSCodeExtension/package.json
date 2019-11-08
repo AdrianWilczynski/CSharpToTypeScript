@@ -100,6 +100,21 @@
 						"type": "boolean",
 						"default": true,
 						"description": "Remove \"I\" prefixes."
+					},
+					"csharpToTypeScript.generateImports": {
+						"type": "boolean",
+						"default": false,
+						"description": "Generate import statements."
+					},
+					"csharpToTypeScript.useKebabCase": {
+						"type": "boolean",
+						"default": false,
+						"description": "Use kebab case for file names in import statements."
+					},
+					"csharpToTypeScript.appendModelSuffix": {
+						"type": "boolean",
+						"default": false,
+						"description": "Append \".model\" suffix to file names in import statements."
 					}
 				}
 			}

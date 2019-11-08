@@ -1,8 +1,8 @@
 namespace CSharpToTypeScript.Core.Options
 {
-    public class FileNameConversionOptions
+    public class ModuleNameConversionOptions
     {
-        public FileNameConversionOptions(bool useKebabCase, bool appendModelSuffix, bool removeInterfacePrefix = true)
+        public ModuleNameConversionOptions(bool useKebabCase, bool appendModelSuffix, bool removeInterfacePrefix = true)
         {
             UseKebabCase = useKebabCase;
             AppendModelSuffix = appendModelSuffix;

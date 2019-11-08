@@ -6,7 +6,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using CSharpToTypeScript.CLITool;
-using CSharpToTypeScript.Core.DI;
+using CSharpToTypeScript.Core.DependencyInjection;
 
 var cli = new ServiceCollection()
     .AddCSharpToTypeScript()

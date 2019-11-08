@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using CSharpToTypeScript.Core.Options;
 using CSharpToTypeScript.Core.Utilities;
 
@@ -14,7 +15,12 @@ namespace CSharpToTypeScript.Core.Models.TypeNodes
         public TypeNode Of { get; }
         public int Rank { get; }
 
+        public override IEnumerable<string> Requires => Of.Requires;
+
         public override string WriteTypeScript(CodeConversionOptions options)
-            => Of.WriteTypeScript(options).TransformIf(Of.IsUnionType(options), StringUtilities.Parenthesize) + "[]".Repeat(Rank);
+            => // underlying type
+            Of.WriteTypeScript(options).TransformIf(Of.IsUnionType(options), StringUtilities.Parenthesize)
+            // brackets
+            + "[]".Repeat(Rank);
     }
 }

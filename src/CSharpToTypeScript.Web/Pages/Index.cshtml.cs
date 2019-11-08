@@ -35,6 +35,15 @@ namespace CSharpToTypeScript.Web.Pages
             [Required, Display(Name = "Remove Interface Prefix")]
             public bool RemoveInterfacePrefix { get; set; } = true;
 
+            [Required, Display(Name = "Generate Imports")]
+            public bool GenerateImports { get; set; } = true;
+
+            [Required, Display(Name = "Use Kebab Case")]
+            public bool UseKebabCase { get; set; }
+
+            [Required, Display(Name = "Append Model Suffix")]
+            public bool AppendModelSuffix { get; set; }
+
             public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
             {
                 if (!UseTabs && TabSize is null)
@@ -46,7 +55,9 @@ namespace CSharpToTypeScript.Web.Pages
             }
 
             public CodeConversionOptions MapToCodeConversionOptions()
-                => new CodeConversionOptions(Export, UseTabs, TabSize, ConvertDatesTo, ConvertNullablesTo, ToCamelCase, RemoveInterfacePrefix);
+                => new CodeConversionOptions(Export, UseTabs, TabSize, ConvertDatesTo, ConvertNullablesTo, ToCamelCase, RemoveInterfacePrefix,
+                    GenerateImports ? ImportGenerationMode.Simple : ImportGenerationMode.None,
+                    UseKebabCase, AppendModelSuffix);
         }
 
         private readonly ICodeConverter _codeConverter;

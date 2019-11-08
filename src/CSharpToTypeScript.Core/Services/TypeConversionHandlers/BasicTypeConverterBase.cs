@@ -13,7 +13,11 @@ namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
             => CanConvert(type) ? new T() : base.Handle(type);
 
         private bool CanConvert(TypeSyntax type)
-            => (type is PredefinedTypeSyntax predefined && ConvertibleFrom.Contains(predefined.Keyword.Text))
-            || (type is IdentifierNameSyntax identified && ConvertibleFrom.Contains(identified.Identifier.Text));
+            => type switch
+            {
+                PredefinedTypeSyntax predefined => ConvertibleFrom.Contains(predefined.Keyword.Text),
+                IdentifierNameSyntax identified => ConvertibleFrom.Contains(identified.Identifier.Text),
+                _ => false
+            };
     }
 }
