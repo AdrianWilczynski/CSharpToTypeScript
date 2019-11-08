@@ -125,7 +125,7 @@ namespace CSharpToTypeScript.CLITool
 
         private void CreateOrUpdateFile(string path, string content, bool partialOverride)
         {
-            FileSystem.EnsureDirectoryExists(path.ContainingDirectory());
+            Directory.CreateDirectory(path.ContainingDirectory());
 
             if (partialOverride)
             {

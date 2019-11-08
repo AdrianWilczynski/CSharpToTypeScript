@@ -301,5 +301,31 @@ export interface Item {
             Assert.True(File.Exists(outputFilePath));
             Assert.Contains("export interface IItemBase", File.ReadAllText(outputFilePath));
         }
+
+        [Fact]
+        public void ConvertFilesInNestedDirecotories()
+        {
+            Prepare(nameof(ConvertFilesInNestedDirecotories));
+
+            var sourceFilePath = Path.Join(nameof(ConvertFilesInNestedDirecotories), "Item.cs");
+
+            var nestedDirectoryPath = Path.Join(nameof(ConvertFilesInNestedDirecotories), "Nested");
+            var nestedSourceFilePath = Path.Join(nestedDirectoryPath, "NestedItem.cs");
+
+            File.WriteAllText(sourceFilePath, "class Item13 { }");
+
+            Directory.CreateDirectory(nestedDirectoryPath);
+            File.WriteAllText(nestedSourceFilePath, "class Item 14 { }");
+
+            _cli.Input = nameof(ConvertFilesInNestedDirecotories);
+
+            _cli.OnExecute();
+
+            var outputFilePath = Path.Join(nameof(ConvertFilesInNestedDirecotories), "item.ts");
+            var nestedOutputFilePath = Path.Join(nestedDirectoryPath, "nestedItem.ts");
+
+            Assert.True(File.Exists(outputFilePath));
+            Assert.True(File.Exists(nestedOutputFilePath));
+        }
     }
 }

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace CSharpToTypeScript.CLITool.Utilities
@@ -14,17 +13,9 @@ namespace CSharpToTypeScript.CLITool.Utilities
             => new FileInfo(filePath).DirectoryName;
 
         public static IEnumerable<string> GetFilesWithExtension(string directoryPath, string extension)
-           => Directory.GetFiles(directoryPath).Where(f => f.EndsWith($".{extension}"));
+           => Directory.GetFiles(directoryPath, $"*.{extension}", SearchOption.AllDirectories);
 
         public static bool EndsWithFileExtension(this string text)
             => Regex.IsMatch(text, @"\.\w+$");
-
-        public static void EnsureDirectoryExists(string path)
-        {
-            if (!Directory.Exists(path))
-            {
-                Directory.CreateDirectory(path);
-            }
-        }
     }
 }
