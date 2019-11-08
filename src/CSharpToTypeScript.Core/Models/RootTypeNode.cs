@@ -24,7 +24,10 @@ namespace CSharpToTypeScript.Core.Models
         public IEnumerable<TypeNode> BaseTypes { get; set; }
 
         public override IEnumerable<string> Requires
-            => Fields.SelectMany(f => f.Requires).Concat(BaseTypes.SelectMany(b => b.Requires)).Distinct();
+            => Fields.SelectMany(f => f.Requires)
+                .Concat(BaseTypes.SelectMany(b => b.Requires))
+                .Except(GenericTypeParameters)
+                .Distinct();
 
         public override string WriteTypeScript(CodeConversionOptions options)
             =>  // keywords

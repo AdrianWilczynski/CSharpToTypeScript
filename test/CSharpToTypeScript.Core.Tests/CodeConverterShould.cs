@@ -377,6 +377,17 @@ export interface ImplementingItem {
         }
 
         [Fact]
+        public void NotImportGenericTypeParameters()
+        {
+            var converted = _codeConverter.ConvertToTypeScript(@"class Item<T>
+{
+    public T MyProperty { get; set; }
+}", new CodeConversionOptions(export: false, useTabs: true, importGenerationMode: ImportGenerationMode.Simple));
+
+            Assert.DoesNotContain("import { T }", converted);
+        }
+
+        [Fact]
         public void RespectModuleNameSettingsWhenGeneratingImports()
         {
             var converted = _codeConverter.ConvertToTypeScript(@"class Item
