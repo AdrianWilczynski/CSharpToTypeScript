@@ -153,7 +153,7 @@ namespace CSharpToTypeScript.CLITool.Tests
 
             var originalFilePath = Path.Join(nameof(UseAngularConventionsWhenRequested), "ShoppingCartItem.cs");
 
-            File.WriteAllText(originalFilePath, @"class ShoppingCartItem 
+            File.WriteAllText(originalFilePath, @"class ShoppingCartItem
 {
     public int Id { get; set; }
 }");
@@ -269,7 +269,7 @@ export interface Item {
             var outputFilePath = Path.Join(nameof(PreserveCasing), "item.ts");
 
             File.WriteAllText(originalFilePath, @"class Item12
-{ 
+{
     public int MyProperty { get; set; }
 }");
 
