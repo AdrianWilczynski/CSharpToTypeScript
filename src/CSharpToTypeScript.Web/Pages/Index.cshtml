@@ -68,8 +68,8 @@
                             <input asp-for="Settings.GenerateImports" class="custom-control-input">
                             <label asp-for="Settings.GenerateImports" class="custom-control-label"></label>
                         </div>
-                        <details class="ml-3">
-                            <summary>File Name Settings</summary>
+                        <details class="ml-3" id="moduleNameSettings" @(Model.Settings.GenerateImports ? "open" : "")>
+                            <summary>Module Name Settings</summary>
                             <div class="custom-control custom-switch">
                                 <input asp-for="Settings.UseKebabCase" class="custom-control-input">
                                 <label asp-for="Settings.UseKebabCase" class="custom-control-label"></label>

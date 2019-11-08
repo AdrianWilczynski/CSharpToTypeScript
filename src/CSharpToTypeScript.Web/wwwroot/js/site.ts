@@ -1,6 +1,8 @@
 const inputCodeTextarea = document.getElementById('InputCode') as HTMLTextAreaElement;
 const convertedCodeHiddenInput = document.getElementById('convertedCodeHiddenInput') as HTMLTextAreaElement;
 const convertedCodeContainer = document.getElementById('convertedCodeContainer')!;
+const moduleNameSettings = document.getElementById('moduleNameSettings') as HTMLDetailsElement;
+const generateImportsToggle = document.getElementById('Settings_GenerateImports') as HTMLInputElement;
 
 inputCodeTextarea.addEventListener('keydown', ev => {
     if (ev.keyCode === 9 /* Tab */) {
@@ -22,6 +24,10 @@ convertedCodeContainer.addEventListener('click', () => {
 })
 
 convertedCodeContainer.addEventListener('animationend', cleanUpAnimations);
+
+generateImportsToggle.addEventListener('change', () => {
+    moduleNameSettings.open = generateImportsToggle.checked;
+})
 
 function copyToClipboard() {
     convertedCodeHiddenInput.hidden = false;
