@@ -25,7 +25,7 @@ namespace CSharpToTypeScript.Core.Models
                 (Imports.Select(i =>
                     // type
                     "import { " + i.TransformIf(options.RemoveInterfacePrefix, StringUtilities.RemoveInterfacePrefix) + " }"
-                    // file
+                    // module
                     + " from \"./" + ModuleNameTransformation.Transform(i, options) + "\";")
                 .Distinct().LineByLine()
                 + EmptyLine).If(Imports.Any() && options.ImportGenerationMode != ImportGenerationMode.None)
