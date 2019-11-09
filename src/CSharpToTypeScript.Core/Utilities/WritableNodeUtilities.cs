@@ -5,7 +5,7 @@ using CSharpToTypeScript.Core.Options;
 
 namespace CSharpToTypeScript.Core.Utilities
 {
-    public static class WritableNodeUtilities
+    internal static class WritableNodeUtilities
     {
         public static IEnumerable<string> WriteTypeScript(this IEnumerable<IWritableNode> nodes, CodeConversionOptions options)
             => nodes.Select(n => n.WriteTypeScript(options));
