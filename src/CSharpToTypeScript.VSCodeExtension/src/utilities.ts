@@ -12,7 +12,7 @@ export function fullRange(document: vscode.TextDocument) {
         document.lineCount - 1, document.lineAt(document.lineCount - 1).range.end.character);
 }
 
-export function getTextFromActiveDocument() {
+export function textFromActiveDocument() {
     if (!vscode.window.activeTextEditor) {
         return '';
     }

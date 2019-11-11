@@ -2,9 +2,9 @@ import * as cp from 'child_process';
 import * as path from 'path';
 import * as readline from 'readline';
 import * as vscode from 'vscode';
-import { dateOutputTypes, Input, nullableOutputTypes, quotationMarks } from './input';
+import { Input, dateOutputTypes, nullableOutputTypes, quotationMarks } from './input';
 import { Output } from './output';
-import { allowedOrDefault, fullRange, getTextFromActiveDocument } from './utilities';
+import { allowedOrDefault, fullRange, textFromActiveDocument } from './utilities';
 
 let server: cp.ChildProcess | undefined;
 let rl: readline.Interface | undefined;
@@ -45,7 +45,7 @@ export function deactivate() {
 }
 
 async function replaceCommand() {
-    const code = getTextFromActiveDocument();
+    const code = textFromActiveDocument();
 
     await convert(code, async convertedCode => {
         if (!vscode.window.activeTextEditor) {
@@ -61,7 +61,7 @@ async function replaceCommand() {
 }
 
 async function toClipboardCommand() {
-    const code = getTextFromActiveDocument();
+    const code = textFromActiveDocument();
 
     await convert(code, async convertedCode => {
         await vscode.env.clipboard.writeText(convertedCode);
