@@ -26,7 +26,7 @@ namespace CSharpToTypeScript.Core.Models
                     // type
                     "import { " + i.TransformIf(options.RemoveInterfacePrefix, StringUtilities.RemoveInterfacePrefix) + " }"
                     // module
-                    + " from \"./" + ModuleNameTransformation.Transform(i, options) + "\";")
+                    + " from " + ("./" + ModuleNameTransformation.Transform(i, options)).InQuotes(options.QuotationMark) + ";")
                 .Distinct().LineByLine()
                 + EmptyLine).If(Imports.Any() && options.ImportGenerationMode != ImportGenerationMode.None)
             // types

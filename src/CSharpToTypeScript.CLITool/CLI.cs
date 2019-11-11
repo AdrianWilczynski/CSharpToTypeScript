@@ -74,10 +74,14 @@ namespace CSharpToTypeScript.CLITool
         ValueName = nameof(ImportGenerationMode.None) + "|" + nameof(ImportGenerationMode.Simple))]
         public ImportGenerationMode ImportGeneration { get; set; }
 
+        [Option(ShortName = "q", Description = "Set quotation marks for import statements",
+        ValueName = nameof(QuotationMark.Double) + "|" + nameof(QuotationMark.Single))]
+        public QuotationMark QuotationMark { get; set; }
+
         public CodeConversionOptions CodeConversionOptions
             => new CodeConversionOptions(!SkipExport, UseTabs, TabSize, ConvertDatesTo, ConvertNullablesTo,
                 !PreserveCasing, !PreserveInterfacePrefix,
-                ImportGeneration, UseKebabCase, AppendModelSuffix);
+                ImportGeneration, UseKebabCase, AppendModelSuffix, QuotationMark);
 
         public void OnExecute()
         {

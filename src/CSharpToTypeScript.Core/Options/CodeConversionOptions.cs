@@ -5,7 +5,7 @@ namespace CSharpToTypeScript.Core.Options
         public CodeConversionOptions(bool export, bool useTabs, int? tabSize = null,
             DateOutputType convertDatesTo = DateOutputType.String, NullableOutputType convertNullablesTo = NullableOutputType.Null,
             bool toCamelCase = true, bool removeInterfacePrefix = true, ImportGenerationMode importGenerationMode = ImportGenerationMode.None,
-            bool useKebabCase = false, bool appendModelSuffix = false)
+            bool useKebabCase = false, bool appendModelSuffix = false, QuotationMark quotationMark = QuotationMark.Double)
         : base(useKebabCase, appendModelSuffix, removeInterfacePrefix)
         {
             Export = export;
@@ -15,6 +15,7 @@ namespace CSharpToTypeScript.Core.Options
             ConvertNullablesTo = convertNullablesTo;
             ToCamelCase = toCamelCase;
             ImportGenerationMode = importGenerationMode;
+            QuotationMark = quotationMark;
         }
 
         public bool Export { get; set; }
@@ -24,5 +25,6 @@ namespace CSharpToTypeScript.Core.Options
         public NullableOutputType ConvertNullablesTo { get; set; }
         public bool ToCamelCase { get; set; }
         public ImportGenerationMode ImportGenerationMode { get; set; }
+        public QuotationMark QuotationMark { get; set; }
     }
 }

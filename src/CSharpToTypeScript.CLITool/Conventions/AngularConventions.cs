@@ -1,3 +1,5 @@
+using CSharpToTypeScript.Core.Options;
+
 namespace CSharpToTypeScript.CLITool.Conventions
 {
     public static class AngularConventions
@@ -7,6 +9,7 @@ namespace CSharpToTypeScript.CLITool.Conventions
             cli.TabSize = 2;
             cli.UseKebabCase = true;
             cli.AppendModelSuffix = true;
+            cli.QuotationMark = QuotationMark.Single;
         }
     }
 }

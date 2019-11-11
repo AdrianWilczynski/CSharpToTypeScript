@@ -2,7 +2,7 @@ import * as cp from 'child_process';
 import * as path from 'path';
 import * as readline from 'readline';
 import * as vscode from 'vscode';
-import { dateOutputTypes, Input, nullableOutputTypes } from './input';
+import { dateOutputTypes, Input, nullableOutputTypes, quotationMarks } from './input';
 import { Output } from './output';
 import { allowedOrDefault, fullRange } from './utilities';
 
@@ -65,13 +65,14 @@ export async function convert(target: 'document' | 'clipboard') {
         useTabs: !vscode.window.activeTextEditor.options.insertSpaces,
         tabSize: vscode.window.activeTextEditor.options.tabSize as number,
         export: !!configuration.get('csharpToTypeScript.export'),
-        convertDatesTo: allowedOrDefault(configuration.get('csharpToTypeScript.convertDatesTo'), dateOutputTypes, 'string'),
-        convertNullablesTo: allowedOrDefault(configuration.get('csharpToTypeScript.convertNullablesTo'), nullableOutputTypes, 'null'),
+        convertDatesTo: allowedOrDefault(configuration.get('csharpToTypeScript.convertDatesTo'), dateOutputTypes),
+        convertNullablesTo: allowedOrDefault(configuration.get('csharpToTypeScript.convertNullablesTo'), nullableOutputTypes),
         toCamelCase: !!configuration.get('csharpToTypeScript.toCamelCase'),
         removeInterfacePrefix: !!configuration.get('csharpToTypeScript.removeInterfacePrefix'),
         generateImports: !!configuration.get('csharpToTypeScript.generateImports'),
         useKebabCase: !!configuration.get('csharpToTypeScript.useKebabCase'),
-        appendModelSuffix: !!configuration.get('csharpToTypeScript.appendModelSuffix')
+        appendModelSuffix: !!configuration.get('csharpToTypeScript.appendModelSuffix'),
+        quotationMark: allowedOrDefault(configuration.get('csharpToTypeScript.quotationMark'), quotationMarks)
     };
 
     const inputLine = JSON.stringify(input) + '\n';

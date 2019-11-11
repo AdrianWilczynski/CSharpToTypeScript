@@ -26,6 +26,7 @@ Convert C# Models, ViewModels and DTOs into their TypeScript equivalents.
 - `"csharpToTypeScript.generateImports": false` toggles simple import statements generation.
     - `"csharpToTypeScript.useKebabCase": false` - use kebab case for module names in import statements.
     - `"csharpToTypeScript.appendModelSuffix": false` - append ".model" suffix to module names in import statements.
+    - `"csharpToTypeScript.quotationMark": double` sets quotation marks for import statements (`double` or `single`).
 
 ## Known limitations / design choices
 

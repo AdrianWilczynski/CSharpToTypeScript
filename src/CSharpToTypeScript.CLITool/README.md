@@ -24,6 +24,7 @@ Convert C# Models, ViewModels and DTOs into their TypeScript equivalents.
 | -d\|--convert-dates-to \<String\|Date\|Union\>     | Set output type for dates                                 |
 | -n\|--convert-nullables-to \<Null\|Undefined\>     | Set output type for nullables                             |
 | -i\|--import-generation \<None\|Simple\>           | Enable import generation\*                                |
+| -q\|--quotation-mark \<Double\|Single\>            | Set quotation marks for import statements                 |
 | -?\|-h\|--help                                     | Show help information                                     |
 
 \* Simple import generation assumes flat output directory structure and file names corresponding to type names (e.g. `MyType`: `myType.ts`, `my-type.ts`, `my-type.model.ts`). 

@@ -115,6 +115,15 @@
 						"type": "boolean",
 						"default": false,
 						"description": "Append \".model\" suffix to module names in import statements."
+					},
+					"csharpToTypeScript.quotationMark": {
+						"type": "string",
+						"default": "double",
+						"enum": [
+							"double",
+							"single"
+						],
+						"description": "Sets quotation marks for import statements."
 					}
 				}
 			}

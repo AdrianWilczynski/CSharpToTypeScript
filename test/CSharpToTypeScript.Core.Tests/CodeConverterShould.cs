@@ -394,9 +394,21 @@ export interface ImplementingItem {
 {
     public ImportMe MyProperty { get; set; }
 }", new CodeConversionOptions(export: false, useTabs: true, importGenerationMode: ImportGenerationMode.Simple,
-        useKebabCase: true, appendModelSuffix: true));
+            useKebabCase: true, appendModelSuffix: true));
 
             Assert.StartsWith("import { ImportMe } from \"./import-me.model\";", converted);
+        }
+
+        [Fact]
+        public void RespectSingleQuoteSetting()
+        {
+            var converted = _codeConverter.ConvertToTypeScript(@"class Item
+{
+    public ImportMe MyProperty { get; set; }
+}", new CodeConversionOptions(export: false, useTabs: true,
+            importGenerationMode: ImportGenerationMode.Simple, quotationMark: QuotationMark.Single));
+
+            Assert.StartsWith("import { ImportMe } from './importMe';", converted);
         }
     }
 }

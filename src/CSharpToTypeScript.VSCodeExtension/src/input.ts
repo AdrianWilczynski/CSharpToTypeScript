@@ -10,7 +10,9 @@ export interface Input {
     generateImports: boolean;
     useKebabCase: boolean;
     appendModelSuffix: boolean;
+    quotationMark: string;
 }
 
 export const dateOutputTypes = ['string', 'date', 'union'];
 export const nullableOutputTypes = ['null', 'undefined'];
+export const quotationMarks = ['double', 'single'];

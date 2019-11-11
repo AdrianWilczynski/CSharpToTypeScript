@@ -15,11 +15,12 @@ namespace CSharpToTypeScript.Server.DTOs
         public bool GenerateImports { get; set; }
         public bool UseKebabCase { get; set; }
         public bool AppendModelSuffix { get; set; }
+        public QuotationMark QuotationMark { get; set; }
 
         public CodeConversionOptions MapToCodeConversionOptions()
             => new CodeConversionOptions(Export, UseTabs, TabSize,
                 ConvertDatesTo, ConvertNullablesTo, ToCamelCase, RemoveInterfacePrefix,
                 GenerateImports ? ImportGenerationMode.Simple : ImportGenerationMode.None,
-                UseKebabCase, AppendModelSuffix);
+                UseKebabCase, AppendModelSuffix, QuotationMark);
     }
 }

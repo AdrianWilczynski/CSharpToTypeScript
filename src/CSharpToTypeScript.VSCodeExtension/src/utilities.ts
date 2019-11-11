@@ -1,10 +1,10 @@
 import * as vscode from 'vscode';
 
-export function allowedOrDefault(value: any, allowedValues: string[], defaultValue: string) {
+export function allowedOrDefault(value: any, allowedValues: string[]) {
     if (typeof value === 'string' && allowedValues.includes(value)) {
         return value;
     }
-    return defaultValue;
+    return allowedValues[0];
 }
 
 export function fullRange(document: vscode.TextDocument) {

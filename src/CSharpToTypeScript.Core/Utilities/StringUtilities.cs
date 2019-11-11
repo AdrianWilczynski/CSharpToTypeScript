@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using CSharpToTypeScript.Core.Options;
 
 namespace CSharpToTypeScript.Core.Utilities
 {
@@ -29,6 +30,14 @@ namespace CSharpToTypeScript.Core.Utilities
 
         public static string Parenthesize(this string text)
             => "(" + text + ")";
+
+        public static string InQuotes(this string text, QuotationMark quotationMark)
+            => quotationMark switch
+            {
+                QuotationMark.Double => '"' + text + '"',
+                QuotationMark.Single => "'" + text + "'",
+                _ => throw new ArgumentException()
+            };
 
         public static string ToCommaSepratedList(this IEnumerable<string> texts)
             => string.Join(", ", texts);
