@@ -4,7 +4,7 @@ import * as readline from 'readline';
 import * as vscode from 'vscode';
 import { dateOutputTypes, Input, nullableOutputTypes, quotationMarks } from './input';
 import { Output } from './output';
-import { allowedOrDefault, fullRange } from './utilities';
+import { allowedOrDefault, fullRange, getTextFromActiveDocument } from './utilities';
 
 let server: cp.ChildProcess | undefined;
 let rl: readline.Interface | undefined;
@@ -33,8 +33,9 @@ export function activate(context: vscode.ExtensionContext) {
     rl = readline.createInterface(server.stdout, server.stdin);
 
     context.subscriptions.push(
-        vscode.commands.registerCommand('csharpToTypeScript.csharpToTypeScriptReplace', () => convert('document')),
-        vscode.commands.registerCommand('csharpToTypeScript.csharpToTypeScriptToClipboard', () => convert('clipboard')));
+        vscode.commands.registerCommand('csharpToTypeScript.csharpToTypeScriptReplace', replaceCommand),
+        vscode.commands.registerCommand('csharpToTypeScript.csharpToTypeScriptToClipboard', toClipboardCommand),
+        vscode.commands.registerCommand('csharpToTypeScript.csharpToTypeScriptPasteAs', paseAsCommand));
 }
 
 export function deactivate() {
@@ -43,7 +44,46 @@ export function deactivate() {
     }
 }
 
-export async function convert(target: 'document' | 'clipboard') {
+async function replaceCommand() {
+    const code = getTextFromActiveDocument();
+
+    await convert(code, async convertedCode => {
+        if (!vscode.window.activeTextEditor) {
+            return;
+        }
+
+        const document = vscode.window.activeTextEditor.document;
+        const selection = vscode.window.activeTextEditor.selection;
+
+        await vscode.window.activeTextEditor.edit(
+            builder => builder.replace(!selection.isEmpty ? selection : fullRange(document), convertedCode));
+    });
+}
+
+async function toClipboardCommand() {
+    const code = getTextFromActiveDocument();
+
+    await convert(code, async convertedCode => {
+        await vscode.env.clipboard.writeText(convertedCode);
+    });
+}
+
+async function paseAsCommand() {
+    const code = await vscode.env.clipboard.readText();
+
+    await convert(code, async convertedCode => {
+        if (!vscode.window.activeTextEditor) {
+            return;
+        }
+
+        const selection = vscode.window.activeTextEditor.selection;
+
+        await vscode.window.activeTextEditor.edit(
+            builder => builder.replace(selection, convertedCode));
+    });
+}
+
+export async function convert(code: string, onConverted: (convertedCode: string) => Promise<void>) {
     if (!serverRunning) {
         vscode.window.showErrorMessage(`"C# to TypeScript" server isn't running! Reload Window to restart it.`);
         return;
@@ -55,13 +95,10 @@ export async function convert(target: 'document' | 'clipboard') {
 
     executingCommand = true;
 
-    const document = vscode.window.activeTextEditor.document;
-    const selection = vscode.window.activeTextEditor.selection;
-
     const configuration = vscode.workspace.getConfiguration();
 
     const input: Input = {
-        code: !selection.isEmpty ? document.getText(selection) : document.getText(),
+        code: code,
         useTabs: !vscode.window.activeTextEditor.options.insertSpaces,
         tabSize: vscode.window.activeTextEditor.options.tabSize as number,
         export: !!configuration.get('csharpToTypeScript.export'),
@@ -80,15 +117,19 @@ export async function convert(target: 'document' | 'clipboard') {
     rl.question(inputLine, async outputLine => {
         const { convertedCode, succeeded, errorMessage } = JSON.parse(outputLine) as Output;
 
-        if (!succeeded && errorMessage) {
-            vscode.window.showErrorMessage(`"C# to TypeScript" extension encountered an error while converting your code: "${errorMessage}".`);
-        } else if (succeeded && convertedCode && target === 'document' && vscode.window.activeTextEditor) {
-            await vscode.window.activeTextEditor.edit(
-                builder => builder.replace(!selection.isEmpty ? selection : fullRange(document), convertedCode));
-        } else if (succeeded && convertedCode && target === 'clipboard') {
-            await vscode.env.clipboard.writeText(convertedCode);
+        if (!succeeded) {
+            if (errorMessage) {
+                vscode.window.showErrorMessage(`"C# to TypeScript" extension encountered an error while converting your code: "${errorMessage}".`);
+            } else {
+                vscode.window.showErrorMessage(`"C# to TypeScript" extension encountered an unknown error while converting your code.`);
+            }
+        } else if (!convertedCode) {
+            vscode.window.showWarningMessage(`Nothing to convert - C# to TypeScript conversion resulted in an empty string.`);
+        } else {
+            await onConverted(convertedCode);
         }
 
         executingCommand = false;
     });
 }
+

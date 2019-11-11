@@ -30,25 +30,36 @@
 	],
 	"activationEvents": [
 		"onCommand:csharpToTypeScript.csharpToTypeScriptReplace",
-		"onCommand:csharpToTypeScript.csharpToTypeScriptToClipboard"
+		"onCommand:csharpToTypeScript.csharpToTypeScriptToClipboard",
+		"onCommand:csharpToTypeScript.csharpToTypeScriptPasteAs"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
 				"command": "csharpToTypeScript.csharpToTypeScriptReplace",
-				"title": "C# to TypeScript (Replace)"
+				"title": "C# to TypeScript (Replace)",
+				"enablement": "resourceLangId == csharp || resourceLangId == typescript"
 			},
 			{
 				"command": "csharpToTypeScript.csharpToTypeScriptToClipboard",
-				"title": "C# to TypeScript (Clipboard)"
+				"title": "C# to TypeScript (To Clipboard)",
+				"enablement": "resourceLangId == csharp || resourceLangId == typescript"
+			},
+			{
+				"command": "csharpToTypeScript.csharpToTypeScriptPasteAs",
+				"title": "C# to TypeScript (Paste As)",
+				"enablement": "resourceLangId == typescript"
 			}
 		],
 		"keybindings": [
 			{
 				"command": "csharpToTypeScript.csharpToTypeScriptToClipboard",
-				"key": "alt+/",
-				"when": "resourceLangId == csharp || resourceLangId == typescript"
+				"key": "alt+/"
+			},
+			{
+				"command": "csharpToTypeScript.csharpToTypeScriptPasteAs",
+				"key": "alt+."
 			}
 		],
 		"menus": {
@@ -60,6 +71,17 @@
 				{
 					"command": "csharpToTypeScript.csharpToTypeScriptToClipboard",
 					"when": "resourceLangId == csharp || resourceLangId == typescript"
+				},
+				{
+					"command": "csharpToTypeScript.csharpToTypeScriptPasteAs",
+					"when": "resourceLangId == typescript"
+				}
+			],
+			"editor/context": [
+				{
+					"command": "csharpToTypeScript.csharpToTypeScriptPasteAs",
+					"when": "resourceLangId == typescript",
+					"group": "9_cutcopypaste@4"
 				}
 			]
 		},
