@@ -35,7 +35,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
         vscode.commands.registerCommand('csharpToTypeScript.csharpToTypeScriptReplace', replaceCommand),
         vscode.commands.registerCommand('csharpToTypeScript.csharpToTypeScriptToClipboard', toClipboardCommand),
-        vscode.commands.registerCommand('csharpToTypeScript.csharpToTypeScriptPasteAs', paseAsCommand));
+        vscode.commands.registerCommand('csharpToTypeScript.csharpToTypeScriptPasteAs', pasteAsCommand));
 }
 
 export function deactivate() {
@@ -68,7 +68,7 @@ async function toClipboardCommand() {
     });
 }
 
-async function paseAsCommand() {
+async function pasteAsCommand() {
     const code = await vscode.env.clipboard.readText();
 
     await convert(code, async convertedCode => {
@@ -83,7 +83,7 @@ async function paseAsCommand() {
     });
 }
 
-export async function convert(code: string, onConverted: (convertedCode: string) => Promise<void>) {
+async function convert(code: string, onConverted: (convertedCode: string) => Promise<void>) {
     if (!serverRunning) {
         vscode.window.showErrorMessage(`"C# to TypeScript" server isn't running! Reload Window to restart it.`);
         return;
