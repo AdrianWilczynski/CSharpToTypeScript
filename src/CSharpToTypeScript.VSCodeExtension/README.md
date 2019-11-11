@@ -6,6 +6,8 @@ Convert C# Models, ViewModels and DTOs into their TypeScript equivalents.
 
 ![In Action](https://raw.githubusercontent.com/AdrianWilczynski/CSharpToTypeScript/master/src/CSharpToTypeScript.VSCodeExtension/img/inAction.gif)
 
+![Conversion Example](https://raw.githubusercontent.com/AdrianWilczynski/CSharpToTypeScript/master/src/CSharpToTypeScript.VSCodeExtension/img/example.png)
+
 ## Commands
 
 - `"C# to TypeScript (Replace)"` - converts content of open document (or it's selected part) and replaces it.
