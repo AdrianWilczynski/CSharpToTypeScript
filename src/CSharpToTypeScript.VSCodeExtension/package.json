@@ -8,7 +8,7 @@
 		"url": "https://github.com/AdrianWilczynski/CSharpToTypeScript"
 	},
 	"icon": "img/icon.png",
-	"version": "1.5.1",
+	"version": "1.6.0",
 	"engines": {
 		"vscode": "^1.38.0"
 	},
