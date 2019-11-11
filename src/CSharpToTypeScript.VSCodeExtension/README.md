@@ -19,14 +19,14 @@ Convert C# Models, ViewModels and DTOs into their TypeScript equivalents.
 
 - Uses VS Code's indentation settings.
 - `"csharpToTypeScript.export": true` controls exporting.
-- `"csharpToTypeScript.convertDatesTo": string` sets output type for dates. You can pick between `string`, `Date` and `string | Date`.
-- `"csharpToTypeScript.convertNullablesTo": null` sets output type for nullables (`int?`) to either `null` or `undefined`.
+- `"csharpToTypeScript.convertDatesTo": "string"` sets output type for dates. You can pick between `string`, `Date` and `string | Date`.
+- `"csharpToTypeScript.convertNullablesTo": "null"` sets output type for nullables (`int?`) to either `null` or `undefined`.
 - `"csharpToTypeScript.toCamelCase": true` toggles field name conversion to camel case.
 - `"csharpToTypeScript.removeInterfacePrefix": true` controls whether to remove interface prefixes (`IType` -> `Type`).
 - `"csharpToTypeScript.generateImports": false` toggles simple import statements generation.
     - `"csharpToTypeScript.useKebabCase": false` - use kebab case for module names in import statements.
     - `"csharpToTypeScript.appendModelSuffix": false` - append ".model" suffix to module names in import statements.
-    - `"csharpToTypeScript.quotationMark": double` sets quotation marks for import statements (`double` or `single`).
+    - `"csharpToTypeScript.quotationMark": "double"` sets quotation marks for import statements (`double` or `single`).
 
 ## Known limitations / design choices
 
