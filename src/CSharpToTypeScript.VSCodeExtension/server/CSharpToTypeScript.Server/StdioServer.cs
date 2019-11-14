@@ -11,12 +11,14 @@ namespace CSharpToTypeScript.Server
     public class StdioServer
     {
         private readonly ICodeConverter _codeConverter;
+        private readonly IFileNameConverter _fileNameConverter;
         private readonly IStdio _stdio;
 
-        public StdioServer(ICodeConverter codeConverter, IStdio stdio)
+        public StdioServer(ICodeConverter codeConverter, IStdio stdio, IFileNameConverter fileNameConverter)
         {
             _codeConverter = codeConverter;
             _stdio = stdio;
+            _fileNameConverter = fileNameConverter;
         }
 
         private readonly JsonSerializerSettings _serializerSettings = new JsonSerializerSettings
@@ -36,9 +38,14 @@ namespace CSharpToTypeScript.Server
                 {
                     var input = JsonConvert.DeserializeObject<Input>(inputLine, _serializerSettings);
 
-                    var convertedCode = _codeConverter.ConvertToTypeScript(input.Code, input.MapToCodeConversionOptions());
+                    var codeConversionOptions = input.MapToCodeConversionOptions();
 
-                    output = new Output { Succeeded = true, ConvertedCode = convertedCode };
+                    var convertedCode = _codeConverter.ConvertToTypeScript(input.Code, codeConversionOptions);
+                    var convertedFileName = string.IsNullOrWhiteSpace(input.FileName)
+                        ? null
+                        : _fileNameConverter.ConvertToTypeScript(input.FileName, codeConversionOptions);
+
+                    output = new Output { Succeeded = true, ConvertedCode = convertedCode, ConvertedFileName = convertedFileName };
                 }
                 catch (Exception ex)
                 {

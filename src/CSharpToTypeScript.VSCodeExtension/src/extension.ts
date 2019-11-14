@@ -5,6 +5,7 @@ import * as vscode from 'vscode';
 import { Input, dateOutputTypes, nullableOutputTypes, quotationMarks } from './input';
 import { Output } from './output';
 import { allowedOrDefault, fullRange, textFromActiveDocument } from './utilities';
+import { TextEncoder } from 'util';
 
 let server: cp.ChildProcess | undefined;
 let rl: readline.Interface | undefined;
@@ -35,7 +36,8 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
         vscode.commands.registerCommand('csharpToTypeScript.csharpToTypeScriptReplace', replaceCommand),
         vscode.commands.registerCommand('csharpToTypeScript.csharpToTypeScriptToClipboard', toClipboardCommand),
-        vscode.commands.registerCommand('csharpToTypeScript.csharpToTypeScriptPasteAs', pasteAsCommand));
+        vscode.commands.registerCommand('csharpToTypeScript.csharpToTypeScriptPasteAs', pasteAsCommand),
+        vscode.commands.registerCommand('csharpToTypeScript.csharpToTypeScriptToFile', toFileCommand));
 }
 
 export function deactivate() {
@@ -83,7 +85,23 @@ async function pasteAsCommand() {
     });
 }
 
-async function convert(code: string, onConverted: (convertedCode: string) => Promise<void>) {
+async function toFileCommand(uri?: vscode.Uri) {
+    uri = uri ?? vscode.window.activeTextEditor?.document.uri;
+    if (!uri) {
+        return;
+    }
+
+    const document = await vscode.workspace.openTextDocument(uri);
+    const code = document.getText();
+    const fileName = uri.path;
+
+    await convert(code, async (convertedCode, convertedFileName) => {
+        await vscode.workspace.fs.writeFile(vscode.Uri.file(
+            path.join(path.dirname(fileName), convertedFileName!)), new TextEncoder().encode(convertedCode));
+    }, fileName);
+}
+
+async function convert(code: string, onConverted: (convertedCode: string, fileName?: string) => Promise<void>, fileName?: string) {
     if (!serverRunning) {
         vscode.window.showErrorMessage(`"C# to TypeScript" server isn't running! Reload Window to restart it.`);
         return;
@@ -99,6 +117,7 @@ async function convert(code: string, onConverted: (convertedCode: string) => Pro
 
     const input: Input = {
         code: code,
+        fileName: fileName,
         useTabs: !vscode.window.activeTextEditor.options.insertSpaces,
         tabSize: vscode.window.activeTextEditor.options.tabSize as number,
         export: !!configuration.get('csharpToTypeScript.export'),
@@ -115,7 +134,7 @@ async function convert(code: string, onConverted: (convertedCode: string) => Pro
     const inputLine = JSON.stringify(input) + '\n';
 
     rl.question(inputLine, async outputLine => {
-        const { convertedCode, succeeded, errorMessage } = JSON.parse(outputLine) as Output;
+        const { convertedCode, convertedFileName: fileName, succeeded, errorMessage } = JSON.parse(outputLine) as Output;
 
         if (!succeeded) {
             if (errorMessage) {
@@ -126,7 +145,7 @@ async function convert(code: string, onConverted: (convertedCode: string) => Pro
         } else if (!convertedCode) {
             vscode.window.showWarningMessage(`Nothing to convert - C# to TypeScript conversion resulted in an empty string.`);
         } else {
-            await onConverted(convertedCode);
+            await onConverted(convertedCode, fileName);
         }
 
         executingCommand = false;

@@ -1,5 +1,6 @@
 export interface Input {
     code: string;
+    fileName?: string;
     useTabs: boolean;
     tabSize?: number;
     export: boolean;

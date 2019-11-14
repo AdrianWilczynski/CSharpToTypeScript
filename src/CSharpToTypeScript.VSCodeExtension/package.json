@@ -31,7 +31,8 @@
 	"activationEvents": [
 		"onCommand:csharpToTypeScript.csharpToTypeScriptReplace",
 		"onCommand:csharpToTypeScript.csharpToTypeScriptToClipboard",
-		"onCommand:csharpToTypeScript.csharpToTypeScriptPasteAs"
+		"onCommand:csharpToTypeScript.csharpToTypeScriptPasteAs",
+		"onCommand:csharpToTypeScript.csharpToTypeScriptToFile"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -50,6 +51,11 @@
 				"command": "csharpToTypeScript.csharpToTypeScriptPasteAs",
 				"title": "C# to TypeScript (Paste As)",
 				"enablement": "resourceLangId == typescript"
+			},
+			{
+				"command": "csharpToTypeScript.csharpToTypeScriptToFile",
+				"title": "C# to TypeScript (To File)",
+				"enablement": "resourceLangId == csharp"
 			}
 		],
 		"keybindings": [
@@ -75,6 +81,10 @@
 				{
 					"command": "csharpToTypeScript.csharpToTypeScriptPasteAs",
 					"when": "resourceLangId == typescript"
+				},
+				{
+					"command": "csharpToTypeScript.csharpToTypeScriptToFile",
+					"when": "resourceLangId == csharp"
 				}
 			],
 			"editor/context": [
@@ -82,6 +92,12 @@
 					"command": "csharpToTypeScript.csharpToTypeScriptPasteAs",
 					"when": "resourceLangId == typescript",
 					"group": "9_cutcopypaste@4"
+				}
+			],
+			"explorer/context": [
+				{
+					"command": "csharpToTypeScript.csharpToTypeScriptToFile",
+					"when": "resourceLangId == csharp"
 				}
 			]
 		},
@@ -165,8 +181,8 @@
 		"@types/vscode": "^1.38.0",
 		"glob": "^7.1.4",
 		"mocha": "^6.1.4",
-		"typescript": "^3.3.1",
 		"tslint": "^5.12.1",
+		"typescript": "^3.7.2",
 		"vscode-test": "^1.0.2"
 	}
 }
