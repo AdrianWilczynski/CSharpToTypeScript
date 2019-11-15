@@ -93,12 +93,12 @@ async function toFileCommand(uri?: vscode.Uri) {
 
     const document = await vscode.workspace.openTextDocument(uri);
     const code = document.getText();
-    const fileName = uri.path;
+    const filePath = uri.path;
 
     await convert(code, async (convertedCode, convertedFileName) => {
         await vscode.workspace.fs.writeFile(vscode.Uri.file(
-            path.join(path.dirname(fileName), convertedFileName!)), new TextEncoder().encode(convertedCode));
-    }, fileName);
+            path.join(path.dirname(filePath), convertedFileName!)), new TextEncoder().encode(convertedCode));
+    }, filePath);
 }
 
 async function convert(code: string, onConverted: (convertedCode: string, fileName?: string) => Promise<void>, fileName?: string) {

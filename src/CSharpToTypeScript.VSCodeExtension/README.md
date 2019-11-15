@@ -13,6 +13,7 @@ Convert C# Models, ViewModels and DTOs into their TypeScript equivalents.
 - `"C# to TypeScript (Replace)"` - converts content of open document (or it's selected part) and replaces it.
 - `"C# to TypeScript (To Clipboard)"` (*keybinding:* `Alt + /`) - writes converted code to clipboard.
 - `"C# to TypeScript (Paste As)"` (*keybinding:* `Alt + .`, *editor context menu*) - converts content of clipboard and pastes it.
+- `"C# to TypeScript (To File)"` (*explorer context menu*) - converts picked file into new file.
 
 ## Requirements
 
@@ -27,9 +28,9 @@ Convert C# Models, ViewModels and DTOs into their TypeScript equivalents.
 - `"csharpToTypeScript.toCamelCase": true` toggles field name conversion to camel case.
 - `"csharpToTypeScript.removeInterfacePrefix": true` controls whether to remove interface prefixes (`IType` -> `Type`).
 - `"csharpToTypeScript.generateImports": false` toggles simple import statements generation.
-    - `"csharpToTypeScript.useKebabCase": false` - use kebab case for module names in import statements.
-    - `"csharpToTypeScript.appendModelSuffix": false` - append ".model" suffix to module names in import statements.
     - `"csharpToTypeScript.quotationMark": "double"` sets quotation marks for import statements (`double` or `single`).
+- `"csharpToTypeScript.useKebabCase": false` - use kebab case for file names.
+- `"csharpToTypeScript.appendModelSuffix": false` - append ".model" suffix to file names.
 
 ## Known limitations / design choices
 
