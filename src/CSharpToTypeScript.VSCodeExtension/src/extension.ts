@@ -96,8 +96,12 @@ async function toFileCommand(uri?: vscode.Uri) {
     const filePath = uri.path;
 
     await convert(code, async (convertedCode, convertedFileName) => {
+        if (!convertedFileName) {
+            return;
+        }
+
         await vscode.workspace.fs.writeFile(vscode.Uri.file(
-            path.join(path.dirname(filePath), convertedFileName!)), new TextEncoder().encode(convertedCode));
+            path.join(path.dirname(filePath), convertedFileName)), new TextEncoder().encode(convertedCode));
     }, filePath);
 }
 
