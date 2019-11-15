@@ -20,13 +20,17 @@
 		"CSharp",
 		".NET",
 		".NET Core",
+		"ASP.NET",
+		"ASP.NET Core",
+		"Angular",
 		"TypeScript",
 		"TS",
 		"Convert",
 		"Converter",
 		"Generate",
 		"Model",
-		"Keybindings"
+		"Keybindings",
+		"API"
 	],
 	"activationEvents": [
 		"onCommand:csharpToTypeScript.csharpToTypeScriptReplace",
