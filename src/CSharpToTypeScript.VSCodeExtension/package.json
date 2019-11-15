@@ -54,7 +54,7 @@
 			{
 				"command": "csharpToTypeScript.csharpToTypeScriptPasteAs",
 				"title": "C# to TypeScript (Paste As)",
-				"enablement": "resourceLangId == typescript"
+				"enablement": "resourceLangId == csharp || resourceLangId == typescript"
 			},
 			{
 				"command": "csharpToTypeScript.csharpToTypeScriptToFile",
@@ -84,7 +84,7 @@
 				},
 				{
 					"command": "csharpToTypeScript.csharpToTypeScriptPasteAs",
-					"when": "resourceLangId == typescript"
+					"when": "resourceLangId == csharp || resourceLangId == typescript"
 				},
 				{
 					"command": "csharpToTypeScript.csharpToTypeScriptToFile",
