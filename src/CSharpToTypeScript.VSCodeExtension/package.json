@@ -97,7 +97,8 @@
 			"explorer/context": [
 				{
 					"command": "csharpToTypeScript.csharpToTypeScriptToFile",
-					"when": "resourceLangId == csharp"
+					"when": "resourceLangId == csharp",
+					"group": "7_modification"
 				}
 			]
 		},
