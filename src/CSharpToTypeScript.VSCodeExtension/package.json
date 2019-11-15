@@ -144,16 +144,6 @@
 						"default": false,
 						"description": "Generate import statements."
 					},
-					"csharpToTypeScript.useKebabCase": {
-						"type": "boolean",
-						"default": false,
-						"description": "Use kebab case for module names in import statements."
-					},
-					"csharpToTypeScript.appendModelSuffix": {
-						"type": "boolean",
-						"default": false,
-						"description": "Append \".model\" suffix to module names in import statements."
-					},
 					"csharpToTypeScript.quotationMark": {
 						"type": "string",
 						"default": "double",
@@ -162,6 +152,16 @@
 							"single"
 						],
 						"description": "Sets quotation marks for import statements."
+					},
+					"csharpToTypeScript.useKebabCase": {
+						"type": "boolean",
+						"default": false,
+						"description": "Use kebab case for file names."
+					},
+					"csharpToTypeScript.appendModelSuffix": {
+						"type": "boolean",
+						"default": false,
+						"description": "Append \".model\" suffix to file names."
 					}
 				}
 			}
