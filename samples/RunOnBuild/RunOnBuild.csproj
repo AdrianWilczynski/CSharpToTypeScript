@@ -10,10 +10,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Client\" />
-  </ItemGroup>
-
   <Target Name="CSharpToTypeScript" BeforeTargets="Build">
     <Exec Command="cs2ts ./DTOs -o ./Client/models -i Simple -q Single -c" />
   </Target>
