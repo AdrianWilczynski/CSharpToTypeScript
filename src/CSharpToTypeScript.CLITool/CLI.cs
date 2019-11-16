@@ -11,7 +11,7 @@ using McMaster.Extensions.CommandLineUtils;
 
 namespace CSharpToTypeScript.CLITool
 {
-    [Command(Name = "cs2ts", Description = "Convert C# Models, ViewModels and DTOs into their TypeScript equivalents")]
+    [Command(Name = "dotnet cs2ts", Description = "Convert C# Models, ViewModels and DTOs into their TypeScript equivalents")]
     [OutputMatchesInput]
     public class CLI
     {

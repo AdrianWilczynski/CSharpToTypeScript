@@ -6,11 +6,11 @@
     <RollForward>Major</RollForward>
 
     <PackAsTool>true</PackAsTool>
-    <ToolCommandName>cs2ts</ToolCommandName>
+    <ToolCommandName>dotnet-cs2ts</ToolCommandName>
     <PackageOutputPath>./nupkg</PackageOutputPath>
 
     <PackageId>CSharpToTypeScript.CLITool</PackageId>
-    <Version>1.6.1</Version>
+    <Version>2.0.0</Version>
     <Authors>AdrianWilczynski</Authors>
     <PackageDescription>Convert C# Models, ViewModels and DTOs into their TypeScript equivalents.</PackageDescription>
     <RepositoryUrl>https://github.com/AdrianWilczynski/CSharpToTypeScript.git</RepositoryUrl>

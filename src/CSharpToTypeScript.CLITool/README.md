@@ -2,7 +2,11 @@
 
 Convert C# Models, ViewModels and DTOs into their TypeScript equivalents.
 
-**Usage**: cs2ts \[options\] \<Input\>
+## Usage
+
+```cmd
+dotnet cs2ts [options] <Input>
+```
 
 | Arguments:                                         |                                                           |
 |----------------------------------------------------|-----------------------------------------------------------|
@@ -27,4 +31,22 @@ Convert C# Models, ViewModels and DTOs into their TypeScript equivalents.
 | -q\|--quotation-mark \<Double\|Single\>            | Set quotation marks for import statements                 |
 | -?\|-h\|--help                                     | Show help information                                     |
 
-\* Simple import generation assumes flat output directory structure and file names corresponding to type names (e.g. `MyType`: `myType.ts`, `my-type.ts`, `my-type.model.ts`). 
+\* Simple import generation assumes flat output directory structure and file names corresponding to type names (e.g. `MyType`: `myType.ts`, `my-type.ts`, `my-type.model.ts`).
+
+## Watch with `dotnet watch`
+
+```cmd
+dotnet watch cs2ts ./DTOs -o ./wwwroot/ts/models
+```
+
+## Run on Build
+
+**Sample**: https://github.com/AdrianWilczynski/CSharpToTypeScript/tree/master/samples/RunOnBuild
+
+Add `Exec` task to `.csproj` file.
+
+```xml
+<Target Name="CSharpToTypeScript" BeforeTargets="Build">
+    <Exec Command="dotnet cs2ts ./DTOs -o ./Client/models -i Simple -q Single -c" />
+</Target>
+```
