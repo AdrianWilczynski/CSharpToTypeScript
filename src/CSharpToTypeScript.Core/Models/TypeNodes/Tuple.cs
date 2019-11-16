@@ -27,18 +27,18 @@ namespace CSharpToTypeScript.Core.Models.TypeNodes
 
             public IEnumerable<string> Requires => Type.Requires;
 
-            public string WriteTypeScript(CodeConversionOptions options)
+            public string WriteTypeScript(CodeConversionOptions options, Context context)
                 => // name
                 Name.TransformIf(options.ToCamelCase, StringUtilities.ToCamelCase)
                 // separator
                 + "?".If(Type.IsOptional(options, out _)) + ": "
                 // type
-                + (Type.IsOptional(options, out var of) ? of.WriteTypeScript(options) : Type.WriteTypeScript(options)) + ";";
+                + (Type.IsOptional(options, out var of) ? of.WriteTypeScript(options, context) : Type.WriteTypeScript(options, context)) + ";";
         }
 
         public override IEnumerable<string> Requires => Elements.SelectMany(e => e.Requires).Distinct();
 
-        public override string WriteTypeScript(CodeConversionOptions options)
-            => "{ " + Elements.WriteTypeScript(options).ToSpaceSepratedList() + " }";
+        public override string WriteTypeScript(CodeConversionOptions options, Context context)
+            => "{ " + Elements.WriteTypeScript(options, context).ToSpaceSepratedList() + " }";
     }
 }

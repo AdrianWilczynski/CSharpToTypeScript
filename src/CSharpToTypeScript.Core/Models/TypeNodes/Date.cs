@@ -8,7 +8,7 @@ namespace CSharpToTypeScript.Core.Models.TypeNodes
         public override bool IsUnionType(CodeConversionOptions options)
             => options.ConvertDatesTo == DateOutputType.Union;
 
-        public override string WriteTypeScript(CodeConversionOptions options)
+        public override string WriteTypeScript(CodeConversionOptions options, Context context)
             => options.ConvertDatesTo switch
             {
                 DateOutputType.String => "string",

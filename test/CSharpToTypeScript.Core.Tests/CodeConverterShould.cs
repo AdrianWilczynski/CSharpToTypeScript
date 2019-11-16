@@ -410,5 +410,19 @@ export interface ImplementingItem {
 
             Assert.StartsWith("import { ImportMe } from './importMe';", converted);
         }
+
+        [Fact]
+        public void NotRemovePrefixFromGenericTypeParameters()
+        {
+            var converted = _codeConverter.ConvertToTypeScript(@"class Item<ITest>
+{
+    public ITest MyProperty { get; set; }
+    public Generic<ITest> MyOtherProperty { get; set; }
+}", new CodeConversionOptions(export: false, useTabs: true, removeInterfacePrefix: true));
+
+            Assert.Contains("interface Item<ITest>", converted);
+            Assert.Contains("myProperty: ITest", converted);
+            Assert.Contains("myOtherProperty: Generic<ITest>", converted);
+        }
     }
 }

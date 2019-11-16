@@ -17,9 +17,9 @@ namespace CSharpToTypeScript.Core.Models.TypeNodes
 
         public override IEnumerable<string> Requires => Of.Requires;
 
-        public override string WriteTypeScript(CodeConversionOptions options)
+        public override string WriteTypeScript(CodeConversionOptions options, Context context)
             => // underlying type
-            Of.WriteTypeScript(options).TransformIf(Of.IsUnionType(options), StringUtilities.Parenthesize)
+            Of.WriteTypeScript(options, context).TransformIf(Of.IsUnionType(options), StringUtilities.Parenthesize)
             // brackets
             + "[]".Repeat(Rank);
     }

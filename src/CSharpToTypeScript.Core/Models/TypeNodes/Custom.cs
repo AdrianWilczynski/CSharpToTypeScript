@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using CSharpToTypeScript.Core.Options;
 using CSharpToTypeScript.Core.Utilities;
 
@@ -10,7 +11,7 @@ namespace CSharpToTypeScript.Core.Models.TypeNodes
 
         public override IEnumerable<string> Requires => new[] { Name };
 
-        public override string WriteTypeScript(CodeConversionOptions options)
-            => Name.TransformIf(options.RemoveInterfacePrefix, StringUtilities.RemoveInterfacePrefix);
+        public override string WriteTypeScript(CodeConversionOptions options, Context context)
+            => Name.TransformIf(options.RemoveInterfacePrefix && !context.GenericTypeParameters.Contains(Name), StringUtilities.RemoveInterfacePrefix);
     }
 }

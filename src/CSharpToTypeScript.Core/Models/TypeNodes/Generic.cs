@@ -17,10 +17,10 @@ namespace CSharpToTypeScript.Core.Models.TypeNodes
 
         public IEnumerable<TypeNode> Arguments { get; }
 
-        public override string WriteTypeScript(CodeConversionOptions options)
+        public override string WriteTypeScript(CodeConversionOptions options, Context context)
             => // name
-            Name.TransformIf(options.RemoveInterfacePrefix, StringUtilities.RemoveInterfacePrefix)
+            Name.TransformIf(options.RemoveInterfacePrefix && !context.GenericTypeParameters.Contains(Name), StringUtilities.RemoveInterfacePrefix)
             // generic type parameters
-            + "<" + Arguments.WriteTypeScript(options).ToCommaSepratedList() + ">";
+            + "<" + Arguments.WriteTypeScript(options, context).ToCommaSepratedList() + ">";
     }
 }

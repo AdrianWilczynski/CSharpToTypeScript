@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using CSharpToTypeScript.Core.Options;
 using CSharpToTypeScript.Core.Utilities;
 
@@ -18,7 +17,7 @@ namespace CSharpToTypeScript.Core.Models
         public override string Name { get; }
         public IEnumerable<EnumMemberNode> Members { get; }
 
-        public override string WriteTypeScript(CodeConversionOptions options)
+        public override string WriteTypeScript(CodeConversionOptions options, Context context)
             =>  // keywords
             "export ".If(options.Export) + "enum "
              // name
@@ -26,7 +25,7 @@ namespace CSharpToTypeScript.Core.Models
             // body
             + " {" + NewLine
             // members
-            + Members.WriteTypeScript(options).Indent(options.UseTabs, options.TabSize).LineByLine(separator: ",") + NewLine
+            + Members.WriteTypeScript(options, context).Indent(options.UseTabs, options.TabSize).LineByLine(separator: ",") + NewLine
             + "}";
     }
 }

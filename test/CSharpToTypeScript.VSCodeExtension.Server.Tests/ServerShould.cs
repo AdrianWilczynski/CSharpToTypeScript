@@ -41,7 +41,11 @@ namespace CSharpToTypeScript.VSCodeExtension.Server.Tests
                 .Returns("export interface First { }")
                 .Returns("export interface Second { }");
 
-            var server = new StdioServer(codeConverterMock.Object, stdioMock.Object);
+            var fileNameConverterMock = new Mock<IFileNameConverter>();
+            fileNameConverterMock.Setup(f => f.ConvertToTypeScript(It.IsAny<string>(), It.IsAny<ModuleNameConversionOptions>()))
+                .Returns("item.ts");
+
+            var server = new StdioServer(codeConverterMock.Object, stdioMock.Object, fileNameConverterMock.Object);
 
             server.Handle();
 

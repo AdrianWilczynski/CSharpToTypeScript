@@ -14,7 +14,7 @@ namespace CSharpToTypeScript.Core.Models
         public string Name { get; }
         public string Value { get; }
 
-        public string WriteTypeScript(CodeConversionOptions options)
+        public string WriteTypeScript(CodeConversionOptions options, Context context)
             => Name + (" = " + Value?.SquashWhistespace()).If(!string.IsNullOrWhiteSpace(Value));
     }
 }

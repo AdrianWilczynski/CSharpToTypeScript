@@ -4,6 +4,6 @@ namespace CSharpToTypeScript.Core.Models.TypeNodes
 {
     internal class Number : TypeNode
     {
-        public override string WriteTypeScript(CodeConversionOptions options) => "number";
+        public override string WriteTypeScript(CodeConversionOptions options, Context context) => "number";
     }
 }

@@ -22,9 +22,9 @@ namespace CSharpToTypeScript.Core.Models.TypeNodes
             return options.ConvertNullablesTo == NullableOutputType.Undefined;
         }
 
-        public override string WriteTypeScript(CodeConversionOptions options)
+        public override string WriteTypeScript(CodeConversionOptions options, Context context)
             => // underlying type
-            Of.WriteTypeScript(options)
+            Of.WriteTypeScript(options, context)
             + " | "
             // "null" type
             + (options.ConvertNullablesTo == NullableOutputType.Undefined ? "undefined" : "null");

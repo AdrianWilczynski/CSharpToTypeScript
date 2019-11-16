@@ -16,6 +16,6 @@ namespace CSharpToTypeScript.Core.Models.TypeNodes
             return false;
         }
 
-        public abstract string WriteTypeScript(CodeConversionOptions options);
+        public abstract string WriteTypeScript(CodeConversionOptions options, Context context);
     }
 }

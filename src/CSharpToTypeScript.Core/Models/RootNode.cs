@@ -10,6 +10,6 @@ namespace CSharpToTypeScript.Core.Models
 
         public virtual IEnumerable<string> Requires => Enumerable.Empty<string>();
 
-        public abstract string WriteTypeScript(CodeConversionOptions options);
+        public abstract string WriteTypeScript(CodeConversionOptions options, Context context);
     }
 }

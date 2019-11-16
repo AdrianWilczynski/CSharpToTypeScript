@@ -18,12 +18,12 @@ namespace CSharpToTypeScript.Core.Models
 
         public IEnumerable<string> Requires => Type.Requires;
 
-        public string WriteTypeScript(CodeConversionOptions options)
+        public string WriteTypeScript(CodeConversionOptions options, Context context)
             => // name
             Name.TransformIf(options.ToCamelCase, StringUtilities.ToCamelCase)
             // separator
             + "?".If(Type.IsOptional(options, out _)) + ": "
             // type
-            + (Type.IsOptional(options, out var of) ? of.WriteTypeScript(options) : Type.WriteTypeScript(options)) + ";";
+            + (Type.IsOptional(options, out var of) ? of.WriteTypeScript(options, context) : Type.WriteTypeScript(options, context)) + ";";
     }
 }

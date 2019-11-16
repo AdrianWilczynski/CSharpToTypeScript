@@ -29,19 +29,23 @@ namespace CSharpToTypeScript.Core.Models
                 .Except(GenericTypeParameters)
                 .Distinct();
 
-        public override string WriteTypeScript(CodeConversionOptions options)
-            =>  // keywords
-            "export ".If(options.Export) + "interface "
-            // name
-            + Name.TransformIf(options.RemoveInterfacePrefix, StringUtilities.RemoveInterfacePrefix)
-            // generic type parameters
-            + ("<" + GenericTypeParameters.ToCommaSepratedList() + ">").If(GenericTypeParameters.Any())
-            // base types
-            + (" extends " + BaseTypes.WriteTypeScript(options).ToCommaSepratedList()).If(BaseTypes.Any())
-            // body
-            + " {" + NewLine
-            // fields
-            + Fields.WriteTypeScript(options).Indent(options.UseTabs, options.TabSize).LineByLine() + NewLine
-            + "}";
+        public override string WriteTypeScript(CodeConversionOptions options, Context context)
+        {
+            context.GenericTypeParameters = GenericTypeParameters;
+
+            // keywords
+            return "export ".If(options.Export) + "interface "
+                // name
+                + Name.TransformIf(options.RemoveInterfacePrefix, StringUtilities.RemoveInterfacePrefix)
+                // generic type parameters
+                + ("<" + GenericTypeParameters.ToCommaSepratedList() + ">").If(GenericTypeParameters.Any())
+                // base types
+                + (" extends " + BaseTypes.WriteTypeScript(options, context).ToCommaSepratedList()).If(BaseTypes.Any())
+                // body
+                + " {" + NewLine
+                // fields
+                + Fields.WriteTypeScript(options, context).Indent(options.UseTabs, options.TabSize).LineByLine() + NewLine
+                + "}";
+        }
     }
 }
