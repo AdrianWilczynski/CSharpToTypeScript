@@ -365,3 +365,5 @@ nupkg/
 **/CSharpToTypeScript.CLITool/**/*.ts
 
 **/temp/**
+
+**/RunOnBuild/Client/models/**

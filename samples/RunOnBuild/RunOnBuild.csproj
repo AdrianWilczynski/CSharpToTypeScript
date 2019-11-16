@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Client\" />
+  </ItemGroup>
+
+  <Target Name="CSharpToTypeScript" BeforeTargets="Build">
+    <Exec Command="cs2ts ./DTOs -o ./Client/models -i Simple -q Single -c" />
+  </Target>
+
+</Project>
