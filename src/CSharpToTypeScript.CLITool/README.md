@@ -35,8 +35,31 @@ dotnet cs2ts [options] <Input>
 
 ## Watch with `dotnet watch`
 
+### Console
+
 ```cmd
 dotnet watch cs2ts ./DTOs -o ./wwwroot/ts/models
+```
+
+### Visual Studio Code Task
+
+Define task in `.vscode/tasks.json` file and run it using `Tasks: Run Task` command.
+
+```json
+{
+    "label": "cs2ts watch",
+    "command": "dotnet",
+    "type": "process",
+    "args": [
+        "watch",
+        "cs2ts",
+        "${workspaceFolder}/DTOs",
+        "-o",
+        "${workspaceFolder}/wwwroot/ts/models",
+        "-c"
+    ],
+    "problemMatcher": []
+}
 ```
 
 ## Run on Build
