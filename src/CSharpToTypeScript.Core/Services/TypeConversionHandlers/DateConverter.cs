@@ -1,13 +1,17 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using CSharpToTypeScript.Core.Models.TypeNodes;
 
 namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
 {
     internal class DateConverter : BasicTypeConverterBase<Date>
     {
-        protected override IEnumerable<string> ConvertibleFrom { get; } = new List<string>
+        protected override IEnumerable<string> ConvertibleFromPredefined => Enumerable.Empty<string>();
+
+        protected override IEnumerable<string> ConvertibleFromIdentified { get; } = new[]
         {
-            "DateTime", "DateTimeOffset"
+            nameof(DateTime), nameof(DateTimeOffset)
         };
     }
 }

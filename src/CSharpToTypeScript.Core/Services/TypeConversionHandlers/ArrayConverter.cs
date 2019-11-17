@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using CSharpToTypeScript.Core.Models.TypeNodes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -14,9 +16,16 @@ namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
             _converter = converter;
         }
 
-        private IEnumerable<string> ConvertibleFrom { get; } = new List<string>
+        private IEnumerable<string> ConvertibleFromIdentified => new[]
         {
-            "List", "IList", "Collection", "ICollection", "Enumerable", "IEnumerable"
+            nameof(System.Array), nameof(Enumerable), nameof(IEnumerable), nameof(ICollection), nameof(IList)
+        };
+
+        private IEnumerable<string> ConvertibleFromGeneric => new[]
+        {
+            nameof(List<object>), nameof(IList<object>), nameof(ICollection<object>), nameof(Collection<object>),
+            nameof(IEnumerable<object>), nameof(ReadOnlyCollection<object>), nameof(IReadOnlyCollection<object>),
+            nameof(IReadOnlyList<object>)
         };
 
         public override TypeNode Handle(TypeSyntax type)
@@ -27,13 +36,13 @@ namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
                     of: _converter.Handle(array.ElementType),
                     rank: array.RankSpecifiers.Aggregate(0, (total, specifier) => total + specifier.Rank));
             }
-            else if (type is IdentifierNameSyntax identified && ConvertibleFrom.Contains(identified.Identifier.Text))
+            else if (type is IdentifierNameSyntax identified && ConvertibleFromIdentified.Contains(identified.Identifier.Text))
             {
                 return new Array(
                     of: new Any(),
                     rank: 1);
             }
-            else if (type is GenericNameSyntax generic && ConvertibleFrom.Contains(generic.Identifier.Text)
+            else if (type is GenericNameSyntax generic && ConvertibleFromGeneric.Contains(generic.Identifier.Text)
                 && generic.TypeArgumentList.Arguments.Count == 1)
             {
                 return new Array(

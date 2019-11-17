@@ -24,7 +24,7 @@ namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
                         name: !string.IsNullOrEmpty(element.Identifier.Text) ? element.Identifier.Text : Name(index),
                         type: _converter.Handle(element.Type))));
             }
-            else if (type is GenericNameSyntax generic && generic.Identifier.Text == "Tuple")
+            else if (type is GenericNameSyntax generic && generic.Identifier.Text == nameof(System.Tuple))
             {
                 return new Tuple(
                     elements: generic.TypeArgumentList.Arguments.Select((argument, index) => new Tuple.Element(

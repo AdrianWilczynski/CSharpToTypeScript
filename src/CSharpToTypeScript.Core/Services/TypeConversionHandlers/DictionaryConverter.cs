@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using CSharpToTypeScript.Core.Models.TypeNodes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -7,9 +8,10 @@ namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
 {
     internal class DictionaryConverter : TypeConversionHandler
     {
-        private IEnumerable<string> ConvertibleFrom { get; } = new List<string>
+        private IEnumerable<string> ConvertibleFrom => new[]
         {
-            "Dictionary", "IDictionary"
+            nameof(Dictionary<object, object>), nameof(IDictionary<object, object>),
+            nameof(ReadOnlyDictionary<object, object>), nameof(IReadOnlyDictionary<object, object>)
         };
 
         private readonly TypeConversionHandler _converter;

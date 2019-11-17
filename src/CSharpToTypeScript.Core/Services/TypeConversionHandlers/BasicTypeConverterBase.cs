@@ -7,7 +7,8 @@ namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
 {
     internal abstract class BasicTypeConverterBase<T> : TypeConversionHandler where T : TypeNode, new()
     {
-        protected abstract IEnumerable<string> ConvertibleFrom { get; }
+        protected abstract IEnumerable<string> ConvertibleFromPredefined { get; }
+        protected abstract IEnumerable<string> ConvertibleFromIdentified { get; }
 
         public override TypeNode Handle(TypeSyntax type)
             => CanConvert(type) ? new T() : base.Handle(type);
@@ -15,8 +16,8 @@ namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
         private bool CanConvert(TypeSyntax type)
             => type switch
             {
-                PredefinedTypeSyntax predefined => ConvertibleFrom.Contains(predefined.Keyword.Text),
-                IdentifierNameSyntax identified => ConvertibleFrom.Contains(identified.Identifier.Text),
+                PredefinedTypeSyntax predefined => ConvertibleFromPredefined.Contains(predefined.Keyword.Text),
+                IdentifierNameSyntax identified => ConvertibleFromIdentified.Contains(identified.Identifier.Text),
                 _ => false
             };
     }

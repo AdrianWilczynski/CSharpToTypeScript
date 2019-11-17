@@ -19,7 +19,7 @@ namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
             {
                 return new Nullable(of: _converter.Handle(nullable.ElementType));
             }
-            else if (type is GenericNameSyntax generic && generic.Identifier.Text == "Nullable"
+            else if (type is GenericNameSyntax generic && generic.Identifier.Text == nameof(System.Nullable)
                 && generic.TypeArgumentList.Arguments.Count == 1)
             {
                 return new Nullable(of: _converter.Handle(generic.TypeArgumentList.Arguments.Single()));

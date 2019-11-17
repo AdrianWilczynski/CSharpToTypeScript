@@ -8,7 +8,7 @@ namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
         public override TypeNode Handle(TypeSyntax type)
         {
             if (type is IdentifierNameSyntax identified && !string.IsNullOrWhiteSpace(identified.Identifier.Text)
-                && identified.Identifier.Text != "Object")
+                && identified.Identifier.Text != nameof(System.Object))
             {
                 return new Custom(identified.Identifier.Text);
             }
