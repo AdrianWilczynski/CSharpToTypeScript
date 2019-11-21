@@ -6,7 +6,7 @@ namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
 {
     internal class NumberConverter : BasicTypeConverterBase<Number>
     {
-        protected override IEnumerable<string> ConvertibleFromPredefined { get; } = new[]
+        protected override IEnumerable<string> ConvertibleFromPredefined => new[]
         {
             PredefinedTypes.Byte, PredefinedTypes.SByte, PredefinedTypes.Int, PredefinedTypes.UInt,
             PredefinedTypes.Long, PredefinedTypes.ULong, PredefinedTypes.Float, PredefinedTypes.Double,
