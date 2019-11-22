@@ -33,6 +33,38 @@ dotnet cs2ts [options] <Input>
 
 \* Simple import generation assumes flat output directory structure and file names corresponding to type names (e.g. `MyType`: `myType.ts`, `my-type.ts`, `my-type.model.ts`).
 
+## Configuration file
+
+To create optional configuration file (`cs2tsconfig.json`) in current directory run:
+
+```cmd
+dotnet cs2ts init
+```
+
+### Content
+
+```json
+{
+  "$schema": "http://raw.githubusercontent.com/AdrianWilczynski/CSharpToTypeScript/master/src/CSharpToTypeScript.CLITool/schemas/cs2tsconfig.json",
+  "input": ".",
+  "output": null,
+  "useTabs": false,
+  "tabSize": 4,
+  "skipExport": false,
+  "useKebabCase": false,
+  "appendModelSuffix": false,
+  "clearOutputDirectory": false,
+  "angularMode": false,
+  "partialOverride": false,
+  "preserveCasing": false,
+  "preserveInterfacePrefix": false,
+  "convertDatesTo": "string",
+  "convertNullablesTo": "null",
+  "importGeneration": "none",
+  "quotationMark": "double"
+}
+```
+
 ## Watch with `dotnet watch`
 
 ### Console
