@@ -12,7 +12,7 @@ namespace CSharpToTypeScript.CLITool.Utilities
         {
             ContractResolver = new CamelCasePropertyNamesContractResolver(),
             Formatting = Formatting.Indented,
-            Converters = new[] { new StringEnumConverter() }
+            Converters = new[] { new StringEnumConverter(new CamelCaseNamingStrategy()) }
         };
 
         public const string FileName = "cs2tsconfig.json";
