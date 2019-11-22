@@ -1,5 +1,6 @@
 using CSharpToTypeScript.CLITool.Commands;
 using CSharpToTypeScript.Core.Options;
+using Newtonsoft.Json;
 
 namespace CSharpToTypeScript.CLITool.Arguments
 {
@@ -14,6 +15,10 @@ namespace CSharpToTypeScript.CLITool.Arguments
                 property.SetValue(this, typeof(CommandBase).GetProperty(property.Name).GetValue(command));
             }
         }
+
+        [JsonProperty("$schema")]
+        public const string Schema
+            = "http://raw.githubusercontent.com/AdrianWilczynski/CSharpToTypeScript/master/src/CSharpToTypeScript.CLITool/schemas/cs2tsconfig.json";
 
         public string Input { get; set; }
         public string Output { get; set; }

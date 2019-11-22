@@ -12,8 +12,11 @@
         },
         "output": {
             "description": "Output file or directory path.",
-            "type": "string",
-            "default": "."
+            "type": [
+                "string",
+                "null"
+            ],
+            "default": null
         },
         "useTabs": {
             "description": "Use tabs for indentation.",
