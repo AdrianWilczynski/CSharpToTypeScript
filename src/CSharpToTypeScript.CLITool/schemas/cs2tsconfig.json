@@ -1,74 +1,74 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "https://raw.githubusercontent.com/AdrianWilczynski/CSharpToTypeScript/master/src/CSharpToTypeScript.CLITool/schemas/cs2tsconfig.json",
+    "$id": "http://raw.githubusercontent.com/AdrianWilczynski/CSharpToTypeScript/master/src/CSharpToTypeScript.CLITool/schemas/cs2tsconfig.json",
     "title": "CSharpToTypeScript.CLITool Configuration File",
     "description": "JSON schema for CSharpToTypeScript.CLITool configuration files.",
     "type": "object",
     "properties": {
         "input": {
-            "description": "Input file or directory path",
+            "description": "Input file or directory path.",
             "type": "string",
             "default": "."
         },
         "output": {
-            "description": "Output file or directory path",
+            "description": "Output file or directory path.",
             "type": "string",
             "default": "."
         },
         "useTabs": {
-            "description": "Use tabs for indentation",
+            "description": "Use tabs for indentation.",
             "type": "boolean",
             "default": false
         },
         "tabSize": {
-            "description": "Number of spaces per tab",
+            "description": "Number of spaces per tab.",
             "type": "integer",
             "minimum": 1,
             "maximum": 8,
             "default": 4
         },
         "skipExport": {
-            "description": "Skip 'export' keyword",
+            "description": "Skip 'export' keyword.",
             "type": "boolean",
             "default": false
         },
         "useKebabCase": {
-            "description": "Use kebab case for output file names",
+            "description": "Use kebab case for output file names.",
             "type": "boolean",
             "default": false
         },
         "appendModelSuffix": {
-            "description": "Append '.model' suffix to output file names",
+            "description": "Append '.model' suffix to output file names.",
             "type": "boolean",
             "default": false
         },
         "clearOutputDirectory": {
-            "description": "Clear output directory",
+            "description": "Clear output directory.",
             "type": "boolean",
             "default": false
         },
         "angularMode": {
-            "description": "Use Angular style conventions",
+            "description": "Use Angular style conventions.",
             "type": "boolean",
             "default": false
         },
         "partialOverride": {
-            "description": "Override only part of output file between marker comments",
+            "description": "Override only part of output file between marker comments.",
             "type": "boolean",
             "default": false
         },
         "preserveCasing": {
-            "description": "Don't convert field names to camel case",
+            "description": "Don't convert field names to camel case.",
             "type": "boolean",
             "default": false
         },
         "preserveInterfacePrefix": {
-            "description": "Don't remove interface prefixes",
+            "description": "Don't remove interface prefixes.",
             "type": "boolean",
             "default": false
         },
         "convertDatesTo": {
-            "description": "Set output type for dates",
+            "description": "Set output type for dates.",
             "type": "string",
             "enum": [
                 "string",
@@ -78,7 +78,7 @@
             "default": "string"
         },
         "convertNullablesTo": {
-            "description": "Set output type for nullables",
+            "description": "Set output type for nullables.",
             "type": "string",
             "enum": [
                 "null",
@@ -87,7 +87,7 @@
             "default": "null"
         },
         "importGeneration": {
-            "description": "Enable import generation",
+            "description": "Enable import generation.",
             "type": "string",
             "enum": [
                 "none",
@@ -96,7 +96,7 @@
             "default": "none"
         },
         "quotationMark": {
-            "description": "Set quotation marks for import statements",
+            "description": "Set quotation marks for import statements.",
             "type": "string",
             "enum": [
                 "double",
