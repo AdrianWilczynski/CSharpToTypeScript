@@ -1,15 +1,15 @@
 using CSharpToTypeScript.CLITool.Commands;
 using CSharpToTypeScript.Core.Options;
 
-namespace CSharpToTypeScript.CLITool.Options
+namespace CSharpToTypeScript.CLITool.Arguments
 {
-    public class ConfigurationFileOptions : OptionsBase<ConfigurationFileOptions>
+    public class ConfigurationFileArguments : ArgumentsBase<ConfigurationFileArguments>
     {
-        public ConfigurationFileOptions() { }
+        public ConfigurationFileArguments() { }
 
-        public ConfigurationFileOptions(CommandBase command)
+        public ConfigurationFileArguments(CommandBase command)
         {
-            foreach (var property in typeof(ConfigurationFileOptions).GetProperties())
+            foreach (var property in typeof(ConfigurationFileArguments).GetProperties())
             {
                 property.SetValue(this, typeof(CommandBase).GetProperty(property.Name).GetValue(command));
             }

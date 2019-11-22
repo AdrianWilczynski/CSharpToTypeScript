@@ -1,8 +1,8 @@
 using CSharpToTypeScript.Core.Options;
 
-namespace CSharpToTypeScript.CLITool.Options
+namespace CSharpToTypeScript.CLITool.Arguments
 {
-    public class AngularConventions : OptionsBase<AngularConventions>
+    public class AngularConventionArguments : ArgumentsBase<AngularConventionArguments>
     {
         public int TabSize { get; } = 2;
         public bool UseKebabCase { get; } = true;

@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
-using CSharpToTypeScript.CLITool.Options;
+using CSharpToTypeScript.CLITool.Arguments;
 using CSharpToTypeScript.CLITool.Utilities;
 using CSharpToTypeScript.Core.Options;
 using CSharpToTypeScript.Core.Services;
@@ -29,14 +29,14 @@ namespace CSharpToTypeScript.CLITool.Commands
 
         public void OnExecute()
         {
-            if (ConfigurationFile.Load() is ConfigurationFileOptions configuration)
+            if (ConfigurationFile.Load() is ConfigurationFileArguments configuration)
             {
                 configuration.Override(this);
             }
 
             if (AngularMode)
             {
-                new AngularConventions().Override(this);
+                new AngularConventionArguments().Override(this);
             }
 
             if (ClearOutputDirectory && !string.IsNullOrWhiteSpace(Output)

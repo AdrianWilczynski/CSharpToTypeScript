@@ -1,5 +1,5 @@
 using System.IO;
-using CSharpToTypeScript.CLITool.Options;
+using CSharpToTypeScript.CLITool.Arguments;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
@@ -17,12 +17,12 @@ namespace CSharpToTypeScript.CLITool.Utilities
 
         public const string FileName = "cs2tsconfig.json";
 
-        public static ConfigurationFileOptions Load()
+        public static ConfigurationFileArguments Load()
             => File.Exists(FileName)
-            ? JsonConvert.DeserializeObject<ConfigurationFileOptions>(File.ReadAllText(FileName), JsonSerializerSettings)
+            ? JsonConvert.DeserializeObject<ConfigurationFileArguments>(File.ReadAllText(FileName), JsonSerializerSettings)
             : null;
 
-        public static void Create(ConfigurationFileOptions configurationFileOptions)
-            => File.WriteAllText(FileName, JsonConvert.SerializeObject(configurationFileOptions, JsonSerializerSettings));
+        public static void Create(ConfigurationFileArguments configuration)
+            => File.WriteAllText(FileName, JsonConvert.SerializeObject(configuration, JsonSerializerSettings));
     }
 }

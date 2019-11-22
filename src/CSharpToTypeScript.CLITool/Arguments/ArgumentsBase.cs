@@ -1,8 +1,8 @@
 using CSharpToTypeScript.CLITool.Commands;
 
-namespace CSharpToTypeScript.CLITool.Options
+namespace CSharpToTypeScript.CLITool.Arguments
 {
-    public abstract class OptionsBase<T> where T : OptionsBase<T>
+    public abstract class ArgumentsBase<T> where T : ArgumentsBase<T>
     {
         public void Override(CommandBase command)
         {
