@@ -1,27 +1,20 @@
 using System.IO;
 using System.Linq;
+using CSharpToTypeScript.CLITool.Commands;
+using CSharpToTypeScript.CLITool.Utilities;
 using CSharpToTypeScript.Core.Options;
 using Xunit;
 
 namespace CSharpToTypeScript.CLITool.Tests
 {
-    public class CLIShould : IClassFixture<CLIFixture>
+    [Collection(nameof(CLITool))]
+    public class ConvertCommandShould : CLITestBase, IClassFixture<CLIFixture>
     {
-        private readonly CLI _cli;
+        private readonly ConvertCommand _convertCommand;
 
-        public CLIShould(CLIFixture fixture)
+        public ConvertCommandShould(CLIFixture fixture)
         {
-            _cli = fixture.CLI;
-        }
-
-        private void Prepare(string directory)
-        {
-            if (Directory.Exists(directory))
-            {
-                Directory.Delete(directory, true);
-            }
-
-            Directory.CreateDirectory(directory);
+            _convertCommand = fixture.ConvertCommand;
         }
 
         [Fact]
@@ -33,9 +26,9 @@ namespace CSharpToTypeScript.CLITool.Tests
 
             File.WriteAllText(originalFilePath, "class SimpleItem { }");
 
-            _cli.Input = originalFilePath;
+            _convertCommand.Input = originalFilePath;
 
-            _cli.OnExecute();
+            _convertCommand.OnExecute();
 
             var generatedFilePath = Path.Join(nameof(ConvertSingleSimpleFile), "simpleItem.ts");
 
@@ -52,9 +45,9 @@ namespace CSharpToTypeScript.CLITool.Tests
             File.WriteAllText(Path.Join(nameof(ConvertDirectory), "File2.cs"), "class Item2 { }");
             File.WriteAllText(Path.Join(nameof(ConvertDirectory), "File3.cs"), "class Item3 { }");
 
-            _cli.Input = nameof(ConvertDirectory);
+            _convertCommand.Input = nameof(ConvertDirectory);
 
-            _cli.OnExecute();
+            _convertCommand.OnExecute();
 
             var convertedFiles = Directory.GetFiles(nameof(ConvertDirectory))
                 .Where(f => f.EndsWith(".ts"))
@@ -70,15 +63,20 @@ namespace CSharpToTypeScript.CLITool.Tests
 
             Directory.SetCurrentDirectory(nameof(ConvertCurrentDirectoryWhenNoInputProvided));
 
-            File.WriteAllText("File1.cs", "class Item4 { }");
-            File.WriteAllText("File2.cs", "class Item5 { }");
+            try
+            {
+                File.WriteAllText("File1.cs", "class Item4 { }");
+                File.WriteAllText("File2.cs", "class Item5 { }");
 
-            _cli.OnExecute();
+                _convertCommand.OnExecute();
 
-            Assert.True(File.Exists("file1.ts"));
-            Assert.True(File.Exists("file2.ts"));
-
-            Directory.SetCurrentDirectory("..");
+                Assert.True(File.Exists("file1.ts"));
+                Assert.True(File.Exists("file2.ts"));
+            }
+            finally
+            {
+                Directory.SetCurrentDirectory("..");
+            }
         }
 
         [Fact]
@@ -91,10 +89,10 @@ namespace CSharpToTypeScript.CLITool.Tests
 
             File.WriteAllText(inputFilePath, "class Item6 { }");
 
-            _cli.Input = inputFilePath;
-            _cli.Output = outputFilePath;
+            _convertCommand.Input = inputFilePath;
+            _convertCommand.Output = outputFilePath;
 
-            _cli.OnExecute();
+            _convertCommand.OnExecute();
 
             Assert.True(File.Exists(outputFilePath));
         }
@@ -109,10 +107,10 @@ namespace CSharpToTypeScript.CLITool.Tests
 
             File.WriteAllText(inputFilePath, "class Item7 { }");
 
-            _cli.Input = inputFilePath;
-            _cli.Output = outputDirectoryPath;
+            _convertCommand.Input = inputFilePath;
+            _convertCommand.Output = outputDirectoryPath;
 
-            _cli.OnExecute();
+            _convertCommand.OnExecute();
 
             Assert.True(File.Exists(Path.Join(outputDirectoryPath, "file.ts")));
         }
@@ -127,24 +125,29 @@ namespace CSharpToTypeScript.CLITool.Tests
 
             Directory.SetCurrentDirectory(inputDirectoryPath);
 
-            File.WriteAllText("File1.cs", "class Item8 { }");
-            File.WriteAllText("File2.cs", "class Item9 { }");
-            File.WriteAllText("File3.cs", "class Item10 { }");
+            try
+            {
+                File.WriteAllText("File1.cs", "class Item8 { }");
+                File.WriteAllText("File2.cs", "class Item9 { }");
+                File.WriteAllText("File3.cs", "class Item10 { }");
 
-            var outputDirectoryPath = Path.Join("..", "Output");
+                var outputDirectoryPath = Path.Join("..", "Output");
 
-            _cli.Input = ".";
-            _cli.Output = outputDirectoryPath;
+                _convertCommand.Input = ".";
+                _convertCommand.Output = outputDirectoryPath;
 
-            _cli.OnExecute();
+                _convertCommand.OnExecute();
 
-            var convertedFiles = Directory.GetFiles(outputDirectoryPath)
-                .Where(f => f.EndsWith(".ts"))
-                .Select(Path.GetFileName);
+                var convertedFiles = Directory.GetFiles(outputDirectoryPath)
+                    .Where(f => f.EndsWith(".ts"))
+                    .Select(Path.GetFileName);
 
-            Assert.Equal(new[] { "file1.ts", "file2.ts", "file3.ts" }, convertedFiles);
-
-            Directory.SetCurrentDirectory(Path.Join("..", ".."));
+                Assert.Equal(new[] { "file1.ts", "file2.ts", "file3.ts" }, convertedFiles);
+            }
+            finally
+            {
+                Directory.SetCurrentDirectory(Path.Join("..", ".."));
+            }
         }
 
         [Fact]
@@ -159,10 +162,10 @@ namespace CSharpToTypeScript.CLITool.Tests
     public int Id { get; set; }
 }");
 
-            _cli.Input = originalFilePath;
-            _cli.AngularMode = true;
+            _convertCommand.Input = originalFilePath;
+            _convertCommand.AngularMode = true;
 
-            _cli.OnExecute();
+            _convertCommand.OnExecute();
 
             var generatedFilePath = Path.Join(nameof(UseAngularConventionsWhenRequested), "shopping-cart-item.model.ts");
 
@@ -170,7 +173,7 @@ namespace CSharpToTypeScript.CLITool.Tests
             Assert.Equal(@"export interface ShoppingCartItem {
   id: number;
 }",
-                File.ReadAllText(generatedFilePath));
+            File.ReadAllText(generatedFilePath));
         }
 
         [Fact]
@@ -188,11 +191,11 @@ namespace CSharpToTypeScript.CLITool.Tests
             File.WriteAllText(originalFilePath, "class Item11 { }");
             File.WriteAllText(undesiredFilePath, "export interface Garbage { }");
 
-            _cli.Input = originalFilePath;
-            _cli.Output = outputDirectoryPath;
-            _cli.ClearOutputDirectory = true;
+            _convertCommand.Input = originalFilePath;
+            _convertCommand.Output = outputDirectoryPath;
+            _convertCommand.ClearOutputDirectory = true;
 
-            _cli.OnExecute();
+            _convertCommand.OnExecute();
 
             Assert.False(File.Exists(undesiredFilePath));
         }
@@ -211,20 +214,20 @@ namespace CSharpToTypeScript.CLITool.Tests
             var undesiredFilePath = Path.Join(outputDirectoryPath, "garbage.ts");
             File.WriteAllText(undesiredFilePath, "export interface Garbage { }");
 
-            _cli.Input = inputDirectoryPath;
-            _cli.Output = outputDirectoryPath;
-            _cli.ClearOutputDirectory = true;
+            _convertCommand.Input = inputDirectoryPath;
+            _convertCommand.Output = outputDirectoryPath;
+            _convertCommand.ClearOutputDirectory = true;
 
-            _cli.OnExecute();
+            _convertCommand.OnExecute();
 
             Assert.True(File.Exists(undesiredFilePath));
 
             undesiredFilePath = Path.Join(inputDirectoryPath, "trash.ts");
             File.WriteAllText(undesiredFilePath, "export interface Trash { }");
 
-            _cli.Output = inputDirectoryPath;
+            _convertCommand.Output = inputDirectoryPath;
 
-            _cli.OnExecute();
+            _convertCommand.OnExecute();
 
             Assert.True(File.Exists(undesiredFilePath));
         }
@@ -248,11 +251,11 @@ export interface Item {
 // below");
             File.WriteAllText(inputFilePath, "class UpdatedItem { }");
 
-            _cli.Input = inputFilePath;
-            _cli.Output = outputFilePath;
-            _cli.PartialOverride = true;
+            _convertCommand.Input = inputFilePath;
+            _convertCommand.Output = outputFilePath;
+            _convertCommand.PartialOverride = true;
 
-            _cli.OnExecute();
+            _convertCommand.OnExecute();
 
             var overriddenOutput = File.ReadAllText(outputFilePath);
 
@@ -274,11 +277,11 @@ export interface Item {
     public int MyProperty { get; set; }
 }");
 
-            _cli.Input = originalFilePath;
-            _cli.Output = outputFilePath;
-            _cli.PreserveCasing = true;
+            _convertCommand.Input = originalFilePath;
+            _convertCommand.Output = outputFilePath;
+            _convertCommand.PreserveCasing = true;
 
-            _cli.OnExecute();
+            _convertCommand.OnExecute();
 
             Assert.Contains("MyProperty: number;", File.ReadAllText(outputFilePath));
         }
@@ -292,10 +295,10 @@ export interface Item {
 
             File.WriteAllText(originalFilePath, "interface IItemBase { }");
 
-            _cli.Input = originalFilePath;
-            _cli.PreserveInterfacePrefix = true;
+            _convertCommand.Input = originalFilePath;
+            _convertCommand.PreserveInterfacePrefix = true;
 
-            _cli.OnExecute();
+            _convertCommand.OnExecute();
 
             var outputFilePath = Path.Join(nameof(PreserveInterfacePrefix), "iItemBase.ts");
 
@@ -318,9 +321,9 @@ export interface Item {
             Directory.CreateDirectory(nestedDirectoryPath);
             File.WriteAllText(nestedSourceFilePath, "class Item14 { }");
 
-            _cli.Input = nameof(ConvertFilesInNestedDirecotories);
+            _convertCommand.Input = nameof(ConvertFilesInNestedDirecotories);
 
-            _cli.OnExecute();
+            _convertCommand.OnExecute();
 
             var outputFilePath = Path.Join(nameof(ConvertFilesInNestedDirecotories), "item.ts");
             var nestedOutputFilePath = Path.Join(nestedDirectoryPath, "nestedItem.ts");
@@ -341,15 +344,39 @@ export interface Item {
     public ShoppingCartItem MyProperty { get; set; }
 }");
 
-            _cli.Input = sourceFilePath;
-            _cli.ImportGeneration = ImportGenerationMode.Simple;
-            _cli.UseKebabCase = true;
-            _cli.AppendModelSuffix = true;
+            _convertCommand.Input = sourceFilePath;
+            _convertCommand.ImportGeneration = ImportGenerationMode.Simple;
+            _convertCommand.UseKebabCase = true;
+            _convertCommand.AppendModelSuffix = true;
 
-            _cli.OnExecute();
+            _convertCommand.OnExecute();
 
             Assert.StartsWith("import { ShoppingCartItem } from \"./shopping-cart-item.model\";",
                 File.ReadAllText(Path.Join(nameof(GenerateSimpleImports), "item.model.ts")));
+        }
+
+        [Fact]
+        public void UseOptionsFromConfigurationFile()
+        {
+            Prepare(nameof(UseOptionsFromConfigurationFile));
+
+            Directory.SetCurrentDirectory(nameof(UseOptionsFromConfigurationFile));
+
+            try
+            {
+                File.WriteAllText(ConfigurationFile.FileName, "{ \"preserveCasing\": true }");
+
+                File.WriteAllText("Item.cs", "class Item16 { public string Test { get; } }");
+
+                _convertCommand.OnExecute();
+
+                Assert.True(_convertCommand.PreserveCasing);
+                Assert.Contains("Test: string", File.ReadAllText("item.ts"));
+            }
+            finally
+            {
+                Directory.SetCurrentDirectory("..");
+            }
         }
     }
 }

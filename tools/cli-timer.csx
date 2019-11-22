@@ -7,12 +7,13 @@
 using Microsoft.Extensions.DependencyInjection;
 using CSharpToTypeScript.CLITool;
 using CSharpToTypeScript.Core.DependencyInjection;
+using CSharpToTypeScript.CLITool.Commands;
 
-var cli = new ServiceCollection()
+var convertCommand = new ServiceCollection()
     .AddCSharpToTypeScript()
-    .AddTransient<CLI>()
+    .AddTransient<ConvertCommand>()
     .BuildServiceProvider()
-    .GetRequiredService<CLI>();
+    .GetRequiredService<ConvertCommand>();
 
 var count = int.Parse(Args[0]);
 
@@ -26,8 +27,8 @@ for (int i = 0; i < count; i++)
 
 var stopwatch = Stopwatch.StartNew();
 
-cli.Input = tempDirectoryPath;
-cli.OnExecute();
+convertCommand.Input = tempDirectoryPath;
+convertCommand.OnExecute();
 
 stopwatch.Stop();
 

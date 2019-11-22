@@ -1,82 +1,26 @@
 using System;
-using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
-using CSharpToTypeScript.CLITool.Conventions;
+using CSharpToTypeScript.CLITool.Options;
 using CSharpToTypeScript.CLITool.Utilities;
-using CSharpToTypeScript.CLITool.Validation;
 using CSharpToTypeScript.Core.Options;
 using CSharpToTypeScript.Core.Services;
 using McMaster.Extensions.CommandLineUtils;
 
-namespace CSharpToTypeScript.CLITool
+namespace CSharpToTypeScript.CLITool.Commands
 {
-    [Command(Name = "dotnet cs2ts", Description = "Convert C# Models, ViewModels and DTOs into their TypeScript equivalents")]
-    [OutputMatchesInput]
-    public class CLI
+    [Command(Name = "dotnet cs2ts", Description = "Convert C# Models, ViewModels and DTOs into their TypeScript equivalents"),
+    Subcommand(typeof(InitializeCommand))]
+    public class ConvertCommand : CommandBase
     {
         private readonly ICodeConverter _codeConverter;
         private readonly IFileNameConverter _fileNameConverter;
 
-        public CLI(ICodeConverter codeConverter, IFileNameConverter fileNameConverter)
+        public ConvertCommand(ICodeConverter codeConverter, IFileNameConverter fileNameConverter)
         {
             _codeConverter = codeConverter;
             _fileNameConverter = fileNameConverter;
         }
-
-        [Argument(0, Description = "Input file or directory path")]
-        [InputExists]
-        public string Input { get; set; } = ".";
-
-        [Option(ShortName = "o", Description = "Output file or directory path")]
-        public string Output { get; set; }
-
-        [Option(ShortName = "t", Description = "Use tabs for indentation")]
-        public bool UseTabs { get; set; }
-
-        [Option(ShortName = "ts", Description = "Number of spaces per tab")]
-        [Range(1, 8)]
-        public int TabSize { get; set; } = 4;
-
-        [Option(ShortName = "se", Description = "Skip 'export' keyword")]
-        public bool SkipExport { get; set; }
-
-        [Option(ShortName = "k", Description = "Use kebab case for output file names")]
-        public bool UseKebabCase { get; set; }
-
-        [Option(ShortName = "m", Description = "Append '.model' suffix to output file names")]
-        public bool AppendModelSuffix { get; set; }
-
-        [Option(ShortName = "c", Description = "Clear output directory")]
-        public bool ClearOutputDirectory { get; set; }
-
-        [Option(ShortName = "a", Description = "Use Angular style conventions")]
-        public bool AngularMode { get; set; }
-
-        [Option(ShortName = "p", Description = "Override only part of output file between marker comments")]
-        public bool PartialOverride { get; set; }
-
-        [Option(ShortName = "pc", Description = "Don't convert field names to camel case")]
-        public bool PreserveCasing { get; set; }
-
-        [Option(ShortName = "pip", Description = "Don't remove interface prefixes")]
-        public bool PreserveInterfacePrefix { get; set; }
-
-        [Option(ShortName = "d", Description = "Set output type for dates",
-        ValueName = nameof(DateOutputType.String) + "|" + nameof(DateOutputType.Date) + "|" + nameof(DateOutputType.Union))]
-        public DateOutputType ConvertDatesTo { get; set; }
-
-        [Option(ShortName = "n", Description = "Set output type for nullables",
-        ValueName = nameof(NullableOutputType.Null) + "|" + nameof(NullableOutputType.Undefined))]
-        public NullableOutputType ConvertNullablesTo { get; set; }
-
-        [Option(ShortName = "i", Description = "Enable import generation",
-        ValueName = nameof(ImportGenerationMode.None) + "|" + nameof(ImportGenerationMode.Simple))]
-        public ImportGenerationMode ImportGeneration { get; set; }
-
-        [Option(ShortName = "q", Description = "Set quotation marks for import statements",
-        ValueName = nameof(QuotationMark.Double) + "|" + nameof(QuotationMark.Single))]
-        public QuotationMark QuotationMark { get; set; }
 
         public CodeConversionOptions CodeConversionOptions
             => new CodeConversionOptions(!SkipExport, UseTabs, TabSize, ConvertDatesTo, ConvertNullablesTo,
@@ -85,9 +29,14 @@ namespace CSharpToTypeScript.CLITool
 
         public void OnExecute()
         {
+            if (ConfigurationFile.Load() is ConfigurationFileOptions configuration)
+            {
+                configuration.Override(this);
+            }
+
             if (AngularMode)
             {
-                AngularConventions.Override(this);
+                new AngularConventions().Override(this);
             }
 
             if (ClearOutputDirectory && !string.IsNullOrWhiteSpace(Output)

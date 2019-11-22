@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using CSharpToTypeScript.CLITool.Commands;
 using CSharpToTypeScript.CLITool.Utilities;
 
 namespace CSharpToTypeScript.CLITool.Validation
@@ -9,8 +10,8 @@ namespace CSharpToTypeScript.CLITool.Validation
     {
         protected override ValidationResult IsValid(object value, ValidationContext context)
         {
-            if (value is CLI cli
-            && cli.Output?.EndsWithFileExtension() == true && cli.Input?.EndsWithFileExtension() == false)
+            if (value is CommandBase command
+            && command.Output?.EndsWithFileExtension() == true && command.Input?.EndsWithFileExtension() == false)
             {
                 return new ValidationResult("If your Output is a file, your Input has to be a file as well.");
             }

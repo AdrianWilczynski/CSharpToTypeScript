@@ -1,4 +1,5 @@
 ﻿using System;
+using CSharpToTypeScript.CLITool.Commands;
 using CSharpToTypeScript.Core.DependencyInjection;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,7 +16,7 @@ namespace CSharpToTypeScript.CLITool
                     .AddCSharpToTypeScript()
                     .BuildServiceProvider();
 
-                using (var cli = new CommandLineApplication<CLI>())
+                using (var cli = new CommandLineApplication<ConvertCommand>())
                 {
                     cli.Conventions.UseDefaultConventions()
                         .UseConstructorInjection(services);
