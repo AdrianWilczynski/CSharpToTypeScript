@@ -20,6 +20,11 @@ namespace CSharpToTypeScript.CLITool.Commands
         {
             _codeConverter = codeConverter;
             _fileNameConverter = fileNameConverter;
+
+            if (ConfigurationFile.Load() is ConfigurationFileArguments configuration)
+            {
+                configuration.Override(this);
+            }
         }
 
         public CodeConversionOptions CodeConversionOptions
@@ -29,11 +34,6 @@ namespace CSharpToTypeScript.CLITool.Commands
 
         public void OnExecute()
         {
-            if (ConfigurationFile.Load() is ConfigurationFileArguments configuration)
-            {
-                configuration.Override(this);
-            }
-
             if (AngularMode)
             {
                 new AngularConventionArguments().Override(this);

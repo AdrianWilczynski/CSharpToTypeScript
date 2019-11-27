@@ -3,6 +3,8 @@ using System.Linq;
 using CSharpToTypeScript.CLITool.Commands;
 using CSharpToTypeScript.CLITool.Utilities;
 using CSharpToTypeScript.Core.Options;
+using CSharpToTypeScript.Core.Services;
+using Moq;
 using Xunit;
 
 namespace CSharpToTypeScript.CLITool.Tests
@@ -364,14 +366,30 @@ export interface Item {
 
             try
             {
+                var codeConverterMock = new Mock<ICodeConverter>();
+                codeConverterMock
+                    .Setup(c => c.ConvertToTypeScript(It.IsAny<string>(), It.IsAny<CodeConversionOptions>()))
+                    .Returns("interface Item16 { }");
+
+                var fileNameConverterMock = new Mock<IFileNameConverter>();
+                fileNameConverterMock
+                    .Setup(f => f.ConvertToTypeScript(It.IsAny<string>(), It.IsAny<ModuleNameConversionOptions>()))
+                    .Returns("item.ts");
+
                 File.WriteAllText(ConfigurationFile.FileName, "{ \"preserveCasing\": true }");
 
-                File.WriteAllText("Item.cs", "class Item16 { public string Test { get; } }");
+                File.WriteAllText("Item.cs", "class Item16 { }");
 
-                _convertCommand.OnExecute();
+                var command = new ConvertCommand(codeConverterMock.Object, fileNameConverterMock.Object);
 
-                Assert.True(_convertCommand.PreserveCasing);
-                Assert.Contains("Test: string", File.ReadAllText("item.ts"));
+                command.OnExecute();
+
+                Assert.True(command.PreserveCasing);
+                codeConverterMock.Verify(c =>
+                    c.ConvertToTypeScript(
+                        It.IsAny<string>(),
+                        It.Is<CodeConversionOptions>(o => !o.ToCamelCase)),
+                    Times.Once);
             }
             finally
             {
