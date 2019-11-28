@@ -424,5 +424,23 @@ export interface ImplementingItem {
             Assert.Contains("myProperty: ITest", converted);
             Assert.Contains("myOtherProperty: Generic<ITest>", converted);
         }
+
+        [Fact]
+        public void ConvertPublicFields()
+        {
+            var converted = _codeConverter.ConvertToTypeScript(@"class Item
+{
+    public int publicField, otherPublicField;
+    public string text;
+    public const bool isSomething;
+    private string privateField;
+}", new CodeConversionOptions(export: false, useTabs: true, removeInterfacePrefix: true));
+
+            Assert.Contains("publicField: number;", converted);
+            Assert.Contains("otherPublicField: number;", converted);
+            Assert.Contains("text: string;", converted);
+            Assert.Contains("isSomething: boolean;", converted);
+            Assert.DoesNotContain("privateField", converted);
+        }
     }
 }

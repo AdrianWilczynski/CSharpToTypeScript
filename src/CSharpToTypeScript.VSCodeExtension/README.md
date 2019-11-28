@@ -35,5 +35,5 @@ Convert C# Models, ViewModels and DTOs into their TypeScript equivalents.
 ## Known limitations / design choices
 
 - Always outputs interface type.
-- Only includes public, non-static properties - not fields, not methods, not private members.
+- Only includes public, non-static properties & fields - not methods, not private members.
 - Import generation assumes flat output directory structure and file names corresponding to type names (e.g. `MyType`: `myType.ts`, `my-type.ts`, `my-type.model.ts`). 

@@ -23,9 +23,13 @@ namespace CSharpToTypeScript.Core.Services
             => new RootTypeNode(
                 name: type.Identifier.Text,
                 fields: ConvertProperties(
-                    type.ChildNodes()
-                    .OfType<PropertyDeclarationSyntax>()
-                    .Where(property => IsSerializable(property, type))),
+                        type.ChildNodes()
+                            .OfType<PropertyDeclarationSyntax>()
+                            .Where(property => IsSerializable(property, type)))
+                    .Union(ConvertFields(
+                        type.ChildNodes()
+                            .OfType<FieldDeclarationSyntax>()
+                            .Where(IsSerializable))),
                 genericTypeParameters: type.TypeParameterList?.Parameters
                     .Select(p => p.Identifier.Text)
                     .Where(p => !string.IsNullOrWhiteSpace(p)) ?? Enumerable.Empty<string>(),
@@ -37,6 +41,11 @@ namespace CSharpToTypeScript.Core.Services
             => properties.Select(p => new FieldNode(
                 name: p.Identifier.Text,
                 type: _typeConverter.Handle(p.Type)));
+
+        private IEnumerable<FieldNode> ConvertFields(IEnumerable<FieldDeclarationSyntax> fields)
+           => fields.SelectMany(f => f.Declaration.Variables, (f, v) => new FieldNode(
+               name: v.Identifier.Text,
+               type: _typeConverter.Handle(f.Declaration.Type)));
 
         private IEnumerable<TypeNode> ConvertBaseTypes(IEnumerable<BaseTypeSyntax> baseTypes, TypeDeclarationSyntax containingType)
         {
@@ -61,10 +70,13 @@ namespace CSharpToTypeScript.Core.Services
         private bool IsSerializable(PropertyDeclarationSyntax property, TypeDeclarationSyntax containingType)
             => IsPublic(property, containingType) && IsNotStatic(property) && IsGettable(property);
 
-        private bool IsNotStatic(PropertyDeclarationSyntax syntax)
+        private bool IsSerializable(FieldDeclarationSyntax field)
+            => IsPublic(field) && IsNotStatic(field);
+
+        private bool IsNotStatic(MemberDeclarationSyntax syntax)
             => syntax.Modifiers.All(m => m.Kind() != SyntaxKind.StaticKeyword);
 
-        private bool IsPublic(PropertyDeclarationSyntax property, TypeDeclarationSyntax containingType)
+        private bool IsPublic(MemberDeclarationSyntax property, TypeDeclarationSyntax containingType = null)
             => containingType is InterfaceDeclarationSyntax
             || property.Modifiers.Any(m => m.Kind() == SyntaxKind.PublicKeyword);
 
