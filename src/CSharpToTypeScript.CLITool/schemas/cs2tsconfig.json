@@ -27,7 +27,6 @@
             "description": "Number of spaces per tab.",
             "type": "integer",
             "minimum": 1,
-            "maximum": 8,
             "default": 4
         },
         "skipExport": {
