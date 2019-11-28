@@ -4,6 +4,11 @@ using CSharpToTypeScript.Core.DependencyInjection;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.DependencyInjection;
 
+#if RELEASE
+using System.Linq;
+using CSharpToTypeScript.CLITool.Utilities;
+#endif
+
 namespace CSharpToTypeScript.CLITool
 {
     public static class Program
@@ -28,9 +33,12 @@ namespace CSharpToTypeScript.CLITool
             catch (Exception ex)
             {
 #if RELEASE
-                Console.Error.WriteLine(ex.Message);
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Error.WriteLine(string.Join(" ---> ", ExceptionMessage.Flatten(ex).Distinct()));
+                Console.ResetColor();
+
                 return 1;
-#else 
+#else
                 throw;
 #endif
             }
