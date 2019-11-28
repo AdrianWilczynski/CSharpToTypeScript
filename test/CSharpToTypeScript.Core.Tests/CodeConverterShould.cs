@@ -434,13 +434,28 @@ export interface ImplementingItem {
     public string text;
     public const bool isSomething;
     private string privateField;
-}", new CodeConversionOptions(export: false, useTabs: true, removeInterfacePrefix: true));
+}", new CodeConversionOptions(export: false, useTabs: true));
 
             Assert.Contains("publicField: number;", converted);
             Assert.Contains("otherPublicField: number;", converted);
             Assert.Contains("text: string;", converted);
             Assert.Contains("isSomething: boolean;", converted);
             Assert.DoesNotContain("privateField", converted);
+        }
+
+        [Fact]
+        public void PreserverMemberOrder()
+        {
+            var converted = _codeConverter.ConvertToTypeScript(@"class Item
+{
+    public int firstField;
+    public int Property { get; set; };
+    public int secondField;
+}", new CodeConversionOptions(export: false, useTabs: false, tabSize: 4));
+
+            Assert.Contains(@"firstField: number;
+    property: number;
+    secondField: number;", converted);
         }
     }
 }

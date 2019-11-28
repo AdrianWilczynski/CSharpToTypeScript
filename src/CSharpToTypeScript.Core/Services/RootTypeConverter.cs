@@ -22,15 +22,13 @@ namespace CSharpToTypeScript.Core.Services
         public RootTypeNode Convert(TypeDeclarationSyntax type)
             => new RootTypeNode(
                 name: type.Identifier.Text,
-                fields: ConvertProperties(
-                        type.ChildNodes()
-                            .OfType<PropertyDeclarationSyntax>()
-                            .Where(property => IsSerializable(property, type)))
-                    .Union(ConvertFields(
-                        type.ChildNodes()
-                            .OfType<FieldDeclarationSyntax>()
-                            .Where(IsSerializable))
-                        .Where(f => !string.IsNullOrWhiteSpace(f.Name))),
+                fields: type.ChildNodes()
+                    .SelectMany(node => node switch
+                    {
+                        PropertyDeclarationSyntax property when IsSerializable(property, type) => new[] { ConvertProperty(property) },
+                        FieldDeclarationSyntax field when IsSerializable(field) => ConvertField(field),
+                        _ => Enumerable.Empty<FieldNode>()
+                    }),
                 genericTypeParameters: type.TypeParameterList?.Parameters
                     .Select(p => p.Identifier.Text)
                     .Where(p => !string.IsNullOrWhiteSpace(p)) ?? Enumerable.Empty<string>(),
@@ -38,15 +36,16 @@ namespace CSharpToTypeScript.Core.Services
                     type.BaseList?.Types ?? Enumerable.Empty<BaseTypeSyntax>(),
                     type));
 
-        private IEnumerable<FieldNode> ConvertProperties(IEnumerable<PropertyDeclarationSyntax> properties)
-            => properties.Select(p => new FieldNode(
-                name: p.Identifier.Text,
-                type: _typeConverter.Handle(p.Type)));
+        private FieldNode ConvertProperty(PropertyDeclarationSyntax property)
+            => new FieldNode(
+                name: property.Identifier.Text,
+                type: _typeConverter.Handle(property.Type));
 
-        private IEnumerable<FieldNode> ConvertFields(IEnumerable<FieldDeclarationSyntax> fields)
-           => fields.SelectMany(f => f.Declaration.Variables, (f, v) => new FieldNode(
-               name: v.Identifier.Text,
-               type: _typeConverter.Handle(f.Declaration.Type)));
+        private IEnumerable<FieldNode> ConvertField(FieldDeclarationSyntax field)
+           => field.Declaration.Variables.Select(v => new FieldNode(
+                name: v.Identifier.Text,
+                type: _typeConverter.Handle(field.Declaration.Type)))
+            .Where(f => !string.IsNullOrWhiteSpace(f.Name));
 
         private IEnumerable<TypeNode> ConvertBaseTypes(IEnumerable<BaseTypeSyntax> baseTypes, TypeDeclarationSyntax containingType)
         {
