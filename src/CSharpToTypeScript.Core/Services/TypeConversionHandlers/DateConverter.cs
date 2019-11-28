@@ -9,7 +9,7 @@ namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
     {
         protected override IEnumerable<string> ConvertibleFromPredefined => Enumerable.Empty<string>();
 
-        protected override IEnumerable<string> ConvertibleFromIdentified { get; } = new[]
+        protected override IEnumerable<string> ConvertibleFromIdentified => new[]
         {
             nameof(DateTime), nameof(DateTimeOffset)
         };
