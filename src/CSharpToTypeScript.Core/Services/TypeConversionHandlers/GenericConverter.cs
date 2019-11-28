@@ -15,7 +15,7 @@ namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
 
         public override TypeNode Handle(TypeSyntax type)
         {
-            if (type is GenericNameSyntax generic)
+            if (type is GenericNameSyntax generic && !string.IsNullOrWhiteSpace(generic.Identifier.Text))
             {
                 return new Generic(
                     name: generic.Identifier.Text,

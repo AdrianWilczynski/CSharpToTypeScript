@@ -17,7 +17,9 @@ namespace CSharpToTypeScript.Core.Utilities
             => Regex.IsMatch(text, InterfacePrefixRegex);
 
         public static string ToCamelCase(this string text)
-            => Regex.Replace(text, "^[A-Z]", char.ToLowerInvariant(text[0]).ToString());
+            => !string.IsNullOrEmpty(text) ?
+            Regex.Replace(text, "^[A-Z]", char.ToLowerInvariant(text[0]).ToString())
+            : text;
 
         public static string ToKebabCase(this string text)
             => Regex.Replace(text, "(?<![A-Z]|^)([A-Z])", "-$1").ToLowerInvariant();

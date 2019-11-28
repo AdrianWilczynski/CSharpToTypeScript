@@ -29,7 +29,8 @@ namespace CSharpToTypeScript.Core.Services
                     .Union(ConvertFields(
                         type.ChildNodes()
                             .OfType<FieldDeclarationSyntax>()
-                            .Where(IsSerializable))),
+                            .Where(IsSerializable))
+                        .Where(field => !string.IsNullOrWhiteSpace(field.Name))),
                 genericTypeParameters: type.TypeParameterList?.Parameters
                     .Select(p => p.Identifier.Text)
                     .Where(p => !string.IsNullOrWhiteSpace(p)) ?? Enumerable.Empty<string>(),
