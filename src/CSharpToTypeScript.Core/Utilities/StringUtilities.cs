@@ -68,7 +68,7 @@ namespace CSharpToTypeScript.Core.Utilities
         public static string Indentation(bool useTabs, int? tabSize)
             => useTabs ? "\t"
             : tabSize is int @int && tabSize > 0 ? " ".Repeat(@int)
-            : throw new ArgumentException("Use tabs for indentation or specify tab size (spaces).");
+            : throw new ArgumentException("Use tabs for indentation or specify positive tab size (spaces).");
 
         public static string NewLine => "\r\n";
 

@@ -34,6 +34,8 @@ namespace CSharpToTypeScript.CLITool.Commands
 
         public void OnExecute()
         {
+            Validate();
+
             if (AngularMode)
             {
                 new AngularConventionArguments().Override(this);

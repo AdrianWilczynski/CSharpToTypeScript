@@ -1,15 +1,12 @@
-using System.ComponentModel.DataAnnotations;
 using CSharpToTypeScript.CLITool.Validation;
 using CSharpToTypeScript.Core.Options;
 using McMaster.Extensions.CommandLineUtils;
 
 namespace CSharpToTypeScript.CLITool.Commands
 {
-    [OutputMatchesInput]
     public abstract class CommandBase
     {
         [Argument(0, Description = "Input file or directory path")]
-        [InputExists]
         public string Input { get; set; } = ".";
 
         [Option(ShortName = "o", Description = "Output file or directory path")]
@@ -19,7 +16,6 @@ namespace CSharpToTypeScript.CLITool.Commands
         public bool UseTabs { get; set; }
 
         [Option(ShortName = "ts", Description = "Number of spaces per tab")]
-        [Range(1, 8)]
         public int TabSize { get; set; } = 4;
 
         [Option(ShortName = "se", Description = "Skip 'export' keyword")]
@@ -61,5 +57,11 @@ namespace CSharpToTypeScript.CLITool.Commands
         [Option(ShortName = "q", Description = "Set quotation marks for import statements",
         ValueName = nameof(QuotationMark.Double) + "|" + nameof(QuotationMark.Single))]
         public QuotationMark QuotationMark { get; set; }
+
+        protected void Validate()
+        {
+            InputExists.Validate(Input);
+            OutputMatchesInput.Validate(Input, Output);
+        }
     }
 }

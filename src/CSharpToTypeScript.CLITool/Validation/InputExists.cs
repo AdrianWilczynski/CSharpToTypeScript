@@ -1,26 +1,21 @@
-using System.ComponentModel.DataAnnotations;
+using System;
 using System.IO;
 using CSharpToTypeScript.CLITool.Utilities;
 
 namespace CSharpToTypeScript.CLITool.Validation
 {
-    public class InputExists : ValidationAttribute
+    public static class InputExists
     {
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        public static void Validate(string input)
         {
-            if (value is string input)
+            if (input.EndsWithFileExtension() && !File.Exists(input))
             {
-                if (input.EndsWithFileExtension() && !File.Exists(input))
-                {
-                    return new ValidationResult($"The file path '{input}' does not exist.");
-                }
-                else if (!input.EndsWithFileExtension() && !Directory.Exists(input))
-                {
-                    return new ValidationResult($"The directory path '{input}' does not exist.");
-                }
+                throw new ArgumentException($"The file path '{input}' does not exist.");
             }
-
-            return ValidationResult.Success;
+            else if (!input.EndsWithFileExtension() && !Directory.Exists(input))
+            {
+                throw new ArgumentException($"The directory path '{input}' does not exist.");
+            }
         }
     }
 }
