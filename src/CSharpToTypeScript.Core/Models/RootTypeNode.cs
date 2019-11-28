@@ -31,6 +31,7 @@ namespace CSharpToTypeScript.Core.Models
 
         public override string WriteTypeScript(CodeConversionOptions options, Context context)
         {
+            context = context.Clone();
             context.GenericTypeParameters = GenericTypeParameters;
 
             // keywords
