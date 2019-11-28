@@ -30,7 +30,7 @@ namespace CSharpToTypeScript.Core.Services
                         type.ChildNodes()
                             .OfType<FieldDeclarationSyntax>()
                             .Where(IsSerializable))
-                        .Where(field => !string.IsNullOrWhiteSpace(field.Name))),
+                        .Where(f => !string.IsNullOrWhiteSpace(f.Name))),
                 genericTypeParameters: type.TypeParameterList?.Parameters
                     .Select(p => p.Identifier.Text)
                     .Where(p => !string.IsNullOrWhiteSpace(p)) ?? Enumerable.Empty<string>(),
