@@ -36,7 +36,7 @@ namespace CSharpToTypeScript.Core.Utilities
             {
                 QuotationMark.Double => '"' + text + '"',
                 QuotationMark.Single => "'" + text + "'",
-                _ => throw new ArgumentException()
+                _ => throw new ArgumentException("Unknown quotation mark character.")
             };
 
         public static string ToCommaSepratedList(this IEnumerable<string> texts)
@@ -66,7 +66,7 @@ namespace CSharpToTypeScript.Core.Utilities
         public static string Indentation(bool useTabs, int? tabSize)
             => useTabs ? "\t"
             : tabSize is int @int && tabSize > 0 ? " ".Repeat(@int)
-            : throw new ArgumentException();
+            : throw new ArgumentException("Use tabs for indentation or specify tab size (spaces).");
 
         public static string NewLine => "\r\n";
 

@@ -14,7 +14,7 @@ namespace CSharpToTypeScript.Core.Models.TypeNodes
                 DateOutputType.String => "string",
                 DateOutputType.Date => "Date",
                 DateOutputType.Union => "string | Date",
-                _ => throw new ArgumentException()
+                _ => throw new ArgumentException("Unknown date output type.")
             };
     }
 }

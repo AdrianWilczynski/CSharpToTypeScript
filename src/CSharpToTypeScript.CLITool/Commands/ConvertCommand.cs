@@ -95,7 +95,7 @@ namespace CSharpToTypeScript.CLITool.Commands
         }
 
         private string GetOutputFilePath(string input, string output, ModuleNameConversionOptions options)
-            => !input.EndsWithFileExtension() ? throw new ArgumentException()
+            => !input.EndsWithFileExtension() ? throw new ArgumentException("Input should end with file extension.")
             : output?.EndsWithFileExtension() == true ? output
             : !string.IsNullOrWhiteSpace(output) ? Path.Join(output, _fileNameConverter.ConvertToTypeScript(input, options))
             : Path.Join(input.ContainingDirectory(), _fileNameConverter.ConvertToTypeScript(input, options));
