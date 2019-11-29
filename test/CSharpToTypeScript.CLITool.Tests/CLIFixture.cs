@@ -8,7 +8,7 @@ namespace CSharpToTypeScript.CLITool.Tests
 {
     public class CLIFixture : IDisposable
     {
-        private readonly string Temp = "../../../../temp";
+        private const string Temp = "../../../../temp";
         private readonly string _originalWorkingDirectory;
 
         private readonly ServiceProvider _serviceProvider;
