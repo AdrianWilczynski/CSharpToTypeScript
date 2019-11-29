@@ -8,7 +8,8 @@ namespace CSharpToTypeScript.CLITool.Tests
 {
     public class CLIFixture : IDisposable
     {
-        private readonly string Temp = "temp";
+        private readonly string Temp = "../../../../temp";
+        private readonly string _originalWorkingDirectory;
 
         private readonly ServiceProvider _serviceProvider;
 
@@ -23,13 +24,15 @@ namespace CSharpToTypeScript.CLITool.Tests
                 .AddTransient<InitializeCommand>()
                 .BuildServiceProvider();
 
+            _originalWorkingDirectory = Directory.GetCurrentDirectory();
+
             Directory.CreateDirectory(Temp);
             Directory.SetCurrentDirectory(Temp);
         }
 
         public void Dispose()
         {
-            Directory.SetCurrentDirectory("./..");
+            Directory.SetCurrentDirectory(_originalWorkingDirectory);
             Directory.Delete(Temp, true);
         }
     }
