@@ -8,6 +8,7 @@ namespace CSharpToTypeScript.CLITool.Commands
 {
     [InputExists]
     [OutputMatchesInput]
+    [ValidIndentation]
     public abstract class CommandBase
     {
         protected CommandBase() => OnBeforeArgumentsSet();
