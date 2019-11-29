@@ -6,6 +6,8 @@ using McMaster.Extensions.CommandLineUtils;
 
 namespace CSharpToTypeScript.CLITool.Commands
 {
+    [InputExists]
+    [OutputMatchesInput]
     public abstract class CommandBase
     {
         protected CommandBase() => OnBeforeArgumentsSet();
@@ -61,12 +63,6 @@ namespace CSharpToTypeScript.CLITool.Commands
         [Option(ShortName = "q", Description = "Set quotation marks for import statements",
         ValueName = nameof(QuotationMark.Double) + "|" + nameof(QuotationMark.Single))]
         public QuotationMark QuotationMark { get; set; }
-
-        protected void Validate()
-        {
-            InputExists.Validate(Input);
-            OutputMatchesInput.Validate(Input, Output);
-        }
 
         private void OnBeforeArgumentsSet()
         {

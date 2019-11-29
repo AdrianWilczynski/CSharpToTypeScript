@@ -1,16 +1,22 @@
 using System;
+using System.ComponentModel.DataAnnotations;
+using CSharpToTypeScript.CLITool.Commands;
 using CSharpToTypeScript.CLITool.Utilities;
 
 namespace CSharpToTypeScript.CLITool.Validation
 {
-    public static class OutputMatchesInput
+    [AttributeUsage(AttributeTargets.Class)]
+    public class OutputMatchesInput : ValidationAttribute
     {
-        public static void Validate(string input, string output)
+        protected override ValidationResult IsValid(object value, ValidationContext context)
         {
-            if (output?.EndsWithFileExtension() == true && !input.EndsWithFileExtension())
+            if (value is CommandBase command
+            && command.Output?.EndsWithFileExtension() == true && command.Input?.EndsWithFileExtension() == false)
             {
-                throw new ArgumentException("If your Output is a file, your Input has to be a file as well.");
+                return new ValidationResult("If your Output is a file, your Input has to be a file as well.");
             }
+
+            return ValidationResult.Success;
         }
     }
 }

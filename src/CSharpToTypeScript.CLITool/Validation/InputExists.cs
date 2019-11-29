@@ -1,21 +1,33 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
+using CSharpToTypeScript.CLITool.Commands;
 using CSharpToTypeScript.CLITool.Utilities;
 
 namespace CSharpToTypeScript.CLITool.Validation
 {
-    public static class InputExists
+    [AttributeUsage(AttributeTargets.Class)]
+    public class InputExists : ValidationAttribute
     {
-        public static void Validate(string input)
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            if (input.EndsWithFileExtension() && !File.Exists(input))
+            if (value is CommandBase command)
             {
-                throw new ArgumentException($"The file path '{input}' does not exist.");
+                if (command.Input is null)
+                {
+                    return new ValidationResult($"Input cannot be null!");
+                }
+                else if (command.Input.EndsWithFileExtension() && !File.Exists(command.Input))
+                {
+                    return new ValidationResult($"The file path '{command.Input}' does not exist.");
+                }
+                else if (!command.Input.EndsWithFileExtension() && !Directory.Exists(command.Input))
+                {
+                    return new ValidationResult($"The directory path '{command.Input}' does not exist.");
+                }
             }
-            else if (!input.EndsWithFileExtension() && !Directory.Exists(input))
-            {
-                throw new ArgumentException($"The directory path '{input}' does not exist.");
-            }
+
+            return ValidationResult.Success;
         }
     }
 }
