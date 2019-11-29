@@ -1,3 +1,5 @@
+using CSharpToTypeScript.CLITool.Arguments;
+using CSharpToTypeScript.CLITool.Utilities;
 using CSharpToTypeScript.CLITool.Validation;
 using CSharpToTypeScript.Core.Options;
 using McMaster.Extensions.CommandLineUtils;
@@ -6,6 +8,8 @@ namespace CSharpToTypeScript.CLITool.Commands
 {
     public abstract class CommandBase
     {
+        protected CommandBase() => OnBeforeArgumentsSet();
+
         [Argument(0, Description = "Input file or directory path")]
         public string Input { get; set; } = ".";
 
@@ -62,6 +66,14 @@ namespace CSharpToTypeScript.CLITool.Commands
         {
             InputExists.Validate(Input);
             OutputMatchesInput.Validate(Input, Output);
+        }
+
+        private void OnBeforeArgumentsSet()
+        {
+            if (ConfigurationFile.Load() is ConfigurationFileArguments configuration)
+            {
+                configuration.Override(this);
+            }
         }
     }
 }

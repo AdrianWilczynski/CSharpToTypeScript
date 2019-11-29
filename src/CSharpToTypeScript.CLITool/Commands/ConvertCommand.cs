@@ -20,11 +20,6 @@ namespace CSharpToTypeScript.CLITool.Commands
         {
             _codeConverter = codeConverter;
             _fileNameConverter = fileNameConverter;
-
-            if (ConfigurationFile.Load() is ConfigurationFileArguments configuration)
-            {
-                configuration.Override(this);
-            }
         }
 
         public CodeConversionOptions CodeConversionOptions
