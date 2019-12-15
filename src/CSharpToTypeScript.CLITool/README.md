@@ -65,35 +65,6 @@ dotnet cs2ts init
 }
 ```
 
-## Watch with `dotnet watch`
-
-### Console
-
-```cmd
-dotnet watch cs2ts ./DTOs -o ./wwwroot/ts/models
-```
-
-### Visual Studio Code Task
-
-Define task in `.vscode/tasks.json` file and run it using `Tasks: Run Task` command.
-
-```json
-{
-    "label": "cs2ts watch",
-    "command": "dotnet",
-    "type": "process",
-    "args": [
-        "watch",
-        "cs2ts",
-        "${workspaceFolder}/DTOs",
-        "-o",
-        "${workspaceFolder}/wwwroot/ts/models",
-        "-c"
-    ],
-    "problemMatcher": []
-}
-```
-
 ## Run on Build
 
 **Sample**: https://github.com/AdrianWilczynski/CSharpToTypeScript/tree/master/samples/RunOnBuild
@@ -104,4 +75,12 @@ Add `Exec` task to `.csproj` file.
 <Target Name="CSharpToTypeScript" BeforeTargets="Build">
     <Exec Command="dotnet cs2ts ./DTOs -o ./Client/models -i Simple -q Single -c" />
 </Target>
+```
+
+## Watch with `dotnet watch`
+
+Run:
+
+```cmd
+dotnet watch cs2ts ./DTOs -o ./wwwroot/ts/models
 ```
