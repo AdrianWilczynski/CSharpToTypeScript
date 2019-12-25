@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "http://raw.githubusercontent.com/AdrianWilczynski/CSharpToTypeScript/master/src/CSharpToTypeScript.CLITool/schemas/cs2tsconfig.json",
+    "$id": "https://adrianwilczynski.github.io/CSharpToTypeScript/cs2tsconfig.json",
     "title": "CSharpToTypeScript.CLITool Configuration File",
     "description": "JSON schema for CSharpToTypeScript.CLITool configuration files.",
     "type": "object",
