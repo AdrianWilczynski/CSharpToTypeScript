@@ -18,7 +18,7 @@ namespace CSharpToTypeScript.CLITool.Arguments
 
         [JsonProperty("$schema")]
         public const string Schema
-            = "http://raw.githubusercontent.com/AdrianWilczynski/CSharpToTypeScript/master/src/CSharpToTypeScript.CLITool/schemas/cs2tsconfig.json";
+            = "https://adrianwilczynski.github.io/CSharpToTypeScript/cs2tsconfig.json";
 
         public string Input { get; set; }
         public string Output { get; set; }
