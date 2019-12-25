@@ -1,0 +1,110 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://raw.githubusercontent.com/AdrianWilczynski/CSharpToTypeScript/master/src/CSharpToTypeScript.CLITool/schemas/cs2tsconfig.json",
+    "title": "CSharpToTypeScript.CLITool Configuration File",
+    "description": "JSON schema for CSharpToTypeScript.CLITool configuration files.",
+    "type": "object",
+    "properties": {
+        "input": {
+            "description": "Input file or directory path.",
+            "type": "string",
+            "default": "."
+        },
+        "output": {
+            "description": "Output file or directory path.",
+            "type": [
+                "string",
+                "null"
+            ],
+            "default": null
+        },
+        "useTabs": {
+            "description": "Use tabs for indentation.",
+            "type": "boolean",
+            "default": false
+        },
+        "tabSize": {
+            "description": "Number of spaces per tab.",
+            "type": "integer",
+            "minimum": 1,
+            "default": 4
+        },
+        "skipExport": {
+            "description": "Skip 'export' keyword.",
+            "type": "boolean",
+            "default": false
+        },
+        "useKebabCase": {
+            "description": "Use kebab case for output file names.",
+            "type": "boolean",
+            "default": false
+        },
+        "appendModelSuffix": {
+            "description": "Append '.model' suffix to output file names.",
+            "type": "boolean",
+            "default": false
+        },
+        "clearOutputDirectory": {
+            "description": "Clear output directory.",
+            "type": "boolean",
+            "default": false
+        },
+        "angularMode": {
+            "description": "Use Angular style conventions.",
+            "type": "boolean",
+            "default": false
+        },
+        "partialOverride": {
+            "description": "Override only part of output file between marker comments.",
+            "type": "boolean",
+            "default": false
+        },
+        "preserveCasing": {
+            "description": "Don't convert field names to camel case.",
+            "type": "boolean",
+            "default": false
+        },
+        "preserveInterfacePrefix": {
+            "description": "Don't remove interface prefixes.",
+            "type": "boolean",
+            "default": false
+        },
+        "convertDatesTo": {
+            "description": "Set output type for dates.",
+            "type": "string",
+            "enum": [
+                "string",
+                "date",
+                "union"
+            ],
+            "default": "string"
+        },
+        "convertNullablesTo": {
+            "description": "Set output type for nullables.",
+            "type": "string",
+            "enum": [
+                "null",
+                "undefined"
+            ],
+            "default": "null"
+        },
+        "importGeneration": {
+            "description": "Enable import generation.",
+            "type": "string",
+            "enum": [
+                "none",
+                "simple"
+            ],
+            "default": "none"
+        },
+        "quotationMark": {
+            "description": "Set quotation marks for import statements.",
+            "type": "string",
+            "enum": [
+                "double",
+                "single"
+            ],
+            "default": "double"
+        }
+    }
+}
