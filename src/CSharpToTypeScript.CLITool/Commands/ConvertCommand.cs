@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
-using CSharpToTypeScript.CLITool.Arguments;
+using CSharpToTypeScript.CLITool.Conventions;
 using CSharpToTypeScript.CLITool.Utilities;
 using CSharpToTypeScript.Core.Options;
 using CSharpToTypeScript.Core.Services;
@@ -31,7 +31,7 @@ namespace CSharpToTypeScript.CLITool.Commands
         {
             if (AngularMode)
             {
-                new AngularConventionArguments().Override(this);
+                AngularConventions.Override(this);
             }
 
             if (ClearOutputDirectory && !string.IsNullOrWhiteSpace(Output)

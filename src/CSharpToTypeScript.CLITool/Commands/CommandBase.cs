@@ -1,4 +1,3 @@
-using CSharpToTypeScript.CLITool.Arguments;
 using CSharpToTypeScript.CLITool.Utilities;
 using CSharpToTypeScript.CLITool.Validation;
 using CSharpToTypeScript.Core.Options;
@@ -67,7 +66,7 @@ namespace CSharpToTypeScript.CLITool.Commands
 
         private void OnBeforeArgumentsSet()
         {
-            if (ConfigurationFile.Load() is ConfigurationFileArguments configuration)
+            if (ConfigurationFile.Load() is Configuration configuration)
             {
                 configuration.Override(this);
             }

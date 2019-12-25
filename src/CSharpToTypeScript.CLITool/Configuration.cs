@@ -2,15 +2,15 @@ using CSharpToTypeScript.CLITool.Commands;
 using CSharpToTypeScript.Core.Options;
 using Newtonsoft.Json;
 
-namespace CSharpToTypeScript.CLITool.Arguments
+namespace CSharpToTypeScript.CLITool
 {
-    public class ConfigurationFileArguments : ArgumentsBase<ConfigurationFileArguments>
+    public class Configuration
     {
-        public ConfigurationFileArguments() { }
+        public Configuration() { }
 
-        public ConfigurationFileArguments(CommandBase command)
+        public Configuration(CommandBase command)
         {
-            foreach (var property in typeof(ConfigurationFileArguments).GetProperties())
+            foreach (var property in typeof(Configuration).GetProperties())
             {
                 property.SetValue(this, typeof(CommandBase).GetProperty(property.Name).GetValue(command));
             }
@@ -36,5 +36,16 @@ namespace CSharpToTypeScript.CLITool.Arguments
         public NullableOutputType? ConvertNullablesTo { get; set; }
         public ImportGenerationMode? ImportGeneration { get; set; }
         public QuotationMark? QuotationMark { get; set; }
+
+        public void Override(CommandBase command)
+        {
+            foreach (var property in typeof(Configuration).GetProperties())
+            {
+                if (property.GetValue(this) is object value)
+                {
+                    typeof(CommandBase).GetProperty(property.Name).SetValue(command, value);
+                }
+            }
+        }
     }
 }
