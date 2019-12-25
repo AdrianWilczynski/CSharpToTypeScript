@@ -45,7 +45,7 @@ dotnet cs2ts init
 
 ```json
 {
-  "$schema": "http://raw.githubusercontent.com/AdrianWilczynski/CSharpToTypeScript/master/src/CSharpToTypeScript.CLITool/schemas/cs2tsconfig.json",
+  "$schema": "https://adrianwilczynski.github.io/CSharpToTypeScript/cs2tsconfig.json",
   "input": ".",
   "output": null,
   "useTabs": false,
