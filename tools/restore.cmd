@@ -18,3 +18,7 @@ dotnet build CSharpToTypeScript.CLITool.Tests
 dotnet build CSharpToTypeScript.Core.Tests
 dotnet build CSharpToTypeScript.VSCodeExtension.Server.Tests
 popd
+
+pushd ..\samples
+dotnet build RunOnBuild
+popd
