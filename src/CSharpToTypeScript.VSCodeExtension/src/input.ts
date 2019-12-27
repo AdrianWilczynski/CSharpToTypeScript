@@ -1,8 +1,11 @@
-export interface Input {
+export interface Input extends Configuration {
     code: string;
     fileName?: string;
     useTabs: boolean;
     tabSize?: number;
+}
+
+export interface Configuration {
     export: boolean;
     convertDatesTo: string;
     convertNullablesTo: string;

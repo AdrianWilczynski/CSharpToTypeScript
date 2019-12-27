@@ -2,7 +2,7 @@ import * as cp from 'child_process';
 import * as path from 'path';
 import * as readline from 'readline';
 import * as vscode from 'vscode';
-import { Input, dateOutputTypes, nullableOutputTypes, quotationMarks } from './input';
+import { Input, dateOutputTypes, nullableOutputTypes, quotationMarks, Configuration } from './input';
 import { Output } from './output';
 import { allowedOrDefault, fullRange, textFromActiveDocument } from './utilities';
 import { TextEncoder } from 'util';
@@ -100,8 +100,9 @@ async function toFileCommand(uri?: vscode.Uri) {
             return;
         }
 
-        await vscode.workspace.fs.writeFile(vscode.Uri.file(
-            path.join(path.dirname(filePath), convertedFileName)), new TextEncoder().encode(convertedCode));
+        await vscode.workspace.fs.writeFile(
+            vscode.Uri.file(path.join(path.dirname(filePath), convertedFileName)),
+            new TextEncoder().encode(convertedCode));
     }, filePath);
 }
 
@@ -117,22 +118,23 @@ async function convert(code: string, onConverted: (convertedCode: string, fileNa
 
     executingCommand = true;
 
-    const configuration = vscode.workspace.getConfiguration();
+    const configuration = vscode.workspace.getConfiguration()
+        .get<Configuration>('csharpToTypeScript')!;
 
     const input: Input = {
         code: code,
         fileName: fileName,
         useTabs: !vscode.window.activeTextEditor.options.insertSpaces,
         tabSize: vscode.window.activeTextEditor.options.tabSize as number,
-        export: !!configuration.get('csharpToTypeScript.export'),
-        convertDatesTo: allowedOrDefault(configuration.get('csharpToTypeScript.convertDatesTo'), dateOutputTypes),
-        convertNullablesTo: allowedOrDefault(configuration.get('csharpToTypeScript.convertNullablesTo'), nullableOutputTypes),
-        toCamelCase: !!configuration.get('csharpToTypeScript.toCamelCase'),
-        removeInterfacePrefix: !!configuration.get('csharpToTypeScript.removeInterfacePrefix'),
-        generateImports: !!configuration.get('csharpToTypeScript.generateImports'),
-        useKebabCase: !!configuration.get('csharpToTypeScript.useKebabCase'),
-        appendModelSuffix: !!configuration.get('csharpToTypeScript.appendModelSuffix'),
-        quotationMark: allowedOrDefault(configuration.get('csharpToTypeScript.quotationMark'), quotationMarks)
+        export: !!configuration.export,
+        convertDatesTo: allowedOrDefault(configuration.convertDatesTo, dateOutputTypes),
+        convertNullablesTo: allowedOrDefault(configuration.convertNullablesTo, nullableOutputTypes),
+        toCamelCase: !!configuration.toCamelCase,
+        removeInterfacePrefix: !!configuration.removeInterfacePrefix,
+        generateImports: !!configuration.generateImports,
+        useKebabCase: !!configuration.useKebabCase,
+        appendModelSuffix: !!configuration.appendModelSuffix,
+        quotationMark: allowedOrDefault(configuration.quotationMark, quotationMarks)
     };
 
     const inputLine = JSON.stringify(input) + '\n';
