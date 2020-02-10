@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using CSharpToTypeScript.Core.Constants;
 using CSharpToTypeScript.Core.Models;
 using CSharpToTypeScript.Core.Models.TypeNodes;
 using CSharpToTypeScript.Core.Services.TypeConversionHandlers;
@@ -68,13 +69,17 @@ namespace CSharpToTypeScript.Core.Services
         }
 
         private bool IsSerializable(PropertyDeclarationSyntax property, TypeDeclarationSyntax containingType)
-            => IsPublic(property, containingType) && IsNotStatic(property) && IsGettable(property);
+            => IsPublic(property, containingType) && IsNotStatic(property)
+            && IsGettable(property) && !HasJsonIgnoreAttribute(property);
 
         private bool IsSerializable(FieldDeclarationSyntax field)
-            => IsPublic(field) && IsNotStatic(field);
+            => IsPublic(field) && IsNotStatic(field) && !HasJsonIgnoreAttribute(field);
 
-        private bool IsNotStatic(MemberDeclarationSyntax syntax)
-            => syntax.Modifiers.All(m => m.Kind() != SyntaxKind.StaticKeyword);
+        private bool IsNotStatic(MemberDeclarationSyntax member)
+            => member.Modifiers.All(m => m.Kind() != SyntaxKind.StaticKeyword);
+
+        private bool HasJsonIgnoreAttribute(MemberDeclarationSyntax member)
+            => member.AttributeLists.Any(l => l.Attributes.Any(a => a.Name.ToString() == Attributes.JsonIgnore));
 
         private bool IsPublic(MemberDeclarationSyntax property, TypeDeclarationSyntax containingType = null)
             => containingType is InterfaceDeclarationSyntax

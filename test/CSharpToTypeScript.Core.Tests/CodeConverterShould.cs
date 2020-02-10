@@ -457,5 +457,32 @@ export interface ImplementingItem {
     property: number;
     secondField: number;", converted);
         }
+
+        [Fact]
+        public void IgnoreMembersMarkedWithJsonIgnore()
+        {
+            var converted = _codeConverter.ConvertToTypeScript(@"class Item
+{
+    public int Id { get; set; }
+
+    [SomeOtherAttribute]
+    public string FirstName { get; set; }
+
+    [JsonIgnore]
+    public string LastName { get; set; }
+
+    [SomeOtherAttribute, JsonIgnore]
+    public int Count { get; set; }
+
+    [SomeOtherAttribute]
+    [JsonIgnore]
+    public int SomeRandomNumber { get; set; }
+}", new CodeConversionOptions(export: true, useTabs: false, tabSize: 4));
+
+            Assert.Equal(@"export interface Item {
+    id: number;
+    firstName: string;
+}", converted);
+        }
     }
 }
