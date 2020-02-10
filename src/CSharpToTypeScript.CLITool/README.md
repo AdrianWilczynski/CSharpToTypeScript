@@ -2,6 +2,12 @@
 
 Convert C# Models, ViewModels and DTOs into their TypeScript equivalents.
 
+## Installing
+
+```cmd
+dotnet tool install --global CSharpToTypeScript.CLITool
+```
+
 ## Usage
 
 ```cmd
