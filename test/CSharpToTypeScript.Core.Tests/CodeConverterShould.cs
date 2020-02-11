@@ -477,11 +477,17 @@ export interface ImplementingItem {
     [SomeOtherAttribute]
     [JsonIgnore]
     public int SomeRandomNumber { get; set; }
+
+    public int justSomeField;
+
+    [JsonIgnore]
+    public int someOtherField;
 }", new CodeConversionOptions(export: true, useTabs: false, tabSize: 4));
 
             Assert.Equal(@"export interface Item {
     id: number;
     firstName: string;
+    justSomeField: number;
 }", converted);
         }
 
@@ -520,6 +526,41 @@ export interface ImplementingItem {
     ""^_^"": string;
     ""¯\\_(ツ)_/¯"": string;
     ""¯\\_(シ)_/¯"": string;
+}", converted);
+        }
+
+        [Fact]
+        public void UseNameFromJsonPropertyAttribute()
+        {
+            var converted = _codeConverter.ConvertToTypeScript(@"class Item
+{
+    public int Id { get; set; }
+
+    [JsonProperty(propertyName: ""Name"")]
+    public string FirstName { get; set; }
+
+    [SomeOtherAttribute, JsonProperty(""How_Many""))]
+    public int Count { get; set; }
+
+    [SomeOtherAttribute]
+    [JsonProperty(PropertyName = ""Random"")]
+    public int SomeRandomNumber { get; set; }
+
+    [SomeOtherAttribute]
+    [JsonProperty(SomeOtherProperty = ""wrongText"", PropertyName = ""rightText"")]
+    public string SomeText { get; set; }
+
+    [JsonProperty(""Text"")]
+    public string field;
+}", new CodeConversionOptions(export: true, useTabs: false, tabSize: 4));
+
+            Assert.Equal(@"export interface Item {
+    id: number;
+    Name: string;
+    How_Many: number;
+    Random: number;
+    rightText: string;
+    Text: string;
 }", converted);
         }
     }

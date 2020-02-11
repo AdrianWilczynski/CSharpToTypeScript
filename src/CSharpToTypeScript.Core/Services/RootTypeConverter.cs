@@ -46,19 +46,36 @@ namespace CSharpToTypeScript.Core.Services
         private IEnumerable<FieldNode> ConvertField(FieldDeclarationSyntax field)
            => field.Declaration.Variables.Select(v => new FieldNode(
                 name: v.Identifier.ValueText,
-                type: _typeConverter.Handle(field.Declaration.Type)))
+                type: _typeConverter.Handle(field.Declaration.Type),
+                jsonPropertyName: GetJsonPropertyName(field)))
             .Where(f => !string.IsNullOrWhiteSpace(f.Name));
 
         private string GetJsonPropertyName(MemberDeclarationSyntax member)
         {
             foreach (var attribute in member.AttributeLists.SelectMany(a => a.Attributes))
             {
-                if (attribute.Name.ToString() != Attributes.JsonPropertyName)
-                    continue;
+                static bool IsNotNamed(AttributeArgumentSyntax attribute)
+                    => attribute.NameColon is null && attribute.NameEquals is null;
 
-                var argument = attribute.ArgumentList.Arguments
-                    .FirstOrDefault(a => (a.NameColon is null || a.NameColon.Name.Identifier.ValueText == AttributeArguments.Name)
-                        && a.Expression.IsKind(SyntaxKind.StringLiteralExpression));
+                static bool ArgumentNameEquals(AttributeArgumentSyntax attribute, string name)
+                    => attribute.NameColon?.Name.Identifier.ValueText == name;
+
+                static bool PropertyNameEquals(AttributeArgumentSyntax attribute, string name)
+                    => attribute.NameEquals?.Name.Identifier.ValueText == name;
+
+                static bool HasStringExpression(AttributeArgumentSyntax attribute)
+                    => attribute.Expression.IsKind(SyntaxKind.StringLiteralExpression);
+
+                var argument = attribute.Name.ToString() switch
+                {
+                    Attributes.JsonPropertyName => attribute.ArgumentList.Arguments
+                        .FirstOrDefault(a => HasStringExpression(a)
+                            && (IsNotNamed(a) || ArgumentNameEquals(a, AttributeArgumentNames.Name))),
+                    Attributes.JsonProperty => attribute.ArgumentList.Arguments
+                        .FirstOrDefault(a => HasStringExpression(a)
+                            && (IsNotNamed(a) || ArgumentNameEquals(a, AttributeArgumentNames.PropertyName) || PropertyNameEquals(a, AttributePropertyNames.PropertyName))),
+                    _ => null
+                };
 
                 if (!(argument is null))
                 {
