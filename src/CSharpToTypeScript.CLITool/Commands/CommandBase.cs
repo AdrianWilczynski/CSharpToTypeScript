@@ -48,20 +48,16 @@ namespace CSharpToTypeScript.CLITool.Commands
         [Option(ShortName = "pip", Description = "Don't remove interface prefixes")]
         public bool PreserveInterfacePrefix { get; set; }
 
-        [Option(ShortName = "d", Description = "Set output type for dates",
-        ValueName = nameof(DateOutputType.String) + "|" + nameof(DateOutputType.Date) + "|" + nameof(DateOutputType.Union))]
+        [Option(ShortName = "d", Description = "Set output type for dates")]
         public DateOutputType ConvertDatesTo { get; set; }
 
-        [Option(ShortName = "n", Description = "Set output type for nullables",
-        ValueName = nameof(NullableOutputType.Null) + "|" + nameof(NullableOutputType.Undefined))]
+        [Option(ShortName = "n", Description = "Set output type for nullables")]
         public NullableOutputType ConvertNullablesTo { get; set; }
 
-        [Option(ShortName = "i", Description = "Enable import generation",
-        ValueName = nameof(ImportGenerationMode.None) + "|" + nameof(ImportGenerationMode.Simple))]
+        [Option(ShortName = "i", Description = "Enable import generation")]
         public ImportGenerationMode ImportGeneration { get; set; }
 
-        [Option(ShortName = "q", Description = "Set quotation marks for import statements & identifiers",
-        ValueName = nameof(QuotationMark.Double) + "|" + nameof(QuotationMark.Single))]
+        [Option(ShortName = "q", Description = "Set quotation marks for import statements & identifiers")]
         public QuotationMark QuotationMark { get; set; }
 
         private void OnBeforeArgumentsSet()
