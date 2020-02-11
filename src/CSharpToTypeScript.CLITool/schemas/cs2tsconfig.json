@@ -98,7 +98,7 @@
             "default": "none"
         },
         "quotationMark": {
-            "description": "Set quotation marks for import statements.",
+            "description": "Set quotation marks for import statements & identifiers.",
             "type": "string",
             "enum": [
                 "double",

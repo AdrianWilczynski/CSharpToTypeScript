@@ -77,14 +77,14 @@
                             <div class="custom-control custom-switch">
                                 <input asp-for="Settings.AppendModelSuffix" class="custom-control-input">
                                 <label asp-for="Settings.AppendModelSuffix" class="custom-control-label"></label>
-                            </div>
-                            <div class="form-group mt-1">
-                                <label asp-for="Settings.QuotationMark"></label>
-                                <select asp-for="Settings.QuotationMark" asp-items="Html.GetEnumSelectList<QuotationMark>()"
-                                    class="form-control form-control-sm"></select>
-                                <span asp-validation-for="Settings.QuotationMark" class="text-danger"></span>
-                            </div>
+                            </div>                            
                         </details>
+                        <div class="form-group mt-1">
+                            <label asp-for="Settings.QuotationMark"></label>
+                            <select asp-for="Settings.QuotationMark" asp-items="Html.GetEnumSelectList<QuotationMark>()"
+                                class="form-control form-control-sm"></select>
+                            <span asp-validation-for="Settings.QuotationMark" class="text-danger"></span>
+                        </div>
                     </div>
                 </div>
             </div>

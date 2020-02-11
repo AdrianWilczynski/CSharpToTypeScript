@@ -28,7 +28,7 @@ Convert C# Models, ViewModels and DTOs into their TypeScript equivalents.
 - `"csharpToTypeScript.toCamelCase": true` toggles field name conversion to camel case.
 - `"csharpToTypeScript.removeInterfacePrefix": true` controls whether to remove interface prefixes (`IType` -> `Type`).
 - `"csharpToTypeScript.generateImports": false` toggles simple import statements generation.
-    - `"csharpToTypeScript.quotationMark": "double"` sets quotation marks for import statements (`double` or `single`).
+- `"csharpToTypeScript.quotationMark": "double"` sets quotation marks for import statements & identifiers (`double` or `single`).
 - `"csharpToTypeScript.useKebabCase": false` - use kebab case for file names.
 - `"csharpToTypeScript.appendModelSuffix": false` - append ".model" suffix to file names.
 

@@ -60,7 +60,7 @@ namespace CSharpToTypeScript.CLITool.Commands
         ValueName = nameof(ImportGenerationMode.None) + "|" + nameof(ImportGenerationMode.Simple))]
         public ImportGenerationMode ImportGeneration { get; set; }
 
-        [Option(ShortName = "q", Description = "Set quotation marks for import statements",
+        [Option(ShortName = "q", Description = "Set quotation marks for import statements & identifiers",
         ValueName = nameof(QuotationMark.Double) + "|" + nameof(QuotationMark.Single))]
         public QuotationMark QuotationMark { get; set; }
 

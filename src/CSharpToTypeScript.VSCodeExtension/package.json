@@ -156,7 +156,7 @@
 							"double",
 							"single"
 						],
-						"description": "Sets quotation marks for import statements."
+						"description": "Sets quotation marks."
 					},
 					"csharpToTypeScript.useKebabCase": {
 						"type": "boolean",
