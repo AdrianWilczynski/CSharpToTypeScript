@@ -484,5 +484,43 @@ export interface ImplementingItem {
     firstName: string;
 }", converted);
         }
+
+        [Fact]
+        public void UseNameFromJsonPropertyNameAttribute()
+        {
+            var converted = _codeConverter.ConvertToTypeScript(@"class Item
+{
+    public int Id { get; set; }
+
+    [JsonPropertyName(name: ""Name"")]
+    public string FirstName { get; set; }
+
+    [SomeOtherAttribute, JsonPropertyName(""How_Many""))]
+    public int Count { get; set; }
+
+    [SomeOtherAttribute]
+    [JsonPropertyName(name: ""Random"")]
+    public int SomeRandomNumber { get; set; }
+
+    [JsonPropertyName(""^_^"")]
+    public string InvalidName { get; set; }
+
+    [JsonPropertyName(@""¯\_(ツ)_/¯"")]
+    public string AnotherInvalidName { get; set; }
+
+    [JsonPropertyName(""¯\\_(シ)_/¯"")]
+    public string OneMore { get; set; }
+}", new CodeConversionOptions(export: true, useTabs: false, tabSize: 4));
+
+            Assert.Equal(@"export interface Item {
+    id: number;
+    Name: string;
+    How_Many: number;
+    Random: number;
+    ""^_^"": string;
+    ""¯\_(ツ)_/¯"": string;
+    ""¯\_(シ)_/¯"": string;
+}", converted);
+        }
     }
 }

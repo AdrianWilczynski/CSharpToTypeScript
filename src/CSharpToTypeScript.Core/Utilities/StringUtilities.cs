@@ -16,6 +16,9 @@ namespace CSharpToTypeScript.Core.Utilities
         public static bool HasInterfacePrefix(this string text)
             => Regex.IsMatch(text, InterfacePrefixRegex);
 
+        public static bool IsValidIdentifier(this string text)
+            => Regex.IsMatch(text, "^([a-zA-Z_$][0-9a-zA-Z_$]*|[0-9]+)$");
+
         public static string ToCamelCase(this string text)
             => !string.IsNullOrEmpty(text) ?
             Regex.Replace(text, "^[A-Z]", char.ToLowerInvariant(text[0]).ToString())
@@ -40,6 +43,9 @@ namespace CSharpToTypeScript.Core.Utilities
                 QuotationMark.Single => "'" + text + "'",
                 _ => throw new ArgumentException("Unknown quotation mark character.")
             };
+
+        public static Func<string, string> InQuotes(QuotationMark quotationMark)
+            => (string text) => text.InQuotes(quotationMark);
 
         public static string ToCommaSepratedList(this IEnumerable<string> texts)
             => string.Join(", ", texts);

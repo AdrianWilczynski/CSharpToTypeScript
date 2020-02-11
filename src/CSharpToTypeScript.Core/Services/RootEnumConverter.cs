@@ -9,12 +9,12 @@ namespace CSharpToTypeScript.Core.Services
     {
         public RootEnumNode Convert(EnumDeclarationSyntax @enum)
             => new RootEnumNode(
-                name: @enum.Identifier.Text,
+                name: @enum.Identifier.ValueText,
                 members: ConvertEnumMembers(@enum.Members));
 
         private IEnumerable<EnumMemberNode> ConvertEnumMembers(IEnumerable<EnumMemberDeclarationSyntax> members)
           => members.Select(m => new EnumMemberNode(
-                name: m.Identifier.Text,
+                name: m.Identifier.ValueText,
                 value: m.EqualsValue?.Value.ToString()));
     }
 }

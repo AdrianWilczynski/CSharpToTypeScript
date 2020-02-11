@@ -7,20 +7,22 @@ namespace CSharpToTypeScript.Core.Models
 {
     internal class FieldNode : IWritableNode, IDependentNode
     {
-        public FieldNode(string name, TypeNode type)
+        public FieldNode(string name, TypeNode type, string jsonPropertyName = null)
         {
             Name = name;
             Type = type;
+            JsonPropertyName = jsonPropertyName;
         }
 
         public string Name { get; }
         public TypeNode Type { get; }
+        public string JsonPropertyName { get; set; }
 
         public IEnumerable<string> Requires => Type.Requires;
 
         public string WriteTypeScript(CodeConversionOptions options, Context context)
             => // name
-            Name.TransformIf(options.ToCamelCase, StringUtilities.ToCamelCase)
+            (JsonPropertyName?.TransformIf(!JsonPropertyName.IsValidIdentifier(), StringUtilities.InQuotes(options.QuotationMark)) ?? Name.TransformIf(options.ToCamelCase, StringUtilities.ToCamelCase))
             // separator
             + "?".If(Type.IsOptional(options, out _)) + ": "
             // type

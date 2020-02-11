@@ -22,7 +22,7 @@ namespace CSharpToTypeScript.Core.Services
 
         public RootTypeNode Convert(TypeDeclarationSyntax type)
             => new RootTypeNode(
-                name: type.Identifier.Text,
+                name: type.Identifier.ValueText,
                 fields: type.ChildNodes()
                     .SelectMany(node => node switch
                     {
@@ -31,7 +31,7 @@ namespace CSharpToTypeScript.Core.Services
                         _ => Enumerable.Empty<FieldNode>()
                     }),
                 genericTypeParameters: type.TypeParameterList?.Parameters
-                    .Select(p => p.Identifier.Text)
+                    .Select(p => p.Identifier.ValueText)
                     .Where(p => !string.IsNullOrWhiteSpace(p)) ?? Enumerable.Empty<string>(),
                 baseTypes: ConvertBaseTypes(
                     type.BaseList?.Types ?? Enumerable.Empty<BaseTypeSyntax>(),
@@ -39,14 +39,35 @@ namespace CSharpToTypeScript.Core.Services
 
         private FieldNode ConvertProperty(PropertyDeclarationSyntax property)
             => new FieldNode(
-                name: property.Identifier.Text,
-                type: _typeConverter.Handle(property.Type));
+                name: property.Identifier.ValueText,
+                type: _typeConverter.Handle(property.Type),
+                jsonPropertyName: GetJsonPropertyName(property));
 
         private IEnumerable<FieldNode> ConvertField(FieldDeclarationSyntax field)
            => field.Declaration.Variables.Select(v => new FieldNode(
-                name: v.Identifier.Text,
+                name: v.Identifier.ValueText,
                 type: _typeConverter.Handle(field.Declaration.Type)))
             .Where(f => !string.IsNullOrWhiteSpace(f.Name));
+
+        private string GetJsonPropertyName(MemberDeclarationSyntax member)
+        {
+            foreach (var attribute in member.AttributeLists.SelectMany(a => a.Attributes))
+            {
+                if (attribute.Name.ToString() != Attributes.JsonPropertyName)
+                    continue;
+
+                var argument = attribute.ArgumentList.Arguments
+                    .FirstOrDefault(a => (a.NameColon is null || a.NameColon.Name.Identifier.ValueText == AttributeArguments.Name)
+                        && a.Expression.IsKind(SyntaxKind.StringLiteralExpression));
+
+                if (!(argument is null))
+                {
+                    return ((LiteralExpressionSyntax)argument.Expression).Token.ValueText;
+                }
+            }
+
+            return null;
+        }
 
         private IEnumerable<TypeNode> ConvertBaseTypes(IEnumerable<BaseTypeSyntax> baseTypes, TypeDeclarationSyntax containingType)
         {
