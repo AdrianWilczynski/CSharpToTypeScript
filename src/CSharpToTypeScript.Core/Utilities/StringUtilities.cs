@@ -19,6 +19,9 @@ namespace CSharpToTypeScript.Core.Utilities
         public static bool IsValidIdentifier(this string text)
             => Regex.IsMatch(text, "^([a-zA-Z_$][0-9a-zA-Z_$]*|[0-9]+)$");
 
+        public static string EscapeBackslashes(this string text)
+            => Regex.Replace(text, @"\\", @"\\");
+
         public static string ToCamelCase(this string text)
             => !string.IsNullOrEmpty(text) ?
             Regex.Replace(text, "^[A-Z]", char.ToLowerInvariant(text[0]).ToString())

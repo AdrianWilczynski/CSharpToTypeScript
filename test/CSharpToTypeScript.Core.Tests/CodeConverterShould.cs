@@ -518,8 +518,8 @@ export interface ImplementingItem {
     How_Many: number;
     Random: number;
     ""^_^"": string;
-    ""¯\_(ツ)_/¯"": string;
-    ""¯\_(シ)_/¯"": string;
+    ""¯\\_(ツ)_/¯"": string;
+    ""¯\\_(シ)_/¯"": string;
 }", converted);
         }
     }

@@ -22,7 +22,10 @@ namespace CSharpToTypeScript.Core.Models
 
         public string WriteTypeScript(CodeConversionOptions options, Context context)
             => // name
-            (JsonPropertyName?.TransformIf(!JsonPropertyName.IsValidIdentifier(), StringUtilities.InQuotes(options.QuotationMark)) ?? Name.TransformIf(options.ToCamelCase, StringUtilities.ToCamelCase))
+            (JsonPropertyName?
+                .TransformIf(!JsonPropertyName.IsValidIdentifier(), StringUtilities.InQuotes(options.QuotationMark))
+                .EscapeBackslashes()
+            ?? Name.TransformIf(options.ToCamelCase, StringUtilities.ToCamelCase))
             // separator
             + "?".If(Type.IsOptional(options, out _)) + ": "
             // type
