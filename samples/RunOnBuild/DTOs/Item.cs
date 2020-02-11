@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace MyProject.DTOs
 {
@@ -17,6 +18,12 @@ namespace MyProject.DTOs
         public DateTime Date { get; set; }
         public string Hello => "Hello World!";
         public byte[] File { get; set; }
+
+        [JsonIgnore]
+        public string IgnoreMe { get; set; }
+
+        [JsonProperty("new_name")]
+        public string RenameMe { get; set; }
     }
 
     public class GenericItem<IT>
