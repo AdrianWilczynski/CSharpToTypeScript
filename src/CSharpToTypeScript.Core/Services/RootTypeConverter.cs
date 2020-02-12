@@ -68,10 +68,10 @@ namespace CSharpToTypeScript.Core.Services
 
                 var argument = attribute.Name.ToString() switch
                 {
-                    Attributes.JsonPropertyName => attribute.ArgumentList.Arguments
+                    Attributes.JsonPropertyName => attribute.ArgumentList?.Arguments
                         .FirstOrDefault(a => HasStringExpression(a)
                             && (IsNotNamed(a) || ArgumentNameEquals(a, AttributeArgumentNames.Name))),
-                    Attributes.JsonProperty => attribute.ArgumentList.Arguments
+                    Attributes.JsonProperty => attribute.ArgumentList?.Arguments
                         .FirstOrDefault(a => HasStringExpression(a)
                             && (IsNotNamed(a) || ArgumentNameEquals(a, AttributeArgumentNames.PropertyName) || PropertyNameEquals(a, AttributePropertyNames.PropertyName))),
                     _ => null
