@@ -1,0 +1,25 @@
+﻿@page "/"
+@inject ICodeConverter CodeConverter
+
+<div>
+    <textarea @bind-value="Code" @bind-value:event="oninput" style="width: 100%;" rows="10"></textarea>
+</div>
+<div>
+    <textarea @bind="ConvertCode" style="width: 100%;" rows="10"></textarea>
+</div>
+
+@code {
+    private string _code;
+
+    private string Code 
+    { 
+        get => _code;
+        set
+        {
+            _code = value;
+            ConvertCode = CodeConverter.ConvertToTypeScript(value, new CodeConversionOptions(true, true));
+        }
+    }
+
+    private string ConvertCode { get; set; }
+}
