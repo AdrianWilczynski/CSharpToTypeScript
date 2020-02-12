@@ -2,6 +2,8 @@
 
 Convert C# Models, ViewModels and DTOs into their TypeScript equivalents.
 
+![In Action](img/InAction.gif)
+
 ## Installing
 
 ```cmd
