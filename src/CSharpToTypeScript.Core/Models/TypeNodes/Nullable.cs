@@ -23,10 +23,6 @@ namespace CSharpToTypeScript.Core.Models.TypeNodes
         }
 
         public override string WriteTypeScript(CodeConversionOptions options, Context context)
-            => // underlying type
-            Of.WriteTypeScript(options, context)
-            + " | "
-            // "null" type
-            + (options.ConvertNullablesTo == NullableOutputType.Undefined ? "undefined" : "null");
+            => Of.WriteTypeScript(options, context) + " | null";
     }
 }

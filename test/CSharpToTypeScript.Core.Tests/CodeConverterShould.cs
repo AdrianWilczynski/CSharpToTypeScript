@@ -256,7 +256,7 @@ export interface ImplementingItem {
 
             Assert.Equal(@"export interface Item {
     id?: number;
-    collection: (number | undefined)[];
+    collection: (number | null)[];
     generic?: number;
 }", converted);
         }
