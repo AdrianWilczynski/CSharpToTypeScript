@@ -13,6 +13,10 @@ call npm install
 call npm run compile-server
 popd
 
+pushd ..\src\CSharpToTypeScript.Blazor
+dotnet build
+popd
+
 pushd ..\test
 dotnet build CSharpToTypeScript.CLITool.Tests
 dotnet build CSharpToTypeScript.Core.Tests
