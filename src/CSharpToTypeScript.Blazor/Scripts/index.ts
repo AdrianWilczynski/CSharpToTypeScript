@@ -1,6 +1,7 @@
 import '../Styles/index.scss';
 
 import * as monaco from 'monaco-editor';
+import _ from 'lodash';
 
 import { getSnippets, getKeywords, getAttributes, getStructs, getInterfaces, getClasses, getNames, getNamespaces } from './completions';
 
@@ -101,8 +102,14 @@ interface DotNetObject {
             enabled: false
         }
     });
-    inputEditor.onDidChangeModelContent(async e =>
-        await component.invokeMethodAsync('OnInputEditorChangeAsync', inputEditor.getValue()));
+
+    inputEditor.onDidChangeModelContent(_.debounce(async e =>
+        await component.invokeMethodAsync('OnInputEditorChangeAsync', inputEditor.getValue()),
+        500,
+        {
+            leading: true,
+            trailing: true
+        }));
 
     const outputEditor = monaco.editor.create(outputEditorContainer, {
         language: 'typescript',

@@ -1,6 +1,7 @@
 {
   "name": "csharptotypescript.blazor",
   "devDependencies": {
+    "@types/lodash": "^4.14.149",
     "css-loader": "^3.4.2",
     "file-loader": "^5.1.0",
     "monaco-editor-webpack-plugin": "^1.9.0",
@@ -13,6 +14,7 @@
     "webpack-cli": "^3.3.11"
   },
   "dependencies": {
+    "lodash": "^4.17.15",
     "monaco-editor": "^0.20.0",
     "spectre.css": "^0.5.8"
   }
