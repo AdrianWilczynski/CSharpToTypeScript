@@ -15,6 +15,8 @@ popd
 
 pushd ..\src\CSharpToTypeScript.Blazor
 dotnet build
+call npm install
+call npx webpack
 popd
 
 pushd ..\test

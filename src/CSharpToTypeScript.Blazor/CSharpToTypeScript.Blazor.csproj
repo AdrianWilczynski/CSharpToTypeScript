@@ -16,4 +16,8 @@
     <ProjectReference Include="..\CSharpToTypeScript.Core\CSharpToTypeScript.Core.csproj" />
   </ItemGroup>
 
+  <Target Name="Webpack" BeforeTargets="Build">
+    <Exec Command="npx webpack" />
+  </Target>
+
 </Project>

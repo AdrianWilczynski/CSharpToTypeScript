@@ -353,8 +353,8 @@ MigrationBackup/
 
 lib/
 
-out
-node_modules
+out/
+node_modules/
 .vscode-test/
 *.vsix
 
@@ -364,6 +364,8 @@ nupkg/
 
 **/CSharpToTypeScript.CLITool/**/*.ts
 
-**/temp/**
+temp/
 
-**/RunOnBuild/Client/models/**
+**/RunOnBuild/Client/models/
+
+**/CSharpToTypeScript.Blazor/wwwroot/dist/
