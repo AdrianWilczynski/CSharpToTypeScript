@@ -1,6 +1,8 @@
+import '../Styles/index.scss';
+
 import * as monaco from 'monaco-editor';
 
-import { getSnippets, getKeywords } from './completions';
+import { getSnippets, getKeywords, getAttributes, getStructs, getInterfaces, getClasses, getNames, getNamespaces } from './completions';
 
 interface DotNetObject {
     invokeMethod<T>(methodIdentifier: string, ...args: any[]): T;
@@ -44,7 +46,49 @@ interface DotNetObject {
                             kind: monaco.languages.CompletionItemKind.Keyword,
                             range: range
                         }
-                    })
+                    }),
+                    ...getAttributes().map(a => {
+                        return {
+                            ...a,
+                            kind: monaco.languages.CompletionItemKind.Class,
+                            range: range
+                        }
+                    }),
+                    ...getStructs().map(t => {
+                        return {
+                            ...t,
+                            kind: monaco.languages.CompletionItemKind.Struct,
+                            range: range
+                        }
+                    }),
+                    ...getInterfaces().map(i => {
+                        return {
+                            ...i,
+                            kind: monaco.languages.CompletionItemKind.Interface,
+                            range: range
+                        }
+                    }),
+                    ...getClasses().map(c => {
+                        return {
+                            ...c,
+                            kind: monaco.languages.CompletionItemKind.Class,
+                            range: range
+                        }
+                    }),
+                    ...getNamespaces().map(n => {
+                        return {
+                            ...n,
+                            kind: monaco.languages.CompletionItemKind.Module,
+                            range: range
+                        }
+                    }),
+                    ...getNames().map(n => {
+                        return {
+                            ...n,
+                            kind: monaco.languages.CompletionItemKind.Variable,
+                            range: range
+                        }
+                    }),
                 ]
             };
         }
@@ -55,8 +99,7 @@ interface DotNetObject {
         theme: 'vs-dark',
         minimap: {
             enabled: false
-        },
-
+        }
     });
     inputEditor.onDidChangeModelContent(async e =>
         await component.invokeMethodAsync('OnInputEditorChangeAsync', inputEditor.getValue()));
@@ -70,4 +113,9 @@ interface DotNetObject {
     });
 
     (window as any)['setOutputEditorValue'] = (value: string) => outputEditor.setValue(value);
+
+    window.addEventListener('resize', () => {
+        inputEditor.layout();
+        outputEditor.layout();
+    });
 }

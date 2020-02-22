@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using CSharpToTypeScript.Blazor.Models;
 using CSharpToTypeScript.Core.Options;
 using CSharpToTypeScript.Core.Services;
 using Microsoft.AspNetCore.Components;
@@ -9,7 +10,7 @@ namespace CSharpToTypeScript.Blazor.Pages
 {
     public partial class Index : IDisposable
     {
-        public Index() => _thisDotNetReference = DotNetObjectReference.Create(this);
+        public Index() => ThisDotNetReference = DotNetObjectReference.Create(this);
 
         [Inject]
         public IJSRuntime JSRuntime { get; set; }
@@ -20,7 +21,9 @@ namespace CSharpToTypeScript.Blazor.Pages
         private ElementReference InputEditorContainer { get; set; }
         private ElementReference OutputEditorContainer { get; set; }
 
-        private readonly DotNetObjectReference<Index> _thisDotNetReference;
+        private DotNetObjectReference<Index> ThisDotNetReference { get; }
+
+        private SettingsModel Model { get; } = new SettingsModel();
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -30,7 +33,7 @@ namespace CSharpToTypeScript.Blazor.Pages
                     "initializeMonaco",
                     InputEditorContainer,
                     OutputEditorContainer,
-                    _thisDotNetReference);
+                    ThisDotNetReference);
             }
         }
 
@@ -46,6 +49,6 @@ namespace CSharpToTypeScript.Blazor.Pages
             await JSRuntime.InvokeVoidAsync("setOutputEditorValue", convertedCode);
         }
 
-        public void Dispose() => _thisDotNetReference.Dispose();
+        public void Dispose() => ThisDotNetReference.Dispose();
     }
 }

@@ -40,6 +40,47 @@ public int \${3:MyProperty}
     get { return \$2; }
     set { \$2 = value; }
 }`
+        },
+        {
+            label: 'sample',
+            insertText: `using System;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+
+namespace MyProject.DTOs
+{
+    public class Item : BaseItem
+    {
+        public Guid Id { get; set; }
+        public string Text { get; set; }
+        public bool IsWhatever { get; set; }
+        public IEnumerable<string> Collection { get; set; }
+        public double[] Array { get; set; }
+        public (int, string) Tuple { get; set; }
+        public int? Nullable { get; set; }
+        public GenericItem<string> Generic { get; set; }
+        public Dictionary<string, string> Dictionary { get; set; }
+        public DateTime Date { get; set; }
+        public string Hello => "Hello World!";
+        public byte[] File { get; set; }
+
+        [JsonIgnore]
+        public string IgnoreMe { get; set; }
+
+        [JsonProperty("new_name")]
+        public string RenameMe { get; set; }
+    }
+
+    public class GenericItem<T>
+    {
+        public T Stuff { get; set; }
+    }
+
+    public class BaseItem
+    {
+        public ImportMe Imported { get; set; }
+    }
+}`
         }
     ]
 }
@@ -153,6 +194,180 @@ export function getKeywords() {
         {
             label: 'ushort',
             insertText: 'ushort'
+        }
+    ]
+}
+
+export function getAttributes() {
+    return [
+        {
+            label: 'JsonProperty',
+            insertText: 'JsonProperty'
+        },
+        {
+            label: 'JsonPropertyName',
+            insertText: 'JsonPropertyName'
+        },
+        {
+            label: 'JsonIgnore',
+            insertText: 'JsonIgnore'
+        }
+    ]
+}
+
+export function getStructs() {
+    return [
+        {
+            label: 'DateTime',
+            insertText: 'DateTime'
+        },
+        {
+            label: 'DateTimeOffset',
+            insertText: 'DateTimeOffset'
+        },
+        {
+            label: 'TimeSpan',
+            insertText: 'TimeSpan'
+        },
+        {
+            label: 'Guid',
+            insertText: 'Guid'
+        },
+        {
+            label: 'Boolean',
+            insertText: 'Boolean'
+        },
+        {
+            label: 'Char',
+            insertText: 'Char'
+        },
+        {
+            label: 'Byte',
+            insertText: 'Byte'
+        },
+        {
+            label: 'SByte',
+            insertText: 'SByte'
+        },
+        {
+            label: 'Decimal',
+            insertText: 'Decimal'
+        },
+        {
+            label: 'Double',
+            insertText: 'Double'
+        },
+        {
+            label: 'Single',
+            insertText: 'Single'
+        },
+        {
+            label: 'Int32',
+            insertText: 'Int32'
+        },
+        {
+            label: 'UInt32',
+            insertText: 'UInt32'
+        },
+        {
+            label: 'Int64',
+            insertText: 'Int64'
+        },
+        {
+            label: 'UInt64',
+            insertText: 'UInt64'
+        },
+        {
+            label: 'Int16',
+            insertText: 'Int16'
+        },
+        {
+            label: 'UInt16',
+            insertText: 'UInt16'
+        }
+    ]
+}
+
+export function getInterfaces() {
+    return [
+        {
+            label: 'IEnumerable',
+            insertText: 'IEnumerable'
+        },
+        {
+            label: 'IDictionary',
+            insertText: 'IDictionary'
+        }
+    ]
+}
+
+export function getClasses() {
+    return [
+        {
+            label: 'List',
+            insertText: 'List'
+        },
+        {
+            label: 'Dictionary',
+            insertText: 'Dictionary'
+        },
+        {
+            label: 'Tuple',
+            insertText: 'Tuple'
+        },
+        {
+            label: 'String',
+            insertText: 'String'
+        },
+    ]
+}
+
+export function getNamespaces() {
+    return [
+        {
+            label: 'System',
+            insertText: 'System'
+        },
+        {
+            label: 'Collections',
+            insertText: 'Collections'
+        },
+        {
+            label: 'Generic',
+            insertText: 'Generic'
+        },
+        {
+            label: 'Newtonsoft',
+            insertText: 'Newtonsoft'
+        },
+        {
+            label: 'Text',
+            insertText: 'Text'
+        },
+        {
+            label: 'Json',
+            insertText: 'Json'
+        },
+        {
+            label: 'Serialization',
+            insertText: 'Serialization'
+        }
+    ]
+}
+
+export function getNames() {
+    return [
+        {
+            label: 'name',
+            insertText: 'name'
+        },
+        {
+            label: 'propertyName',
+            insertText: 'propertyName'
+        },
+        {
+            label: 'PropertyName',
+            insertText: 'PropertyName'
         }
     ]
 }

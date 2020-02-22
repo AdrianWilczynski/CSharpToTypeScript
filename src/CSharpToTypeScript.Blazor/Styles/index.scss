@@ -1,0 +1,32 @@
+$primary-color: rgb(212, 212, 212);
+$dark-color: rgb(30, 30, 30);
+$body-bg: $dark-color;
+
+@import "node_modules/spectre.css/src/spectre";
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.height-75 {
+  height: 75%;
+}
+
+.height-full {
+  height: 100%;
+}
+
+.hide-overflow {
+  overflow: hidden;
+}
+
+.px-bigger {
+  margin-left: $unit-5 !important;
+  margin-right: $unit-5 !important;
+}
+
+.mt-bigger {
+  margin-top: $unit-16;
+}

@@ -1,5 +1,19 @@
 ﻿@page "/"
 
+<header class="navbar p-2 px-bigger">
+    <section class="navbar-section">
+        <a href="/" class="navbar-brand mr-2">C# to TypeScript</a>
+        <a href="https://github.com/AdrianWilczynski/CSharpToTypeScript" class="btn btn-link hide-md">GitHub</a>
+        <a href="https://www.nuget.org/packages/CSharpToTypeScript.CLITool/" class="btn btn-link hide-md">NuGet</a>
+        <a href="https://marketplace.visualstudio.com/items?itemName=adrianwilczynski.csharp-to-typescript"
+            class="btn btn-link hide-md">Visual Studio Marketplace</a>
+    </section>
+    <section class="navbar-section">
+        <a href="#" class="btn btn-link">Settings</a>
+    </section>
+</header>
 
-<div @ref="InputEditorContainer" style="height: 500px;"></div>
-<div @ref="OutputEditorContainer" style="height: 500px; margin-top: 10px;"></div>
+<div class="columns col-gapless height-75">
+    <div @ref="InputEditorContainer" class="column full-height hide-overflow"></div>
+    <div @ref="OutputEditorContainer" class="column full-height hide-overflow"></div>
+</div>
