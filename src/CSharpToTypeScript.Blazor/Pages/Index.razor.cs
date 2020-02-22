@@ -18,12 +18,14 @@ namespace CSharpToTypeScript.Blazor.Pages
         [Inject]
         public ICodeConverter CodeConverter { get; set; }
 
-        private ElementReference InputEditorContainer { get; set; }
-        private ElementReference OutputEditorContainer { get; set; }
+        protected ElementReference InputEditorContainer { get; set; }
+        protected ElementReference OutputEditorContainer { get; set; }
 
-        private DotNetObjectReference<Index> ThisDotNetReference { get; }
+        protected DotNetObjectReference<Index> ThisDotNetReference { get; }
 
-        private SettingsModel Model { get; } = new SettingsModel();
+        protected SettingsModel Model { get; } = new SettingsModel();
+
+        protected bool AreSettingsOpen { get; set; }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -31,8 +33,7 @@ namespace CSharpToTypeScript.Blazor.Pages
             {
                 await JSRuntime.InvokeVoidAsync(
                     "initializeMonaco",
-                    InputEditorContainer,
-                    OutputEditorContainer,
+                    InputEditorContainer, OutputEditorContainer,
                     ThisDotNetReference);
             }
         }
@@ -48,6 +49,9 @@ namespace CSharpToTypeScript.Blazor.Pages
 
             await JSRuntime.InvokeVoidAsync("setOutputEditorValue", convertedCode);
         }
+
+        protected void OnOpenSettingsClick() => AreSettingsOpen = true;
+        protected void OnSettingsCloseRequested() => AreSettingsOpen = false;
 
         public void Dispose() => ThisDotNetReference.Dispose();
     }

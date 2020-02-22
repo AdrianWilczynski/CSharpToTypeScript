@@ -1,6 +1,7 @@
 $primary-color: rgb(212, 212, 212);
-$dark-color: rgb(30, 30, 30);
-$body-bg: $dark-color;
+$dark-color:  rgb(60, 60, 60);
+$bg-color: rgb(30, 30, 30);
+$body-bg: $bg-color;
 
 @import "node_modules/spectre.css/src/spectre";
 

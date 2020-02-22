@@ -9,7 +9,7 @@
             class="btn btn-link hide-md">Visual Studio Marketplace</a>
     </section>
     <section class="navbar-section">
-        <a href="#" class="btn btn-link">Settings</a>
+        <a href="#" class="btn btn-link" @onclick="OnOpenSettingsClick">Settings</a>
     </section>
 </header>
 
@@ -17,3 +17,6 @@
     <div @ref="InputEditorContainer" class="column full-height hide-overflow"></div>
     <div @ref="OutputEditorContainer" class="column full-height hide-overflow"></div>
 </div>
+
+<Modal Title="Settings" IsActive="AreSettingsOpen" OnCloseRequested="OnSettingsCloseRequested">
+</Modal>

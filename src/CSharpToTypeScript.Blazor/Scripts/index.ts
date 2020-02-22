@@ -11,8 +11,7 @@ interface DotNetObject {
 }
 
 (window as any)['initializeMonaco'] = (
-    inputEditorContainer: HTMLDivElement,
-    outputEditorContainer: HTMLDivElement,
+    inputEditorContainer: HTMLDivElement, outputEditorContainer: HTMLDivElement,
     component: DotNetObject) => {
 
     monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
