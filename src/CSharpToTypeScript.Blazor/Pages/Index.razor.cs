@@ -1,4 +1,5 @@
 using System;
+using System.Text.Json;
 using System.Threading.Tasks;
 using CSharpToTypeScript.Blazor.Models;
 using CSharpToTypeScript.Core.Options;
@@ -23,9 +24,17 @@ namespace CSharpToTypeScript.Blazor.Pages
 
         protected DotNetObjectReference<Index> ThisDotNetReference { get; }
 
-        protected SettingsModel Model { get; } = new SettingsModel();
+        protected SettingsModel SettingsModel { get; set; } = new SettingsModel();
 
         protected bool AreSettingsOpen { get; set; }
+
+        protected override async Task OnInitializedAsync()
+        {
+            if (await JSRuntime.InvokeAsync<string>("localStorage.getItem", nameof(SettingsModel)) is string json)
+            {
+                SettingsModel = JsonSerializer.Deserialize<SettingsModel>(json);
+            }
+        }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
@@ -48,6 +57,14 @@ namespace CSharpToTypeScript.Blazor.Pages
                 importGenerationMode: ImportGenerationMode.Simple));
 
             await JSRuntime.InvokeVoidAsync("setOutputEditorValue", convertedCode);
+        }
+
+        protected async Task OnSaveSettingsAsync()
+        {
+            await JSRuntime.InvokeAsync<string>(
+                "localStorage.setItem", nameof(SettingsModel), JsonSerializer.Serialize(SettingsModel));
+
+            AreSettingsOpen = false;
         }
 
         protected void OnOpenSettingsClick() => AreSettingsOpen = true;

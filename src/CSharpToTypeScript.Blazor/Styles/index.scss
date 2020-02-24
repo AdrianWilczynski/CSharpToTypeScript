@@ -24,10 +24,14 @@ html, body {
 }
 
 .px-bigger {
-  margin-left: $unit-5 !important;
-  margin-right: $unit-5 !important;
+  padding-left: 2em !important;
+  padding-right: 2em !important;
 }
 
-.mt-bigger {
-  margin-top: $unit-16;
+.pt-bigger {
+  padding-top: 2em;
+}
+
+.pt-biggest {
+  padding-top: 10em;
 }

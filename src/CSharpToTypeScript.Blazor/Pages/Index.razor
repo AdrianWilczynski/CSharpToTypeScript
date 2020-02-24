@@ -21,4 +21,83 @@
 </div>
 
 <Modal Title="Settings" IsActive="AreSettingsOpen" OnCloseRequested="OnSettingsCloseRequested">
+    <EditForm Model="SettingsModel" OnValidSubmit="OnSaveSettingsAsync">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="columns">
+            <div class="column">
+                <div class="form-group">
+                    <label class="form-label" for="@nameof(SettingsModel.TabSize)">Tab Size</label>
+                    <InputNumber class="form-input" id="@nameof(SettingsModel.TabSize)"
+                        @bind-Value="SettingsModel.TabSize" />
+                    <ValidationMessage For="@(() => SettingsModel.TabSize)" />
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="@nameof(SettingsModel.ConvertDatesTo)">Convert Dates To</label>
+                    <InputSelect class="form-input" id="@nameof(SettingsModel.ConvertDatesTo)" @bind-Value="SettingsModel.ConvertDatesTo">
+                        <option value="@DateOutputType.String">@nameof(DateOutputType.String)</option>
+                        <option value="@DateOutputType.Date">@nameof(DateOutputType.Date)</option>
+                        <option value="@DateOutputType.Union">@nameof(DateOutputType.Union)</option>
+                    </InputSelect>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="@nameof(SettingsModel.ConvertNullablesTo)">Nullable Output Type</label>
+                    <InputSelect class="form-input" id="@nameof(SettingsModel.ConvertNullablesTo)"
+                        @bind-Value="SettingsModel.ConvertNullablesTo">
+                        <option value="@NullableOutputType.Null">@nameof(NullableOutputType.Null)</option>
+                        <option value="@NullableOutputType.Undefined">@nameof(NullableOutputType.Undefined)</option>
+                    </InputSelect>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="@nameof(SettingsModel.QuotationMark)">Quotation Mark</label>
+                    <InputSelect class="form-input" id="@nameof(SettingsModel.QuotationMark)"
+                        @bind-Value="SettingsModel.QuotationMark">
+                        <option value="@QuotationMark.Double">@nameof(QuotationMark.Double)</option>
+                        <option value="@QuotationMark.Single">@nameof(QuotationMark.Single)</option>
+                    </InputSelect>
+                </div>
+            </div>
+            <div class="column pt-bigger">
+                <div class="form-group">
+                    <label class="form-switch" for="@nameof(SettingsModel.UseTabs)">
+                        <InputCheckbox id="@nameof(SettingsModel.UseTabs)" @bind-Value="SettingsModel.UseTabs" />
+                        <i class="form-icon"></i> Use Tabs
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="form-switch" for="@nameof(SettingsModel.ToCamelCase)">
+                        <InputCheckbox id="@nameof(SettingsModel.ToCamelCase)" @bind-Value="SettingsModel.ToCamelCase" />
+                        <i class="form-icon"></i> To Camel Case
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="form-switch" for="@nameof(SettingsModel.RemoveInterfacePrefix)">
+                        <InputCheckbox id="@nameof(SettingsModel.RemoveInterfacePrefix)" @bind-Value="SettingsModel.RemoveInterfacePrefix" />
+                        <i class="form-icon"></i> Remove Interface Prefix
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="form-switch" for="@nameof(SettingsModel.GenerateImports)">
+                        <InputCheckbox id="@nameof(SettingsModel.GenerateImports)" @bind-Value="SettingsModel.GenerateImports" />
+                        <i class="form-icon"></i> Generate Imports
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="form-switch" for="@nameof(SettingsModel.UseKebabCase)">
+                        <InputCheckbox id="@nameof(SettingsModel.UseKebabCase)" @bind-Value="SettingsModel.UseKebabCase" />
+                        <i class="form-icon"></i> Use Kebab Case
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="form-switch" for="@nameof(SettingsModel.AppendModelSuffix)">
+                        <InputCheckbox id="@nameof(SettingsModel.AppendModelSuffix)" @bind-Value="SettingsModel.AppendModelSuffix" />
+                        <i class="form-icon"></i> Append Model Suffix
+                    </label>
+                </div>
+            </div>
+        </div>
+        
+        <button class="btn btn-success float-right my-2" type="submit">Save</button>
+    </EditForm>
 </Modal>
