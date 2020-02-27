@@ -11,10 +11,6 @@ html, body {
   padding: 0;
 }
 
-.height-75 {
-  height: 75%;
-}
-
 .height-full {
   height: 100%;
 }
@@ -42,4 +38,12 @@ html, body {
 
 .invalid {
   border-color: $error-color;
+}
+
+.navbar {
+  height: 80px;
+}
+
+.height-editors {
+  min-height: calc(100% - 80px);
 }
