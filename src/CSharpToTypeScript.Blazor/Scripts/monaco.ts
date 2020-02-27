@@ -104,6 +104,8 @@ import { DotNetObject } from './interop';
             trailing: true
         }));
 
+    (window as any)['getInputEditorValue'] = () => inputEditor.getValue();
+
     const outputEditor = monaco.editor.create(outputEditorContainer, {
         language: 'typescript',
         theme: 'vs-dark',

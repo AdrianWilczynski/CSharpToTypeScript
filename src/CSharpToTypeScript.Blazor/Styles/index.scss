@@ -35,3 +35,11 @@ html, body {
 .pt-biggest {
   padding-top: 10em;
 }
+
+.validation-message {
+  color: $error-color;
+}
+
+.invalid {
+  border-color: $error-color;
+}

@@ -2,7 +2,6 @@ using System;
 using System.Text.Json;
 using System.Threading.Tasks;
 using CSharpToTypeScript.Blazor.Models;
-using CSharpToTypeScript.Core.Options;
 using CSharpToTypeScript.Core.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
@@ -49,22 +48,27 @@ namespace CSharpToTypeScript.Blazor.Pages
 
         [JSInvokable]
         public async Task OnInputEditorChangeAsync(string value)
-        {
-            var convertedCode = CodeConverter.ConvertToTypeScript(value, new CodeConversionOptions(
-                export: true,
-                useTabs: false,
-                tabSize: 4,
-                importGenerationMode: ImportGenerationMode.Simple));
-
-            await JSRuntime.InvokeVoidAsync("setOutputEditorValue", convertedCode);
-        }
+            => await OutputAsConvertedCode(value);
 
         protected async Task OnSaveSettingsAsync()
         {
             await JSRuntime.InvokeAsync<string>(
                 "localStorage.setItem", nameof(SettingsModel), JsonSerializer.Serialize(SettingsModel));
 
+            var inputCode = await JSRuntime.InvokeAsync<string>("getInputEditorValue");
+
+            await OutputAsConvertedCode(inputCode);
+
             AreSettingsOpen = false;
+        }
+
+        protected async Task OutputAsConvertedCode(string value)
+        {
+            var convertedCode = CodeConverter.ConvertToTypeScript(
+                value,
+                SettingsModel.MapToCodeConversionOptions());
+
+            await JSRuntime.InvokeVoidAsync("setOutputEditorValue", convertedCode);
         }
 
         protected void OnOpenSettingsClick() => AreSettingsOpen = true;
