@@ -66,7 +66,7 @@ namespace CSharpToTypeScript.Core.Services
                 static bool HasStringExpression(AttributeArgumentSyntax attribute)
                     => attribute.Expression.IsKind(SyntaxKind.StringLiteralExpression);
 
-                var argument = attribute.Name.ToString() switch
+                var argument = GetAttributeName(attribute) switch
                 {
                     Attributes.JsonPropertyName => attribute.ArgumentList?.Arguments
                         .FirstOrDefault(a => HasStringExpression(a)
@@ -117,7 +117,7 @@ namespace CSharpToTypeScript.Core.Services
             => member.Modifiers.All(m => m.Kind() != SyntaxKind.StaticKeyword);
 
         private bool HasJsonIgnoreAttribute(MemberDeclarationSyntax member)
-            => member.AttributeLists.Any(l => l.Attributes.Any(a => a.Name.ToString() == Attributes.JsonIgnore));
+            => member.AttributeLists.Any(l => l.Attributes.Any(a => GetAttributeName(a) == Attributes.JsonIgnore));
 
         private bool IsPublic(MemberDeclarationSyntax property, TypeDeclarationSyntax containingType = null)
             => containingType is InterfaceDeclarationSyntax
@@ -138,5 +138,12 @@ namespace CSharpToTypeScript.Core.Services
 
         private IEnumerable<SyntaxKind> RestrictiveAccessModifiers { get; }
             = new[] { SyntaxKind.PrivateKeyword, SyntaxKind.ProtectedKeyword, SyntaxKind.InternalKeyword };
+
+        private string GetAttributeName(AttributeSyntax attribute)
+            => attribute.Name switch
+            {
+                QualifiedNameSyntax qualified => qualified.Right.Identifier.ValueText,
+                _ => attribute.Name.ToString()
+            };
     }
 }

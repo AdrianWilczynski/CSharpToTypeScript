@@ -563,5 +563,22 @@ export interface ImplementingItem {
     Text: string;
 }", converted);
         }
+
+        [Fact]
+        public void HandleQualifiedAttributeNames()
+        {
+            var converted = _codeConverter.ConvertToTypeScript(@"class Item
+{
+    [System.Text.Json.Serialization.JsonPropertyName(""first_name"")]
+    public string FirstName { get; set; }
+
+    [System.Text.Json.Serialization.JsonIgnore]
+    public string LastName { get; set; }
+}", new CodeConversionOptions(export: true, useTabs: false, tabSize: 4));
+
+            Assert.Equal(@"export interface Item {
+    first_name: string;
+}", converted);
+        }
     }
 }
