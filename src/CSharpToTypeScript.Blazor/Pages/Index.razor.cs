@@ -71,11 +71,17 @@ namespace CSharpToTypeScript.Blazor.Pages
             await JSRuntime.InvokeVoidAsync("setOutputEditorValue", convertedCode);
         }
 
-        protected void OnOpenSettingsClick() => AreSettingsOpen = true;
-        protected void OnSettingsCloseRequested() => AreSettingsOpen = false;
+        protected void OnOpenSettingsClick()
+            => AreSettingsOpen = true;
+
+        protected void OnSettingsCloseRequested()
+            => AreSettingsOpen = false;
 
         protected async Task OnCopyClickAsync()
             => await JSRuntime.InvokeVoidAsync("copyToClipboard");
+
+        protected async Task OnBrandClickAsync()
+            => await JSRuntime.InvokeVoidAsync("setInputEditorValue", string.Empty);
 
         public void Dispose() => ThisDotNetReference.Dispose();
     }
