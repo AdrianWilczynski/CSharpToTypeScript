@@ -93,7 +93,8 @@ import { DotNetObject } from './interop';
         theme: 'vs-dark',
         minimap: {
             enabled: false
-        }
+        },
+        contextmenu: false
     });
 
     inputEditor.onDidChangeModelContent(debounce(async e =>
@@ -111,7 +112,8 @@ import { DotNetObject } from './interop';
         theme: 'vs-dark',
         minimap: {
             enabled: false
-        }
+        },
+        contextmenu: false
     });
 
     (window as any)['setOutputEditorValue'] = (value: string) => outputEditor.setValue(value);
