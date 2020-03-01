@@ -23,16 +23,20 @@ namespace CSharpToTypeScript.Blazor.Pages
 
         protected DotNetObjectReference<Index> ThisDotNetReference { get; }
 
-        protected SettingsModel SettingsModel { get; set; } = new SettingsModel();
+        protected SettingsModel SettingsModalModel { get; set; } = new SettingsModel();
+
+        protected SettingsModel CurrentSettings { get; set; }
 
         protected bool AreSettingsOpen { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            if (await JSRuntime.InvokeAsync<string>("localStorage.getItem", nameof(SettingsModel)) is string json)
+            if (await JSRuntime.InvokeAsync<string>("localStorage.getItem", nameof(SettingsModalModel)) is string json)
             {
-                SettingsModel = JsonSerializer.Deserialize<SettingsModel>(json);
+                CurrentSettings = JsonSerializer.Deserialize<SettingsModel>(json);
             }
+
+            SettingsModalModel = CurrentSettings.Clone();
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -53,7 +57,9 @@ namespace CSharpToTypeScript.Blazor.Pages
         protected async Task OnSaveSettingsAsync()
         {
             await JSRuntime.InvokeAsync<string>(
-                "localStorage.setItem", nameof(SettingsModel), JsonSerializer.Serialize(SettingsModel));
+                "localStorage.setItem", nameof(SettingsModalModel), JsonSerializer.Serialize(SettingsModalModel));
+
+            CurrentSettings = SettingsModalModel.Clone();
 
             var inputCode = await JSRuntime.InvokeAsync<string>("getInputEditorValue");
 
@@ -66,10 +72,13 @@ namespace CSharpToTypeScript.Blazor.Pages
         {
             var convertedCode = CodeConverter.ConvertToTypeScript(
                 value,
-                SettingsModel.MapToCodeConversionOptions());
+                CurrentSettings.MapToCodeConversionOptions());
 
             await JSRuntime.InvokeVoidAsync("setOutputEditorValue", convertedCode);
         }
+
+        protected void OnSettingsToDefaultClick()
+            => SettingsModalModel = new SettingsModel();
 
         protected void OnOpenSettingsClick()
             => AreSettingsOpen = true;

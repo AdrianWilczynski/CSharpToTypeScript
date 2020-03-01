@@ -39,6 +39,9 @@ namespace CSharpToTypeScript.Blazor.Models
             }
         }
 
+        public SettingsModel Clone()
+            => (SettingsModel)MemberwiseClone();
+
         public CodeConversionOptions MapToCodeConversionOptions()
             => new CodeConversionOptions(Export, UseTabs, TabSize, ConvertDatesTo, ConvertNullablesTo, ToCamelCase, RemoveInterfacePrefix,
                 GenerateImports ? ImportGenerationMode.Simple : ImportGenerationMode.None,
