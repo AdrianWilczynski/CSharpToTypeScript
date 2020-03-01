@@ -74,6 +74,9 @@ namespace CSharpToTypeScript.Blazor.Pages
         protected void OnOpenSettingsClick() => AreSettingsOpen = true;
         protected void OnSettingsCloseRequested() => AreSettingsOpen = false;
 
+        protected async Task OnCopyClickAsync()
+            => await JSRuntime.InvokeVoidAsync("copyToClipboard");
+
         public void Dispose() => ThisDotNetReference.Dispose();
     }
 }

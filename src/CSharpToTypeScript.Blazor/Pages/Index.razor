@@ -11,7 +11,12 @@
             target="_blank" rel="noopener" class="btn btn-link hide-md">Visual Studio Marketplace</a>
     </section>
     <section class="navbar-section">
-        <button type="button" class="btn btn-link" @onclick="OnOpenSettingsClick">Settings</button>
+        <button type="button" class="btn btn-link" @onclick="OnCopyClickAsync">
+            <i class="icon icon-copy"></i> Copy
+        </button>
+        <button type="button" class="btn btn-link" @onclick="OnOpenSettingsClick">
+            <i class="icon icon-apps"></i> Settings
+        </button>
     </section>
 </header>
 

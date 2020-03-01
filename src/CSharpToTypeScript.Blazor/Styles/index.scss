@@ -4,6 +4,7 @@ $bg-color: rgb(30, 30, 30);
 $body-bg: $bg-color;
 
 @import "node_modules/spectre.css/src/spectre";
+@import "./../node_modules/spectre.css/src/spectre-icons";
 
 html, body {
   height: 100%;
@@ -41,7 +42,7 @@ html, body {
 }
 
 .navbar {
-  height: 80px;
+  min-height: 80px;
 }
 
 .height-editors {

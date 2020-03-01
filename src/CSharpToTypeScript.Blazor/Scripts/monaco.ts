@@ -116,6 +116,13 @@ import { DotNetObject } from './interop';
 
     (window as any)['setOutputEditorValue'] = (value: string) => outputEditor.setValue(value);
 
+    (window as any)['copyToClipboard'] = () => {
+        outputEditor.setSelection(
+            outputEditor.getModel()!.getFullModelRange());
+
+        outputEditor.trigger('copyToClipboard', 'editor.action.clipboardCopyAction', null);
+    };
+
     window.addEventListener('resize', () => {
         inputEditor.layout();
         outputEditor.layout();
