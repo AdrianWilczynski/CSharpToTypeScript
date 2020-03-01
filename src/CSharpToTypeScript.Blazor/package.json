@@ -1,6 +1,7 @@
 {
   "name": "csharptotypescript.blazor",
   "devDependencies": {
+    "@types/blazor__javascript-interop": "^3.1.0",
     "@types/lodash": "^4.14.149",
     "css-loader": "^3.4.2",
     "file-loader": "^5.1.0",

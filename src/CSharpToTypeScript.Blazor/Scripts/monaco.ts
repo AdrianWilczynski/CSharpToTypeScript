@@ -2,11 +2,10 @@ import * as monaco from 'monaco-editor';
 import { debounce } from 'lodash';
 
 import { getSnippets, getKeywords, getAttributes, getStructs, getInterfaces, getClasses, getNames, getNamespaces } from './completions';
-import { DotNetObject } from './interop';
 
 (window as any)['initializeMonaco'] = (
     inputEditorContainer: HTMLDivElement, outputEditorContainer: HTMLDivElement,
-    component: DotNetObject) => {
+    component: DotNet.DotNetObject) => {
 
     monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
         diagnosticCodesToIgnore: [
