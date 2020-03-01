@@ -33,10 +33,10 @@ namespace CSharpToTypeScript.Blazor.Pages
         {
             if (await JSRuntime.InvokeAsync<string>("localStorage.getItem", nameof(SettingsModalModel)) is string json)
             {
-                CurrentSettings = JsonSerializer.Deserialize<SettingsModel>(json);
+                SettingsModalModel = JsonSerializer.Deserialize<SettingsModel>(json);
             }
 
-            SettingsModalModel = CurrentSettings.Clone();
+            CurrentSettings = SettingsModalModel.Clone();
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
