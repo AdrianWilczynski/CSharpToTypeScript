@@ -35,7 +35,7 @@
                 <div class="form-group">
                     <label class="form-label" for="@nameof(SettingsModalModel.TabSize)">Tab Size</label>
                     <InputNumber class="form-input" id="@nameof(SettingsModalModel.TabSize)"
-                        @bind-Value="SettingsModalModel.TabSize"
+                        @bind-Value="SettingsModalModel.TabSize" min="2" max="8"
                         disabled="@SettingsModalModel.UseTabs" />
                     <ValidationMessage For="@(() => SettingsModalModel.TabSize)" />
                 </div>
