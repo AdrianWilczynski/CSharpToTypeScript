@@ -1,8 +1,9 @@
 <div class="modal @ActiveCssClass">
-    <a href="#" class="modal-overlay" aria-label="Close" @onclick="OnCloseRequested"></a>
+    <a href="#" class="modal-overlay" aria-label="Close" @onclick="OnCloseRequested" @onclick:preventDefault></a>
     <div class="modal-container bg-dark">
         <div class="modal-header text-light">
-            <button type="button" class="btn btn-clear float-right" aria-label="Close" @onclick="OnCloseRequested"></button>
+            <button type="button" class="btn btn-clear float-right" aria-label="Close"
+                @onclick="OnCloseRequested"></button>
             <div class="modal-title h5">@Title</div>
         </div>
         <div class="modal-body">
