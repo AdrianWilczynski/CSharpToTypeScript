@@ -26,63 +26,14 @@ import { getSnippets, getKeywords, getAttributes, getStructs, getInterfaces, get
 
             return {
                 suggestions: [
-                    ...getSnippets().map(s => {
-                        return {
-                            ...s,
-                            kind: monaco.languages.CompletionItemKind.Snippet,
-                            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-                            range: range
-                        }
-                    }),
-                    ...getKeywords().map(k => {
-                        return {
-                            ...k,
-                            kind: monaco.languages.CompletionItemKind.Keyword,
-                            range: range
-                        }
-                    }),
-                    ...getAttributes().map(a => {
-                        return {
-                            ...a,
-                            kind: monaco.languages.CompletionItemKind.Class,
-                            range: range
-                        }
-                    }),
-                    ...getStructs().map(t => {
-                        return {
-                            ...t,
-                            kind: monaco.languages.CompletionItemKind.Struct,
-                            range: range
-                        }
-                    }),
-                    ...getInterfaces().map(i => {
-                        return {
-                            ...i,
-                            kind: monaco.languages.CompletionItemKind.Interface,
-                            range: range
-                        }
-                    }),
-                    ...getClasses().map(c => {
-                        return {
-                            ...c,
-                            kind: monaco.languages.CompletionItemKind.Class,
-                            range: range
-                        }
-                    }),
-                    ...getNamespaces().map(n => {
-                        return {
-                            ...n,
-                            kind: monaco.languages.CompletionItemKind.Module,
-                            range: range
-                        }
-                    }),
-                    ...getNames().map(n => {
-                        return {
-                            ...n,
-                            kind: monaco.languages.CompletionItemKind.Variable,
-                            range: range
-                        }
-                    }),
+                    ...getSnippets(range),
+                    ...getKeywords(range),
+                    ...getAttributes(range),
+                    ...getStructs(range),
+                    ...getInterfaces(range),
+                    ...getClasses(range),
+                    ...getNamespaces(range),
+                    ...getNames(range)
                 ]
             };
         }

@@ -1,4 +1,6 @@
-export function getSnippets() {
+import * as monaco from 'monaco-editor';
+
+export function getSnippets(range: monaco.IRange): monaco.languages.CompletionItem[] {
     return [
         {
             label: 'class',
@@ -82,292 +84,122 @@ namespace MyProject.DTOs
     }
 }`
         }
-    ]
+    ].map(s => {
+        return {
+            ...s,
+            kind: monaco.languages.CompletionItemKind.Snippet,
+            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+            range: range
+        };
+    });
 }
 
-export function getKeywords() {
+export function getKeywords(range: monaco.IRange) {
     return [
-        {
-            label: 'class',
-            insertText: 'class'
-        },
-        {
-            label: 'interface',
-            insertText: 'interface'
-        },
-        {
-            label: 'enum',
-            insertText: 'enum'
-        },
-        {
-            label: 'namespace',
-            insertText: 'namespace'
-        },
-        {
-            label: 'using',
-            insertText: 'using'
-        },
-        {
-            label: 'public',
-            insertText: 'public'
-        },
-        {
-            label: 'private',
-            insertText: 'private'
-        },
-        {
-            label: 'protected',
-            insertText: 'protected'
-        },
-        {
-            label: 'static',
-            insertText: 'static'
-        },
-        {
-            label: 'const',
-            insertText: 'const'
-        },
-        {
-            label: 'get',
-            insertText: 'get'
-        },
-        {
-            label: 'set',
-            insertText: 'set'
-        },
-        {
-            label: 'char',
-            insertText: 'char'
-        },
-        {
-            label: 'ulong',
-            insertText: 'ulong'
-        },
-        {
-            label: 'byte',
-            insertText: 'byte'
-        },
-        {
-            label: 'decimal',
-            insertText: 'decimal'
-        },
-        {
-            label: 'double',
-            insertText: 'double'
-        },
-        {
-            label: 'int',
-            insertText: 'int'
-        },
-        {
-            label: 'sbyte',
-            insertText: 'sbyte'
-        },
-        {
-            label: 'float',
-            insertText: 'float'
-        },
-        {
-            label: 'long',
-            insertText: 'long'
-        },
-        {
-            label: 'object',
-            insertText: 'object'
-        },
-        {
-            label: 'bool',
-            insertText: 'bool'
-        },
-        {
-            label: 'short',
-            insertText: 'short'
-        },
-        {
-            label: 'string',
-            insertText: 'string'
-        },
-        {
-            label: 'uint',
-            insertText: 'uint'
-        },
-        {
-            label: 'ushort',
-            insertText: 'ushort'
-        }
-    ]
+        'class',
+        'interface',
+        'enum',
+        'namespace',
+        'using',
+        'public',
+        'private',
+        'protected',
+        'static',
+        'const',
+        'get',
+        'set',
+        'char',
+        'ulong',
+        'byte',
+        'decimal',
+        'double',
+        'int',
+        'sbyte',
+        'float',
+        'long',
+        'object',
+        'bool',
+        'short',
+        'string',
+        'uint',
+        'ushort'
+    ].map(v => toCompletion(v, monaco.languages.CompletionItemKind.Keyword, range));
 }
 
-export function getAttributes() {
+export function getAttributes(range: monaco.IRange) {
     return [
-        {
-            label: 'JsonProperty',
-            insertText: 'JsonProperty'
-        },
-        {
-            label: 'JsonPropertyName',
-            insertText: 'JsonPropertyName'
-        },
-        {
-            label: 'JsonIgnore',
-            insertText: 'JsonIgnore'
-        }
-    ]
+        'JsonProperty',
+        'JsonPropertyName',
+        'JsonIgnore'
+    ].map(v => toCompletion(v, monaco.languages.CompletionItemKind.Class, range));
 }
 
-export function getStructs() {
+export function getStructs(range: monaco.IRange) {
     return [
-        {
-            label: 'DateTime',
-            insertText: 'DateTime'
-        },
-        {
-            label: 'DateTimeOffset',
-            insertText: 'DateTimeOffset'
-        },
-        {
-            label: 'TimeSpan',
-            insertText: 'TimeSpan'
-        },
-        {
-            label: 'Guid',
-            insertText: 'Guid'
-        },
-        {
-            label: 'Boolean',
-            insertText: 'Boolean'
-        },
-        {
-            label: 'Char',
-            insertText: 'Char'
-        },
-        {
-            label: 'Byte',
-            insertText: 'Byte'
-        },
-        {
-            label: 'SByte',
-            insertText: 'SByte'
-        },
-        {
-            label: 'Decimal',
-            insertText: 'Decimal'
-        },
-        {
-            label: 'Double',
-            insertText: 'Double'
-        },
-        {
-            label: 'Single',
-            insertText: 'Single'
-        },
-        {
-            label: 'Int32',
-            insertText: 'Int32'
-        },
-        {
-            label: 'UInt32',
-            insertText: 'UInt32'
-        },
-        {
-            label: 'Int64',
-            insertText: 'Int64'
-        },
-        {
-            label: 'UInt64',
-            insertText: 'UInt64'
-        },
-        {
-            label: 'Int16',
-            insertText: 'Int16'
-        },
-        {
-            label: 'UInt16',
-            insertText: 'UInt16'
-        }
-    ]
+        'DateTime',
+        'DateTimeOffset',
+        'TimeSpan',
+        'Guid',
+        'Boolean',
+        'Char',
+        'Byte',
+        'SByte',
+        'Decimal',
+        'Double',
+        'Single',
+        'Int32',
+        'UInt32',
+        'Int64',
+        'UInt64',
+        'Int16',
+        'UInt16'
+    ].map(v => toCompletion(v, monaco.languages.CompletionItemKind.Struct, range));
 }
 
-export function getInterfaces() {
+export function getInterfaces(range: monaco.IRange) {
     return [
-        {
-            label: 'IEnumerable',
-            insertText: 'IEnumerable'
-        },
-        {
-            label: 'IDictionary',
-            insertText: 'IDictionary'
-        }
-    ]
+        'IEnumerable',
+        'IDictionary'
+    ].map(v => toCompletion(v, monaco.languages.CompletionItemKind.Interface, range));
 }
 
-export function getClasses() {
+export function getClasses(range: monaco.IRange) {
     return [
-        {
-            label: 'List',
-            insertText: 'List'
-        },
-        {
-            label: 'Dictionary',
-            insertText: 'Dictionary'
-        },
-        {
-            label: 'Tuple',
-            insertText: 'Tuple'
-        },
-        {
-            label: 'String',
-            insertText: 'String'
-        },
-    ]
+        'List',
+        'Dictionary',
+        'Tuple',
+        'String'
+    ].map(v => toCompletion(v, monaco.languages.CompletionItemKind.Class, range));
 }
 
-export function getNamespaces() {
+export function getNamespaces(range: monaco.IRange) {
     return [
-        {
-            label: 'System',
-            insertText: 'System'
-        },
-        {
-            label: 'Collections',
-            insertText: 'Collections'
-        },
-        {
-            label: 'Generic',
-            insertText: 'Generic'
-        },
-        {
-            label: 'Newtonsoft',
-            insertText: 'Newtonsoft'
-        },
-        {
-            label: 'Text',
-            insertText: 'Text'
-        },
-        {
-            label: 'Json',
-            insertText: 'Json'
-        },
-        {
-            label: 'Serialization',
-            insertText: 'Serialization'
-        }
-    ]
+        'System',
+        'Collections',
+        'Generic',
+        'Newtonsoft',
+        'Text',
+        'Json',
+        'Serialization'
+    ].map(v => toCompletion(v, monaco.languages.CompletionItemKind.Module, range));
 }
 
-export function getNames() {
+export function getNames(range: monaco.IRange) {
     return [
-        {
-            label: 'name',
-            insertText: 'name'
-        },
-        {
-            label: 'propertyName',
-            insertText: 'propertyName'
-        },
-        {
-            label: 'PropertyName',
-            insertText: 'PropertyName'
-        }
-    ]
+        'name',
+        'propertyName',
+        'PropertyName'
+    ].map(v => toCompletion(v, monaco.languages.CompletionItemKind.Variable, range));
+}
+
+function toCompletion(
+    value: string,
+    kind: monaco.languages.CompletionItemKind,
+    range: monaco.IRange): monaco.languages.CompletionItem {
+    return {
+        label: value,
+        insertText: value,
+        kind: kind,
+        range: range
+    };
 }
