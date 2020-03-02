@@ -35,19 +35,22 @@
                 <div class="form-group">
                     <label class="form-label" for="@nameof(SettingsModalModel.TabSize)">Tab Size</label>
                     <InputNumber class="form-input" id="@nameof(SettingsModalModel.TabSize)"
-                        @bind-Value="SettingsModalModel.TabSize" />
+                        @bind-Value="SettingsModalModel.TabSize"
+                        disabled="@SettingsModalModel.UseTabs" />
                     <ValidationMessage For="@(() => SettingsModalModel.TabSize)" />
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="@nameof(SettingsModalModel.ConvertDatesTo)">Convert Dates To</label>
-                    <InputSelect class="form-input" id="@nameof(SettingsModalModel.ConvertDatesTo)" @bind-Value="SettingsModalModel.ConvertDatesTo">
+                    <InputSelect class="form-input" id="@nameof(SettingsModalModel.ConvertDatesTo)"
+                        @bind-Value="SettingsModalModel.ConvertDatesTo">
                         <option value="@DateOutputType.String">@nameof(DateOutputType.String)</option>
                         <option value="@DateOutputType.Date">@nameof(DateOutputType.Date)</option>
                         <option value="@DateOutputType.Union">@nameof(DateOutputType.Union)</option>
                     </InputSelect>
                 </div>
                 <div class="form-group">
-                    <label class="form-label" for="@nameof(SettingsModalModel.ConvertNullablesTo)">Nullable Output Type</label>
+                    <label class="form-label" for="@nameof(SettingsModalModel.ConvertNullablesTo)">Nullable Output
+                        Type</label>
                     <InputSelect class="form-input" id="@nameof(SettingsModalModel.ConvertNullablesTo)"
                         @bind-Value="SettingsModalModel.ConvertNullablesTo">
                         <option value="@NullableOutputType.Null">@nameof(NullableOutputType.Null)</option>
@@ -66,37 +69,45 @@
             <div class="column pt-bigger">
                 <div class="form-group">
                     <label class="form-switch" for="@nameof(SettingsModalModel.UseTabs)">
-                        <InputCheckbox id="@nameof(SettingsModalModel.UseTabs)" @bind-Value="SettingsModalModel.UseTabs" />
+                        <InputCheckbox id="@nameof(SettingsModalModel.UseTabs)"
+                            @bind-Value="SettingsModalModel.UseTabs" />
                         <i class="form-icon"></i> Use Tabs
                     </label>
                 </div>
                 <div class="form-group">
                     <label class="form-switch" for="@nameof(SettingsModalModel.ToCamelCase)">
-                        <InputCheckbox id="@nameof(SettingsModalModel.ToCamelCase)" @bind-Value="SettingsModalModel.ToCamelCase" />
+                        <InputCheckbox id="@nameof(SettingsModalModel.ToCamelCase)"
+                            @bind-Value="SettingsModalModel.ToCamelCase" />
                         <i class="form-icon"></i> To Camel Case
                     </label>
                 </div>
                 <div class="form-group">
                     <label class="form-switch" for="@nameof(SettingsModalModel.RemoveInterfacePrefix)">
-                        <InputCheckbox id="@nameof(SettingsModalModel.RemoveInterfacePrefix)" @bind-Value="SettingsModalModel.RemoveInterfacePrefix" />
+                        <InputCheckbox id="@nameof(SettingsModalModel.RemoveInterfacePrefix)"
+                            @bind-Value="SettingsModalModel.RemoveInterfacePrefix" />
                         <i class="form-icon"></i> Remove Interface Prefix
                     </label>
                 </div>
                 <div class="form-group">
                     <label class="form-switch" for="@nameof(SettingsModalModel.GenerateImports)">
-                        <InputCheckbox id="@nameof(SettingsModalModel.GenerateImports)" @bind-Value="SettingsModalModel.GenerateImports" />
+                        <InputCheckbox id="@nameof(SettingsModalModel.GenerateImports)"
+                            @bind-Value="SettingsModalModel.GenerateImports" />
                         <i class="form-icon"></i> Generate Imports
                     </label>
                 </div>
-                <div class="form-group">
+                <div class="form-group ml-2">
                     <label class="form-switch" for="@nameof(SettingsModalModel.UseKebabCase)">
-                        <InputCheckbox id="@nameof(SettingsModalModel.UseKebabCase)" @bind-Value="SettingsModalModel.UseKebabCase" />
+                        <InputCheckbox id="@nameof(SettingsModalModel.UseKebabCase)"
+                            @bind-Value="SettingsModalModel.UseKebabCase"
+                            disabled="@(!SettingsModalModel.GenerateImports)" />
                         <i class="form-icon"></i> Use Kebab Case
                     </label>
                 </div>
-                <div class="form-group">
+                <div class="form-group ml-2">
                     <label class="form-switch" for="@nameof(SettingsModalModel.AppendModelSuffix)">
-                        <InputCheckbox id="@nameof(SettingsModalModel.AppendModelSuffix)" @bind-Value="SettingsModalModel.AppendModelSuffix" />
+                        <InputCheckbox id="@nameof(SettingsModalModel.AppendModelSuffix)"
+                            @bind-Value="SettingsModalModel.AppendModelSuffix"
+                            disabled="@(!SettingsModalModel.GenerateImports)" />
                         <i class="form-icon"></i> Append Model Suffix
                     </label>
                 </div>
@@ -108,4 +119,4 @@
             <button class="btn btn-success" type="submit">Save</button>
         </div>
     </EditForm>
-</Modal> 
+</Modal>
