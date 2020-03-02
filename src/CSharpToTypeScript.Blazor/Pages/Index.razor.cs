@@ -21,6 +21,8 @@ namespace CSharpToTypeScript.Blazor.Pages
         protected ElementReference InputEditorContainer { get; set; }
         protected ElementReference OutputEditorContainer { get; set; }
 
+        protected ElementReference Navbar { get; set; }
+
         protected DotNetObjectReference<Index> ThisDotNetReference { get; }
 
         protected SettingsModel SettingsModalModel { get; set; } = new SettingsModel();
@@ -46,6 +48,7 @@ namespace CSharpToTypeScript.Blazor.Pages
                 await JSRuntime.InvokeVoidAsync(
                     "initializeMonaco",
                     InputEditorContainer, OutputEditorContainer,
+                    Navbar,
                     ThisDotNetReference);
             }
         }

@@ -5,6 +5,7 @@ import { getSnippets, getKeywords, getAttributes, getStructs, getInterfaces, get
 
 (window as any)['initializeMonaco'] = (
     inputEditorContainer: HTMLDivElement, outputEditorContainer: HTMLDivElement,
+    navbar: HTMLElement,
     component: DotNet.DotNetObject) => {
 
     monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
@@ -127,7 +128,12 @@ import { getSnippets, getKeywords, getAttributes, getStructs, getInterfaces, get
     };
 
     window.addEventListener('resize', () => {
-        inputEditor.layout();
-        outputEditor.layout();
+        const dimensions = {
+            width: window.innerWidth / 2,
+            height: Math.max(window.innerHeight - navbar.offsetHeight, 100)
+        };
+
+        inputEditor.layout(dimensions);
+        outputEditor.layout(dimensions);
     });
 }

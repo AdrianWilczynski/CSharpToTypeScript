@@ -1,6 +1,6 @@
 ﻿@page "/"
 
-<header class="navbar p-2 px-bigger">
+<header @ref="Navbar" class="navbar p-2 px-bigger">
     <section class="navbar-section">
         <a href="./" class="navbar-brand mr-2" @onclick="OnBrandClickAsync" 
             @onclick:preventDefault>C# to TypeScript</a>
