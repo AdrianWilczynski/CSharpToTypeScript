@@ -59,8 +59,8 @@
                     <label class="form-label" for="@nameof(SettingsModalModel.QuotationMark)">Quotation Mark</label>
                     <InputSelect class="form-input" id="@nameof(SettingsModalModel.QuotationMark)"
                         @bind-Value="SettingsModalModel.QuotationMark">
-                        <option value="@QuotationMark.Double">@nameof(QuotationMark.Double)</option>
-                        <option value="@QuotationMark.Single">@nameof(QuotationMark.Single)</option>
+                        <option value="@QuotationMark.Double">"@nameof(QuotationMark.Double)"</option>
+                        <option value="@QuotationMark.Single">'@nameof(QuotationMark.Single)'</option>
                     </InputSelect>
                 </div>
             </div>

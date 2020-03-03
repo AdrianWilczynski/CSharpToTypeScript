@@ -82,6 +82,9 @@ namespace MyProject.DTOs
         [Newtonsoft.Json.JsonProperty(PropertyName = "someOtherName")]
         public string RenameMeToo { get; set; }
 
+        [JsonProperty(propertyName: "(╯°□°）╯︵ ┻━┻)")]
+        public string InvalidIdentifier { get; set; }
+
         private int _backingField;
 
         public int BackedProperty
@@ -90,7 +93,8 @@ namespace MyProject.DTOs
             set { _backingField = value; }
         }
 
-        public int FieldNotProperty;
+        public int fieldNotProperty;
+        public int first, second;
     }
 
     public class GenericItem<T>
