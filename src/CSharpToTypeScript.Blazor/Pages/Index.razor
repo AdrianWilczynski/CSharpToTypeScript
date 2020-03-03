@@ -4,12 +4,10 @@
     <section class="navbar-section">
         <a href="./" class="navbar-brand mr-2" @onclick="OnBrandClickAsync" 
             @onclick:preventDefault>C# to TypeScript</a>
-        <a href="https://github.com/AdrianWilczynski/CSharpToTypeScript" target="_blank" rel="noopener"
-            class="btn btn-link hide-md">GitHub</a>
-        <a href="https://www.nuget.org/packages/CSharpToTypeScript.CLITool/" target="_blank" rel="noopener"
-            class="btn btn-link hide-md">NuGet</a>
-        <a href="https://marketplace.visualstudio.com/items?itemName=adrianwilczynski.csharp-to-typescript"
-            target="_blank" rel="noopener" class="btn btn-link hide-md">Visual Studio Marketplace</a>
+        @foreach (var (name, url) in Constants.Sites)
+        {
+            <a href="@url" target="_blank" rel="noopener" class="btn btn-link hide-md">@name</a>
+        }
     </section>
     <section class="navbar-section">
         <button type="button" class="btn btn-link" @onclick="OnCopyClickAsync">
