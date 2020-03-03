@@ -75,6 +75,13 @@
                     </label>
                 </div>
                 <div class="form-group">
+                    <label class="form-switch" for="@nameof(SettingsModalModel.Export)">
+                        <InputCheckbox id="@nameof(SettingsModalModel.Export)"
+                            @bind-Value="SettingsModalModel.Export" />
+                        <i class="form-icon"></i> Export
+                    </label>
+                </div>
+                <div class="form-group">
                     <label class="form-switch" for="@nameof(SettingsModalModel.ToCamelCase)">
                         <InputCheckbox id="@nameof(SettingsModalModel.ToCamelCase)"
                             @bind-Value="SettingsModalModel.ToCamelCase" />
