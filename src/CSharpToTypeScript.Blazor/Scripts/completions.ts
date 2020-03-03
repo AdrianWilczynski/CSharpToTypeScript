@@ -55,22 +55,42 @@ namespace MyProject.DTOs
     {
         public Guid Id { get; set; }
         public string Text { get; set; }
+        public System.String MoreText { get; private set; }
         public bool IsWhatever { get; set; }
         public IEnumerable<string> Collection { get; set; }
         public double[] Array { get; set; }
+        public string[,] Array2D { get; set; }
+        public string[][] ArrayOfArrays { get; set; }
         public (int, string) Tuple { get; set; }
         public int? Nullable { get; set; }
+        public List<double?> MaybeNumbers { get; set; }
         public GenericItem<string> Generic { get; set; }
         public Dictionary<string, string> Dictionary { get; set; }
         public DateTime Date { get; set; }
+        public TimeSpan Time { get; set; }
         public string Hello => "Hello World!";
         public byte[] File { get; set; }
+        public SomeEnum SomeEnum { get; set; }
+        public ISomeInterface SomeInterface { get; set; }
 
         [JsonIgnore]
         public string IgnoreMe { get; set; }
 
         [JsonProperty("new_name")]
         public string RenameMe { get; set; }
+
+        [Newtonsoft.Json.JsonProperty(PropertyName = "someOtherName")]
+        public string RenameMeToo { get; set; }
+
+        private int _backingField;
+
+        public int BackedProperty
+        {
+            get { return _backingField; }
+            set { _backingField = value; }
+        }
+
+        public int FieldNotProperty;
     }
 
     public class GenericItem<T>
@@ -81,6 +101,17 @@ namespace MyProject.DTOs
     public class BaseItem
     {
         public ImportMe Imported { get; set; }
+    }
+
+    public interface ISomeInterface
+    {
+        int SomeProperty { get; set; }
+    }
+
+    public enum SomeEnum
+    {
+        Value,
+        OtherValue
     }
 }`
         }
