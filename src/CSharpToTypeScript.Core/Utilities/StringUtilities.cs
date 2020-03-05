@@ -87,7 +87,10 @@ namespace CSharpToTypeScript.Core.Utilities
             : tabSize is int @int && tabSize > 0 ? " ".Repeat(@int)
             : throw new ArgumentException("Use tabs for indentation or specify positive tab size (spaces).");
 
-        public static string NewLine => "\r\n";
+        public static string NewLine => Environment.NewLine;
+
+        public static string NormalizeNewLine(this string text)
+            => Regex.Replace(text, @"\r?\n", NewLine);
 
         public static string EmptyLine => NewLine.Repeat(2);
     }

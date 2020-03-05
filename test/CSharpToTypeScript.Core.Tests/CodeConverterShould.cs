@@ -1,6 +1,7 @@
 using CSharpToTypeScript.Core.DependencyInjection;
 using CSharpToTypeScript.Core.Options;
 using CSharpToTypeScript.Core.Services;
+using CSharpToTypeScript.Core.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
@@ -31,7 +32,7 @@ namespace CSharpToTypeScript.Core.Tests
             Assert.Equal(@"export interface Item {
     id: number;
     name: string;
-}", converted);
+}".NormalizeNewLine(), converted);
         }
 
         [Fact]
@@ -46,7 +47,7 @@ namespace CSharpToTypeScript.Core.Tests
             Assert.Equal(@"export interface Item {
     id: number;
     name: string;
-}", converted);
+}".NormalizeNewLine(), converted);
         }
 
         [Fact]
@@ -60,7 +61,7 @@ namespace CSharpToTypeScript.Core.Tests
             Assert.Equal(@"export enum Color {
     Red,
     Blue
-}", converted);
+}".NormalizeNewLine(), converted);
         }
 
         [Fact]
@@ -75,7 +76,7 @@ namespace CSharpToTypeScript.Core.Tests
             Assert.Equal(@"export interface Item<T> {
     id: number;
     someT: T;
-}", converted);
+}".NormalizeNewLine(), converted);
         }
 
         [Fact]
@@ -101,7 +102,7 @@ class MyItem : IITem
 export interface MyItem {
     id: number;
     name: string;
-}", converted);
+}".NormalizeNewLine(), converted);
         }
 
         [Fact]
@@ -134,7 +135,7 @@ export interface DerivedItem extends ItemBase {
 
 export interface ImplementingItem {
     id: number;
-}", converted);
+}".NormalizeNewLine(), converted);
         }
 
         [Fact]
@@ -155,7 +156,7 @@ export interface ImplementingItem {
 
             Assert.Equal(@"export interface Item {
     id: number;
-}", converted);
+}".NormalizeNewLine(), converted);
         }
 
         [Fact]
@@ -192,7 +193,7 @@ export interface ImplementingItem {
     date: string;
     guid: string;
     boolean: boolean;
-}", converted);
+}".NormalizeNewLine(), converted);
         }
 
         [Fact]
@@ -209,7 +210,7 @@ export interface ImplementingItem {
     tupleA: { item1: number; item2: number; item3: string; };
     tupleB: { id: number; name: string; };
     tupleC: { item1: number; item2: string; };
-}", converted);
+}".NormalizeNewLine(), converted);
         }
 
         [Fact]
@@ -224,7 +225,7 @@ export interface ImplementingItem {
             Assert.Equal(@"export interface Item {
     dict: { [key: string]: number; };
     illegalDict: Dictionary<boolean, string>;
-}", converted);
+}".NormalizeNewLine(), converted);
         }
 
         [Fact]
@@ -241,7 +242,7 @@ export interface ImplementingItem {
     array: number[];
     array2D: string[][];
     enumerable: string[];
-}", converted);
+}".NormalizeNewLine(), converted);
         }
 
         [Fact]
@@ -258,7 +259,7 @@ export interface ImplementingItem {
     id?: number;
     collection: (number | null)[];
     generic?: number;
-}", converted);
+}".NormalizeNewLine(), converted);
         }
 
         [Fact]
@@ -271,7 +272,7 @@ export interface ImplementingItem {
 
             Assert.Equal(@"export interface Item {
     wtf: ({ [key: number]: { item1: string; item2: number | null; }; } | null)[] | null;
-}", converted);
+}".NormalizeNewLine(), converted);
         }
 
         [Fact]
@@ -290,11 +291,11 @@ export interface ImplementingItem {
 
             Assert.Equal(@"export interface Item {
   myProperty: number;
-}", twoSpaceIndented);
+}".NormalizeNewLine(), twoSpaceIndented);
 
             Assert.Equal(@"export interface Item {
-" + "\t" + @"myProperty: number;
-}", tabIndented);
+".NormalizeNewLine() + "\t" + @"myProperty: number;
+}".NormalizeNewLine(), tabIndented);
         }
 
         [Fact]
@@ -307,7 +308,7 @@ export interface ImplementingItem {
 
             Assert.Equal(@"interface Item {
     id: number;
-}", converted);
+}".NormalizeNewLine(), converted);
         }
 
         [Fact]
@@ -320,7 +321,7 @@ export interface ImplementingItem {
 
             Assert.Equal(@"interface Item {
     createdAt: Date;
-}", converted);
+}".NormalizeNewLine(), converted);
 
             converted = _codeConverter.ConvertToTypeScript(@"class Item
 {
@@ -329,7 +330,7 @@ export interface ImplementingItem {
 
             Assert.Equal(@"interface Item {
     dates: (string | Date)[];
-}", converted);
+}".NormalizeNewLine(), converted);
         }
 
         [Fact]
@@ -344,7 +345,7 @@ export interface ImplementingItem {
             Assert.Equal(@"interface Item {
     Id: number;
     Tuple: { Item1: number; Item2: number; };
-}", converted);
+}".NormalizeNewLine(), converted);
         }
 
         [Fact]
@@ -356,13 +357,13 @@ export interface ImplementingItem {
 
             Assert.Equal(@"interface Item {
 
-}", converted);
+}".NormalizeNewLine(), converted);
 
             converted = _codeConverter.ConvertToTypeScript(source, new CodeConversionOptions(export: false, useTabs: false, tabSize: 4, toCamelCase: false, removeInterfacePrefix: false));
 
             Assert.Equal(@"interface IItem {
 
-}", converted);
+}".NormalizeNewLine(), converted);
         }
 
         [Fact]
@@ -455,7 +456,7 @@ export interface ImplementingItem {
 
             Assert.Contains(@"firstField: number;
     property: number;
-    secondField: number;", converted);
+    secondField: number;".NormalizeNewLine(), converted);
         }
 
         [Fact]
@@ -488,7 +489,7 @@ export interface ImplementingItem {
     id: number;
     firstName: string;
     justSomeField: number;
-}", converted);
+}".NormalizeNewLine(), converted);
         }
 
         [Fact]
@@ -526,7 +527,7 @@ export interface ImplementingItem {
     ""^_^"": string;
     ""¯\\_(ツ)_/¯"": string;
     ""¯\\_(シ)_/¯"": string;
-}", converted);
+}".NormalizeNewLine(), converted);
         }
 
         [Fact]
@@ -561,7 +562,7 @@ export interface ImplementingItem {
     Random: number;
     rightText: string;
     Text: string;
-}", converted);
+}".NormalizeNewLine(), converted);
         }
 
         [Fact]
@@ -578,7 +579,7 @@ export interface ImplementingItem {
 
             Assert.Equal(@"export interface Item {
     first_name: string;
-}", converted);
+}".NormalizeNewLine(), converted);
         }
 
         [Fact]
@@ -596,7 +597,7 @@ export interface ImplementingItem {
             Assert.Equal(@"export interface Item {
     ""\""double\"""": string;
     ""'single'"": string;
-}", converted);
+}".NormalizeNewLine(), converted);
         }
 
         [Fact]
@@ -614,7 +615,7 @@ export interface ImplementingItem {
             Assert.Equal(@"export interface Item {
     '""double""': string;
     '\'single\'': string;
-}", converted);
+}".NormalizeNewLine(), converted);
         }
     }
 }
