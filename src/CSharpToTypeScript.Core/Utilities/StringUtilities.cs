@@ -22,6 +22,14 @@ namespace CSharpToTypeScript.Core.Utilities
         public static string EscapeBackslashes(this string text)
             => Regex.Replace(text, @"\\", @"\\");
 
+        public static string EscapeQuotes(this string text, QuotationMark quotationMark)
+            => quotationMark switch
+            {
+                QuotationMark.Double => Regex.Replace(text, "\"", "\\\""),
+                QuotationMark.Single => Regex.Replace(text, "'", "\\'"),
+                _ => throw new ArgumentException("Unknown quotation mark character.")
+            };
+
         public static string ToCamelCase(this string text)
             => !string.IsNullOrEmpty(text) ?
             Regex.Replace(text, "^[A-Z]", char.ToLowerInvariant(text[0]).ToString())

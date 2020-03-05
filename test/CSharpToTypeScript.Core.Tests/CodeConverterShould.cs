@@ -580,5 +580,41 @@ export interface ImplementingItem {
     first_name: string;
 }", converted);
         }
+
+        [Fact]
+        public void EscapeDoubleQuotesInIdentifiers()
+        {
+            var converted = _codeConverter.ConvertToTypeScript(@"class Item
+{
+    [JsonPropertyName(""\""double\"""")]
+    public string Something { get; set; }
+
+    [JsonPropertyName(""'single'"")]
+    public string SomethingElse { get; set; }
+}", new CodeConversionOptions(export: true, useTabs: false, tabSize: 4, quotationMark: QuotationMark.Double));
+
+            Assert.Equal(@"export interface Item {
+    ""\""double\"""": string;
+    ""'single'"": string;
+}", converted);
+        }
+
+        [Fact]
+        public void EscapeSingleQuotesInIdentifiers()
+        {
+            var converted = _codeConverter.ConvertToTypeScript(@"class Item
+{
+    [JsonPropertyName(""\""double\"""")]
+    public string Something { get; set; }
+
+    [JsonPropertyName(""'single'"")]
+    public string SomethingElse { get; set; }
+}", new CodeConversionOptions(export: true, useTabs: false, tabSize: 4, quotationMark: QuotationMark.Single));
+
+            Assert.Equal(@"export interface Item {
+    '""double""': string;
+    '\'single\'': string;
+}", converted);
+        }
     }
 }
