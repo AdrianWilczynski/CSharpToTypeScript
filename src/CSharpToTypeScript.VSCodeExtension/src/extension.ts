@@ -128,7 +128,7 @@ function convert(code: string, fileName?: string) {
         }
 
         if (executingCommand) {
-            reject(new Error('Conversion in progres...'));
+            reject(new Error('Conversion in progress...'));
         }
 
         executingCommand = true;
