@@ -139,7 +139,7 @@ function convert(code: string, fileName?: string) {
         const input: Input = {
             code: code,
             fileName: fileName,
-            useTabs: !vscode.window.activeTextEditor?.options.insertSpaces ?? true,
+            useTabs: !vscode.window.activeTextEditor?.options.insertSpaces,
             tabSize: vscode.window.activeTextEditor?.options.tabSize as number ?? 4,
             export: !!configuration.export,
             convertDatesTo: allowedOrDefault(configuration.convertDatesTo, dateOutputTypes),
