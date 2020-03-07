@@ -1,5 +1,6 @@
 import * as assert from 'assert';
-
+import * as fs from 'fs';
+import * as path from 'path';
 import * as vscode from 'vscode';
 
 suite('Commands Tests', () => {
@@ -108,5 +109,43 @@ suite('Commands Tests', () => {
 
         assert.ok(convertedContent.includes('interface PasteMe {'));
         assert.ok(convertedContent.includes(': string;'));
+    });
+
+    test('Convert to new file', async () => {
+        const tempDirPath = path.join(__dirname, 'temp');
+        const csharpFilePath = path.join(tempDirPath, 'Item.cs');
+        const tsFilePath = path.join(tempDirPath, 'item.ts');
+
+        if (!fs.existsSync(tempDirPath)) {
+            fs.mkdirSync(tempDirPath);
+        }
+        if (fs.existsSync(csharpFilePath)) {
+            fs.unlinkSync(csharpFilePath);
+        }
+        if (fs.existsSync(tsFilePath)) {
+            fs.unlinkSync(tsFilePath);
+        }
+
+        fs.writeFileSync(csharpFilePath,
+            `using System;
+
+            namespace MyProject.DTOs
+            {
+                public class Item
+                {
+                    public string Text { get; set; }
+                }
+            }`);
+
+        await vscode.commands.executeCommand(
+            'csharpToTypeScript.csharpToTypeScriptToFile',
+            vscode.Uri.file(csharpFilePath));
+
+        assert.ok(fs.existsSync(tsFilePath));
+
+        const tsFileContent = fs.readFileSync(tsFilePath, { encoding: 'utf-8' });
+
+        assert.ok(tsFileContent.includes('interface Item {'));
+        assert.ok(tsFileContent.includes(': string;'));
     });
 });
