@@ -60,4 +60,53 @@ suite('Commands Tests', () => {
         assert.ok(convertedContent.includes('interface Replace'));
         assert.ok(convertedContent.includes(': number;'));
     });
+
+    test('Write to clipboard', async () => {
+        const document = await vscode.workspace.openTextDocument({
+            language: 'csharp',
+            content:
+                `using System;
+
+                namespace MyProject.DTOs
+                {
+                    public class WriteMe
+                    {
+                        public string Text { get; set; }
+                    }
+                }`});
+        await vscode.window.showTextDocument(document);
+
+        await vscode.commands.executeCommand('csharpToTypeScript.csharpToTypeScriptToClipboard');
+
+        const convertedContent = await vscode.env.clipboard.readText();
+
+        assert.ok(convertedContent.includes('interface WriteMe {'));
+        assert.ok(convertedContent.includes(': string;'));
+    });
+
+    test('Convert & paste from clipboard', async () => {
+        const document = await vscode.workspace.openTextDocument({
+            language: 'typescript'
+        });
+
+        await vscode.env.clipboard.writeText(
+            `using System;
+
+            namespace MyProject.DTOs
+            {
+                public class PasteMe
+                {
+                    public string Text { get; set; }
+                }
+            }`);
+
+        await vscode.window.showTextDocument(document);
+
+        await vscode.commands.executeCommand('csharpToTypeScript.csharpToTypeScriptPasteAs');
+
+        const convertedContent = document.getText();
+
+        assert.ok(convertedContent.includes('interface PasteMe {'));
+        assert.ok(convertedContent.includes(': string;'));
+    });
 });
