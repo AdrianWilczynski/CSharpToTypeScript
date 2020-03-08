@@ -29,8 +29,7 @@ namespace CSharpToTypeScript.Server
 
         public void Handle()
         {
-            string inputLine;
-            while ((inputLine = _stdio.ReadLine()) != "EXIT")
+            while (_stdio.ReadLine() is var inputLine && inputLine != "EXIT")
             {
                 Output output;
 
