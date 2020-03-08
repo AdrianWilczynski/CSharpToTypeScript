@@ -92,7 +92,7 @@ namespace CSharpToTypeScript.Web.Pages
             Response.Cookies.Append(
                 nameof(Settings),
                 JsonConvert.SerializeObject(Settings),
-                new CookieOptions { Expires = DateTimeOffset.MaxValue });
+                new CookieOptions { Expires = DateTimeOffset.Now.AddYears(1) });
 
             PreviousInputCode = InputCode;
 
