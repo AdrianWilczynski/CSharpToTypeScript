@@ -124,10 +124,12 @@ function convert(code: string, fileName?: string) {
     return new Promise<{ convertedCode: string, convertedFileName?: string }>((resolve, reject) => {
         if (!serverRunning) {
             reject(new Error(`"C# to TypeScript" server isn't running! Reload Window to restart it.`));
+            return;
         }
 
         if (executingCommand) {
             reject(new Error('Conversion in progress...'));
+            return;
         }
 
         executingCommand = true;
