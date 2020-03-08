@@ -80,7 +80,6 @@ async function toClipboardCommand() {
 
 async function pasteAsCommand() {
     try {
-
         if (!vscode.window.activeTextEditor) {
             return;
         }
@@ -157,16 +156,14 @@ function convert(code: string, fileName?: string) {
         rl.question(inputLine, outputLine => {
             const { convertedCode, convertedFileName, succeeded, errorMessage } = JSON.parse(outputLine) as Output;
 
-            if (!succeeded && errorMessage) {
+            if (!succeeded) {
                 reject(new Error(`"C# to TypeScript" extension encountered an error while converting your code: "${errorMessage}".`));
-            } else if (!succeeded && !errorMessage) {
-                reject(new Error('"C# to TypeScript" extension encountered an unknown error while converting your code.'));
+            } else {
+                resolve({
+                    convertedCode: convertedCode ?? '',
+                    convertedFileName
+                });
             }
-
-            resolve({
-                convertedCode: convertedCode ?? '',
-                convertedFileName
-            });
 
             executingCommand = false;
         });
