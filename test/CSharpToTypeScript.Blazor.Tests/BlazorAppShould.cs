@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using Xunit;
@@ -17,7 +17,11 @@ namespace CSharpToTypeScript.Blazor.Tests
 
         public BlazorAppShould()
         {
-            _webDriver = new ChromeDriver(new ChromeOptions
+            // https://stackoverflow.com/a/57720610
+            var driverService = FirefoxDriverService.CreateDefaultService();
+            driverService.Host = "::1";
+
+            _webDriver = new FirefoxDriver(driverService, new FirefoxOptions
             {
                 AcceptInsecureCertificates = true
             });
@@ -28,13 +32,16 @@ namespace CSharpToTypeScript.Blazor.Tests
                 {
                     FileName = "dotnet",
                     Arguments = "run --pathbase=/CSharpToTypeScript",
-                    UseShellExecute = false,
                     WorkingDirectory = Path.Join(
                         Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-                        "..", "..", "..", "..", "..", "src", "CSharpToTypeScript.Blazor")
+                        "..", "..", "..", "..", "..", "src", "CSharpToTypeScript.Blazor"),
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true
                 }
             };
             _process.Start();
+
+            while (!_process.StandardOutput.ReadLine().Contains("Now listening on:")) { }
         }
 
         [Fact]
@@ -65,7 +72,7 @@ namespace CSharpToTypeScript.Blazor.Tests
             var outputEditorText = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(5))
                 .Until(c =>
                 {
-                    var lines = _webDriver.FindElements(By.ClassName("view-lines"))[1];
+                    var lines = c.FindElements(By.ClassName("view-lines"))[1];
 
                     return lines.Text.Contains("MyClass")
                         ? lines.Text
@@ -82,7 +89,10 @@ namespace CSharpToTypeScript.Blazor.Tests
             _webDriver.Dispose();
 
             _process.CloseMainWindow();
-            _process.WaitForExit();
+            if (!_process.WaitForExit(TimeSpan.FromSeconds(3).Milliseconds))
+            {
+                try { _process.Kill(); } catch { }
+            }
             _process.Dispose();
         }
     }
