@@ -17,8 +17,6 @@ namespace CSharpToTypeScript.Blazor
             ("Visual Studio Dark", "vs-dark"),
             ("Oceanic Next", "oceanic-next"),
             ("Blackboard", "blackboard"),
-            ("Brilliance Black", "brilliance-black"),
-            ("Brilliance Dull", "brilliance-dull"),
             ("Clouds Midnight", "clouds-midnight"),
             ("Merbivore", "merbivore"),
             ("Monokai", "monokai"),
