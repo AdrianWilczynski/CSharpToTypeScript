@@ -1,0 +1,15 @@
+{
+  "name": "C# to TypeScript",
+  "short_name": "C# to TS",
+  "start_url": "/CSharpToTypeScript/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1e1e1e",
+  "icons": [
+    {
+      "src": "icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
