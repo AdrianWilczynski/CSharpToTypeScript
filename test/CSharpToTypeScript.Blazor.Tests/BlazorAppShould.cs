@@ -61,8 +61,7 @@ namespace CSharpToTypeScript.Blazor.Tests
         {
             NavigateToApp();
             WaitForLoad();
-
-            _webDriver.FindElement(By.Id("openSettingsButton")).Click();
+            OpenSettings();
 
             var toCamelCaseToggle = _webDriver.FindElement(By.CssSelector("label[for=\"ToCamelCase\"]"));
             var toCamelCaseBackingInput = _webDriver.FindElement(By.Id("ToCamelCase"));
@@ -76,7 +75,7 @@ namespace CSharpToTypeScript.Blazor.Tests
             tabSizeInput.Clear();
             tabSizeInput.SendKeys("8");
 
-            _webDriver.FindElement(By.Id("saveSettingsButton")).Click();
+            SaveAndCloseSettings();
 
             InputTextIntoMonacoEditor("class MyClass" + Keys.Return +
             "{" + Keys.Return +
@@ -86,6 +85,30 @@ namespace CSharpToTypeScript.Blazor.Tests
             var outputEditorText = GetTextFromOutputEditor();
 
             Assert.Contains("        MyProperty: number;", outputEditorText);
+        }
+
+        [Fact]
+        public void PreserveSettings()
+        {
+            NavigateToApp();
+            WaitForLoad();
+            OpenSettings();
+
+            var tabSizeInput = _webDriver.FindElement(By.Id("TabSize"));
+            Assert.Equal("4", tabSizeInput.GetProperty("value"));
+            tabSizeInput.Clear();
+            tabSizeInput.SendKeys("2");
+
+            SaveAndCloseSettings();
+
+            NavigateToApp();
+            WaitForLoad();
+            OpenSettings();
+
+            var preservedTabSizeValue = _webDriver.FindElement(By.Id("TabSize"))
+                .GetProperty("value");
+
+            Assert.Equal("2", preservedTabSizeValue);
         }
 
         #region Helpers
@@ -129,6 +152,12 @@ namespace CSharpToTypeScript.Blazor.Tests
                         ? lines.Text
                         : null;
                 });
+
+        private void OpenSettings()
+            => _webDriver.FindElement(By.Id("openSettingsButton")).Click();
+
+        private void SaveAndCloseSettings()
+            => _webDriver.FindElement(By.Id("saveSettingsButton")).Click();
         #endregion
 
         public void Dispose()
