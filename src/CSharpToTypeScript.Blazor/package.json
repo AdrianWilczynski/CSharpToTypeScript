@@ -17,6 +17,7 @@
   "dependencies": {
     "lodash": "^4.17.15",
     "monaco-editor": "^0.20.0",
+    "monaco-themes": "^0.3.3",
     "spectre.css": "^0.5.8"
   }
 }

@@ -26,10 +26,11 @@ namespace CSharpToTypeScript.Blazor.Pages
         protected DotNetObjectReference<Index> ThisDotNetReference { get; }
 
         protected SettingsModel SettingsModalModel { get; set; } = new SettingsModel();
-
         protected SettingsModel CurrentSettings { get; set; }
-
         protected bool AreSettingsOpen { get; set; }
+
+        public int ThemeIndex { get; set; }
+        public string ThemeDisplayName { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -50,6 +51,15 @@ namespace CSharpToTypeScript.Blazor.Pages
                     InputEditorContainer, OutputEditorContainer,
                     Navbar,
                     ThisDotNetReference);
+
+                ThemeIndex = int.TryParse(
+                    await JSRuntime.InvokeAsync<string>("localStorage.getItem", nameof(ThemeIndex)),
+                    out var themeIndex)
+                ? themeIndex
+                : 0;
+
+                await SetTheme();
+                StateHasChanged();
             }
         }
 
@@ -71,7 +81,7 @@ namespace CSharpToTypeScript.Blazor.Pages
             AreSettingsOpen = false;
         }
 
-        protected async Task OutputAsConvertedCode(string value)
+        private async Task OutputAsConvertedCode(string value)
         {
             var convertedCode = CodeConverter.ConvertToTypeScript(
                 value,
@@ -94,6 +104,28 @@ namespace CSharpToTypeScript.Blazor.Pages
 
         protected async Task OnBrandClickAsync()
             => await JSRuntime.InvokeVoidAsync("setInputEditorValue", string.Empty);
+
+        protected async Task OnChangeThemeClick()
+        {
+            if (ThemeIndex == Constants.Themes.Count - 1)
+            {
+                ThemeIndex = 0;
+            }
+            else
+            {
+                ThemeIndex++;
+            }
+
+            await SetTheme();
+
+            await JSRuntime.InvokeVoidAsync("localStorage.setItem", nameof(ThemeIndex), ThemeIndex.ToString());
+        }
+
+        private async Task SetTheme()
+        {
+            ThemeDisplayName = Constants.Themes[ThemeIndex].DisplayName;
+            await JSRuntime.InvokeVoidAsync("setTheme", Constants.Themes[ThemeIndex].Name);
+        }
 
         public void Dispose() => ThisDotNetReference.Dispose();
     }

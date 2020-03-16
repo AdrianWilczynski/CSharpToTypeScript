@@ -11,5 +11,19 @@ namespace CSharpToTypeScript.Blazor
             ("Visual Studio Marketplace", "https://marketplace.visualstudio.com/items?itemName=adrianwilczynski.csharp-to-typescript"),
             ("Azure", "https://csharptotypescript.azurewebsites.net")
         };
+
+        public static IReadOnlyList<(string DisplayName, string Name)> Themes = new List<(string, string)>
+        {
+            ("Visual Studio Dark", "vs-dark"),
+            ("Oceanic Next", "oceanic-next"),
+            ("Blackboard", "blackboard"),
+            ("Brilliance Black", "brilliance-black"),
+            ("Brilliance Dull", "brilliance-dull"),
+            ("Clouds Midnight", "clouds-midnight"),
+            ("Merbivore", "merbivore"),
+            ("Monokai", "monokai"),
+            ("Night Owl", "night-owl"),
+            ("Tomorrow Night", "tomorrow-night")
+        };
     }
 }

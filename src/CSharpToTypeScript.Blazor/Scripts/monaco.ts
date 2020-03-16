@@ -2,11 +2,15 @@ import * as monaco from 'monaco-editor';
 import { debounce } from 'lodash';
 
 import { getSnippets, getKeywords, getAttributes, getStructs, getInterfaces, getClasses, getNames, getNamespaces } from './completions';
+import { themes, visualStudioDarkBackgroundColor } from './themes';
 
 (window as any)['initializeMonaco'] = (
     inputEditorContainer: HTMLDivElement, outputEditorContainer: HTMLDivElement,
     navbar: HTMLElement,
     component: DotNet.DotNetObject) => {
+
+    themes.forEach(t => monaco.editor.defineTheme(t.name, t.data as monaco.editor.IStandaloneThemeData));
+    monaco.editor.setTheme('vs-dark');
 
     monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
         diagnosticCodesToIgnore: [
@@ -41,7 +45,6 @@ import { getSnippets, getKeywords, getAttributes, getStructs, getInterfaces, get
 
     const inputEditor = monaco.editor.create(inputEditorContainer, {
         language: 'csharp',
-        theme: 'vs-dark',
         minimap: {
             enabled: false
         },
@@ -62,7 +65,6 @@ import { getSnippets, getKeywords, getAttributes, getStructs, getInterfaces, get
 
     const outputEditor = monaco.editor.create(outputEditorContainer, {
         language: 'typescript',
-        theme: 'vs-dark',
         minimap: {
             enabled: false
         },
@@ -77,6 +79,13 @@ import { getSnippets, getKeywords, getAttributes, getStructs, getInterfaces, get
 
         outputEditor.trigger('copyToClipboard', 'editor.action.clipboardCopyAction', null);
     };
+
+    (window as any)['setTheme'] = (themeName: string) => {
+        monaco.editor.setTheme(themeName);
+
+        document.body.style.background = themes.find(t => t.name === themeName)
+            ?.data.colors["editor.background"] ?? visualStudioDarkBackgroundColor;
+    }
 
     window.addEventListener('resize', () => {
         const dimensions = {
