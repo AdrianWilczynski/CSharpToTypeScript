@@ -1,7 +1,4 @@
 using System;
-using System.Diagnostics;
-using System.IO;
-using System.Reflection;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Interactions;
@@ -10,10 +7,9 @@ using Xunit;
 
 namespace CSharpToTypeScript.Blazor.Tests
 {
-    public class BlazorAppShould : IDisposable
+    public class BlazorAppShould : IClassFixture<DotnetRunFixture>, IDisposable
     {
         private readonly IWebDriver _webDriver;
-        private readonly Process _process;
 
         public BlazorAppShould()
         {
@@ -25,23 +21,6 @@ namespace CSharpToTypeScript.Blazor.Tests
             {
                 AcceptInsecureCertificates = true
             });
-
-            _process = new Process
-            {
-                StartInfo =
-                {
-                    FileName = "dotnet",
-                    Arguments = "run --pathbase=/CSharpToTypeScript",
-                    WorkingDirectory = Path.Join(
-                        Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
-                        "..", "..", "..", "..", "..", "src", "CSharpToTypeScript.Blazor"),
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true
-                }
-            };
-            _process.Start();
-
-            while (!_process.StandardOutput.ReadLine().Contains("Now listening on:")) { }
         }
 
         [Fact]
@@ -164,13 +143,6 @@ namespace CSharpToTypeScript.Blazor.Tests
         {
             _webDriver.Quit();
             _webDriver.Dispose();
-
-            _process.CloseMainWindow();
-            if (!_process.WaitForExit(TimeSpan.FromSeconds(3).Milliseconds))
-            {
-                try { _process.Kill(); } catch { }
-            }
-            _process.Dispose();
         }
     }
 }
