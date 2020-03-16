@@ -47,41 +47,89 @@ namespace CSharpToTypeScript.Blazor.Tests
         [Fact]
         public void ConvertCode()
         {
-            _webDriver.Navigate()
-                .GoToUrl("https://localhost:5001/CSharpToTypeScript/");
-
-            var inputEditor = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(30))
-                .Until(c =>
-                {
-                    try
-                    {
-                        return c.FindElement(By.ClassName("monaco-editor"));
-                    }
-                    catch
-                    {
-                        return null;
-                    }
-                });
-
-            inputEditor.Click();
-
-            new Actions(_webDriver)
-                .SendKeys("class MyClass { }")
-                .Perform();
-
-            var outputEditorText = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(5))
-                .Until(c =>
-                {
-                    var lines = c.FindElements(By.ClassName("view-lines"))[1];
-
-                    return lines.Text.Contains("MyClass")
-                        ? lines.Text
-                        : null;
-                });
+            NavigateToApp();
+            WaitForLoad();
+            InputTextIntoMonacoEditor("class MyClass { }");
+            var outputEditorText = GetTextFromOutputEditor();
 
             Assert.Contains("export interface MyClass {", outputEditorText);
             Assert.Contains("}", outputEditorText);
         }
+
+        [Fact]
+        public void UseSettings()
+        {
+            NavigateToApp();
+            WaitForLoad();
+
+            _webDriver.FindElement(By.Id("openSettingsButton")).Click();
+
+            var toCamelCaseToggle = _webDriver.FindElement(By.CssSelector("label[for=\"ToCamelCase\"]"));
+            var toCamelCaseBackingInput = _webDriver.FindElement(By.Id("ToCamelCase"));
+
+            Assert.True(toCamelCaseBackingInput.Selected);
+            toCamelCaseToggle.Click();
+            Assert.False(toCamelCaseBackingInput.Selected);
+
+            var tabSizeInput = _webDriver.FindElement(By.Id("TabSize"));
+            Assert.Equal("4", tabSizeInput.GetProperty("value"));
+            tabSizeInput.Clear();
+            tabSizeInput.SendKeys("8");
+
+            _webDriver.FindElement(By.Id("saveSettingsButton")).Click();
+
+            InputTextIntoMonacoEditor("class MyClass" + Keys.Return +
+            "{" + Keys.Return +
+            "    public int MyProperty { get; set; }" + Keys.Return + Keys.Backspace +
+            "}");
+
+            var outputEditorText = GetTextFromOutputEditor();
+
+            Assert.Contains("        MyProperty: number;", outputEditorText);
+        }
+
+        #region Helpers
+        private void NavigateToApp()
+             => _webDriver.Navigate()
+                 .GoToUrl("https://localhost:5001/CSharpToTypeScript/");
+
+        private void WaitForLoad()
+            => new WebDriverWait(_webDriver, TimeSpan.FromSeconds(30))
+                .Until(c =>
+                {
+                    try
+                    {
+                        c.FindElement(By.ClassName("monaco-editor"));
+                        return true;
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                });
+
+        private void InputTextIntoMonacoEditor(string code)
+        {
+            var inputEditor = _webDriver.FindElement(By.ClassName("monaco-editor"));
+
+            inputEditor.Click();
+
+            new Actions(_webDriver)
+                .SendKeys(code)
+                .Perform();
+        }
+
+        private string GetTextFromOutputEditor()
+            => new WebDriverWait(_webDriver, TimeSpan.FromSeconds(5))
+                .Until(c =>
+                {
+                    var lines = c.FindElements(By.ClassName("view-lines"))[1];
+
+                    return !string.IsNullOrWhiteSpace(lines.Text)
+                        ? lines.Text
+                        : null;
+                });
+        #endregion
 
         public void Dispose()
         {
