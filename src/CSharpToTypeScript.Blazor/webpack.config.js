@@ -34,7 +34,9 @@ const config = {
         ]
     },
     plugins: [
-        new MonacoWebpackPlugin()
+        new MonacoWebpackPlugin({
+            languages: ['csharp', 'typescript']
+        })
     ],
     output: {
         filename: '[name].js',
