@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Blazor.Hosting;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using CSharpToTypeScript.Core.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CSharpToTypeScript.Blazor
 {
@@ -10,9 +11,10 @@ namespace CSharpToTypeScript.Blazor
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
-            builder.Services.AddCSharpToTypeScript();
-
             builder.RootComponents.Add<App>("app");
+
+            builder.Services.AddCSharpToTypeScript();
+            builder.Services.AddBaseAddressHttpClient();
 
             await builder.Build().RunAsync();
         }
