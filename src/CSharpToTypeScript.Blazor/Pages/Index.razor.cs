@@ -18,19 +18,21 @@ namespace CSharpToTypeScript.Blazor.Pages
         [Inject]
         public ICodeConverter CodeConverter { get; set; }
 
-        protected ElementReference InputEditorContainer { get; set; }
-        protected ElementReference OutputEditorContainer { get; set; }
+        private ElementReference InputEditorContainer { get; set; }
+        private ElementReference OutputEditorContainer { get; set; }
 
-        protected ElementReference Navbar { get; set; }
+        private ElementReference Navbar { get; set; }
 
-        protected DotNetObjectReference<Index> ThisDotNetReference { get; }
+        private DotNetObjectReference<Index> ThisDotNetReference { get; }
 
-        protected SettingsModel SettingsModalModel { get; set; } = new SettingsModel();
-        protected SettingsModel CurrentSettings { get; set; }
-        protected bool AreSettingsOpen { get; set; }
+        private SettingsModel SettingsModalModel { get; set; } = new SettingsModel();
+        private SettingsModel CurrentSettings { get; set; }
+        private bool AreSettingsOpen { get; set; }
 
-        public int ThemeIndex { get; set; }
-        public string ThemeDisplayName { get; set; }
+        private int ThemeIndex { get; set; }
+        private string ThemeDisplayName { get; set; }
+
+        private bool IsSettingRandomThemeInProgress { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -67,7 +69,7 @@ namespace CSharpToTypeScript.Blazor.Pages
         public async Task OnInputEditorChangeAsync(string value)
             => await OutputAsConvertedCode(value);
 
-        protected async Task OnSaveSettingsAsync()
+        private async Task OnSaveSettingsAsync()
         {
             await JSRuntime.InvokeAsync<string>(
                 "localStorage.setItem", nameof(SettingsModalModel), JsonSerializer.Serialize(SettingsModalModel));
@@ -90,23 +92,30 @@ namespace CSharpToTypeScript.Blazor.Pages
             await JSRuntime.InvokeVoidAsync("setOutputEditorValue", convertedCode);
         }
 
-        protected void OnSettingsToDefaultClick()
+        private void OnSettingsToDefaultClick()
             => SettingsModalModel = new SettingsModel();
 
-        protected void OnOpenSettingsClick()
+        private void OnOpenSettingsClick()
             => AreSettingsOpen = true;
 
-        protected void OnSettingsCloseRequested()
+        private void OnSettingsCloseRequested()
             => AreSettingsOpen = false;
 
-        protected async Task OnCopyClickAsync()
+        private async Task OnCopyClickAsync()
             => await JSRuntime.InvokeVoidAsync("copyToClipboard");
 
-        protected async Task OnBrandClickAsync()
+        private async Task OnBrandClickAsync()
             => await JSRuntime.InvokeVoidAsync("setInputEditorValue", string.Empty);
 
-        protected async Task OnSetRandomThemeClick()
+        private async Task OnSetRandomThemeClick()
         {
+            if (IsSettingRandomThemeInProgress)
+            {
+                return;
+            }
+
+            IsSettingRandomThemeInProgress = true;
+
             var steps = new Random().Next(1, Constants.Themes.Count);
 
             for (int i = 0; i < steps; i++)
@@ -119,9 +128,11 @@ namespace CSharpToTypeScript.Blazor.Pages
                 await OnChangeThemeClick();
                 StateHasChanged();
             }
+
+            IsSettingRandomThemeInProgress = false;
         }
 
-        protected async Task OnChangeThemeClick()
+        private async Task OnChangeThemeClick()
         {
             if (ThemeIndex == Constants.Themes.Count - 1)
             {

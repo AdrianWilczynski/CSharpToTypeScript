@@ -27,5 +27,5 @@
     [Parameter]
     public EventCallback OnCloseRequested { get; set; }
 
-    protected string ActiveCssClass => IsActive ? "active" : string.Empty;
+    private string ActiveCssClass => IsActive ? "active" : string.Empty;
 }

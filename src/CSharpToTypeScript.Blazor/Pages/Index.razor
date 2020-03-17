@@ -17,10 +17,12 @@
             @onclick="OnOpenSettingsClick">
             <i class="icon icon-apps"></i> Settings
         </button>
-        <button type="button" class="btn btn-link ml-2" title="Change Theme" @onclick="OnChangeThemeClick">
+        <button type="button" class="btn btn-link ml-2" title="Change Theme" @onclick="OnChangeThemeClick"
+            disabled="@IsSettingRandomThemeInProgress">
             <i class="icon icon-photo"></i> @ThemeDisplayName
         </button>
-        <button type="button" class="btn btn-link" title="Set Random Theme" @onclick="OnSetRandomThemeClick">
+        <button type="button" class="btn btn-link" title="Set Random Theme" @onclick="OnSetRandomThemeClick"
+            disabled="@IsSettingRandomThemeInProgress">
             <i class="icon icon-emoji"></i>
         </button>
     </section>
