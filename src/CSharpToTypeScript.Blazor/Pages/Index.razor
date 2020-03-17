@@ -10,14 +10,18 @@
         }
     </section>
     <section class="navbar-section">
-        <button type="button" class="btn btn-link" @onclick="OnCopyClickAsync">
+        <button type="button" class="btn btn-link" title="Copy to Clipboard" @onclick="OnCopyClickAsync">
             <i class="icon icon-copy"></i> Copy
         </button>
-        <button id="openSettingsButton" type="button" class="btn btn-link" @onclick="OnOpenSettingsClick">
+        <button id="openSettingsButton" type="button" title="Open Settings" class="btn btn-link"
+            @onclick="OnOpenSettingsClick">
             <i class="icon icon-apps"></i> Settings
         </button>
-        <button type="button" class="btn btn-link ml-2" @onclick="OnChangeThemeClick">
+        <button type="button" class="btn btn-link ml-2" title="Change Theme" @onclick="OnChangeThemeClick">
             <i class="icon icon-photo"></i> @ThemeDisplayName
+        </button>
+        <button type="button" class="btn btn-link" title="Set Random Theme" @onclick="OnSetRandomThemeClick">
+            <i class="icon icon-emoji"></i>
         </button>
     </section>
 </header>

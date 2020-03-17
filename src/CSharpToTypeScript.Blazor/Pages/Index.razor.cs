@@ -105,6 +105,22 @@ namespace CSharpToTypeScript.Blazor.Pages
         protected async Task OnBrandClickAsync()
             => await JSRuntime.InvokeVoidAsync("setInputEditorValue", string.Empty);
 
+        protected async Task OnSetRandomThemeClick()
+        {
+            var steps = new Random().Next(1, Constants.Themes.Count);
+
+            for (int i = 0; i < steps; i++)
+            {
+                if (i != 0)
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(0.25));
+                }
+
+                await OnChangeThemeClick();
+                StateHasChanged();
+            }
+        }
+
         protected async Task OnChangeThemeClick()
         {
             if (ThemeIndex == Constants.Themes.Count - 1)
