@@ -22,7 +22,8 @@ namespace CSharpToTypeScript.Blazor
             ("Monokai", "monokai"),
             ("Night Owl", "night-owl"),
             ("Tomorrow Night", "tomorrow-night"),
-            ("One Dark", "one-dark")
+            ("One Dark", "one-dark"),
+            ("Nord", "nord")
         };
     }
 }

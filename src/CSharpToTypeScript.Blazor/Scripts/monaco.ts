@@ -84,7 +84,7 @@ import { themes, visualStudioDarkBackgroundColor } from './themes';
         monaco.editor.setTheme(themeName);
 
         document.body.style.background = themes.find(t => t.name === themeName)
-            ?.data.colors["editor.background"] ?? visualStudioDarkBackgroundColor;
+            ?.data.colors['editor.background'] ?? visualStudioDarkBackgroundColor;
     }
 
     window.addEventListener('resize', () => {
