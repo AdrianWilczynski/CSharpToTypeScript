@@ -60,6 +60,9 @@ namespace CSharpToTypeScript.CLITool.Commands
         [Option(ShortName = "q", Description = "Set quotation marks for import statements & identifiers")]
         public QuotationMark QuotationMark { get; set; }
 
+        [Option(ShortName = "anl", Description = "Append new line to end of file (removes tslint warning)")]
+        public bool AppendNewLine { get; set; }
+
         private void OnBeforeArgumentsSet()
         {
             if (ConfigurationFile.Load() is Configuration configuration)
