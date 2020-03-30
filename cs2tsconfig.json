@@ -105,6 +105,11 @@
                 "single"
             ],
             "default": "double"
+        },
+        "appendNewLine": {
+            "description": "Append new line to end of file (removes TSLint warning).",
+            "type": "boolean",
+            "default": false
         }
     }
 }
