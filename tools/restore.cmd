@@ -23,6 +23,8 @@ pushd ..\test
 dotnet build CSharpToTypeScript.CLITool.Tests
 dotnet build CSharpToTypeScript.Core.Tests
 dotnet build CSharpToTypeScript.VSCodeExtension.Server.Tests
+dotnet build CSharpToTypeScript.Blazor.Tests
+dotnet build CSharpToTypeScript.Web.Tests
 popd
 
 pushd ..\samples
