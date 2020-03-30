@@ -150,7 +150,8 @@ function convert(code: string, fileName?: string) {
             generateImports: !!configuration.generateImports,
             useKebabCase: !!configuration.useKebabCase,
             appendModelSuffix: !!configuration.appendModelSuffix,
-            quotationMark: allowedOrDefault(configuration.quotationMark, quotationMarks)
+            quotationMark: allowedOrDefault(configuration.quotationMark, quotationMarks),
+            appendNewLine: !!configuration.appendNewLine
         };
 
         const inputLine = JSON.stringify(input) + '\n';

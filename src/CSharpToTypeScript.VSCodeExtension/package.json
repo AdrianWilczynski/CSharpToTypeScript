@@ -167,6 +167,11 @@
 						"type": "boolean",
 						"default": false,
 						"description": "Append \".model\" suffix to file names."
+					},
+					"csharpToTypeScript.appendNewLine": {
+						"type": "boolean",
+						"default": false,
+						"description": "Append new line to end of file (removes TSLint warning)."
 					}
 				}
 			}

@@ -15,6 +15,7 @@ export interface Configuration {
     useKebabCase: boolean;
     appendModelSuffix: boolean;
     quotationMark: string;
+    appendNewLine: boolean;
 }
 
 export const dateOutputTypes = ['string', 'date', 'union'];

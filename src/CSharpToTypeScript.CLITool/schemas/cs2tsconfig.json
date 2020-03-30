@@ -97,19 +97,19 @@
             ],
             "default": "none"
         },
-      "quotationMark": {
-        "description": "Set quotation marks for import statements & identifiers.",
-        "type": "string",
-        "enum": [
-          "double",
-          "single"
-        ],
-        "default": "double"
-      },
-      "appendNewLine": {
-        "description": "Append new line to end of file (removes tslint warning)",
-        "type": "boolean",
-        "default": "false"
-      }
+        "quotationMark": {
+            "description": "Set quotation marks for import statements & identifiers.",
+            "type": "string",
+            "enum": [
+                "double",
+                "single"
+            ],
+            "default": "double"
+        },
+        "appendNewLine": {
+            "description": "Append new line to end of file (removes TSLint warning).",
+            "type": "boolean",
+            "default": false
+        }
     }
 }

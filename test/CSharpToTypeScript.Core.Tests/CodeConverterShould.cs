@@ -1,3 +1,5 @@
+using System.Linq;
+using System.Text.RegularExpressions;
 using CSharpToTypeScript.Core.DependencyInjection;
 using CSharpToTypeScript.Core.Options;
 using CSharpToTypeScript.Core.Services;
@@ -616,6 +618,26 @@ export interface ImplementingItem {
     '""double""': string;
     '\'single\'': string;
 }".NormalizeNewLine(), converted);
+        }
+
+        [Fact]
+        public void AppendNewLineAtTheEndOfTheFile()
+        {
+            var converted = _codeConverter.ConvertToTypeScript(
+                "class Item {}",
+                new CodeConversionOptions(export: true, useTabs: true, appendNewLine: true));
+
+            var lastLine = Regex.Split(converted, @"\r?\n").Last();
+
+            Assert.Equal(string.Empty, lastLine);
+
+            converted = _codeConverter.ConvertToTypeScript(
+                "class Item {}",
+                new CodeConversionOptions(export: true, useTabs: true, appendNewLine: false));
+
+            lastLine = Regex.Split(converted, @"\r?\n").Last();
+
+            Assert.NotEqual(string.Empty, lastLine);
         }
     }
 }

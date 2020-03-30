@@ -1,12 +1,13 @@
 $primary-color: rgb(212, 212, 212);
-$dark-color:  rgb(60, 60, 60);
+$dark-color: rgb(60, 60, 60);
 $bg-color: rgb(30, 30, 30);
 $body-bg: $bg-color;
 
 @import "node_modules/spectre.css/src/spectre";
 @import "./../node_modules/spectre.css/src/spectre-icons";
 
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
   padding: 0;
@@ -26,11 +27,15 @@ html, body {
 }
 
 .pt-bigger {
-  padding-top: 2em;
+  padding-top: 1.75em;
 }
 
 .pt-biggest {
   padding-top: 10em;
+}
+
+.ml-bigger {
+  margin-left: 1.25em;
 }
 
 .validation-message {

@@ -36,6 +36,7 @@ namespace CSharpToTypeScript.CLITool
         public NullableOutputType? ConvertNullablesTo { get; set; }
         public ImportGenerationMode? ImportGeneration { get; set; }
         public QuotationMark? QuotationMark { get; set; }
+        public bool? AppendNewLine { get; set; }
 
         public void Override(CommandBase command)
         {

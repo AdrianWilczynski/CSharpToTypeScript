@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using CSharpToTypeScript.Core.Options;
@@ -35,8 +34,8 @@ namespace CSharpToTypeScript.Core.Models
                 + EmptyLine).If(Imports.Any() && options.ImportGenerationMode != ImportGenerationMode.None)
                 // types
                 + RootNodes.WriteTypeScript(options, context).ToEmptyLineSeparatedList()
-                // Empty line at the end
-                + (options.AppendNewLine ? Environment.NewLine : string.Empty);
+                // empty line at the end
+                + NewLine.If(options.AppendNewLine);
         }
     }
 }

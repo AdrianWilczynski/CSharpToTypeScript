@@ -14,38 +14,40 @@ namespace CSharpToTypeScript.Web.Pages
     {
         public class SettingsModel : IValidatableObject
         {
-            [Required, Display(Name = "Use Tabs")]
+            [Display(Name = "Use Tabs")]
             public bool UseTabs { get; set; }
 
-            [Required]
             public bool Export { get; set; } = true;
 
             [Range(1, 8), Display(Name = "Tab Size")]
             public int? TabSize { get; set; } = 4;
 
-            [Required, Display(Name = "Convert Dates To")]
+            [Display(Name = "Convert Dates To")]
             public DateOutputType ConvertDatesTo { get; set; }
 
-            [Required, Display(Name = "Convert Nullables To")]
+            [Display(Name = "Convert Nullables To")]
             public NullableOutputType ConvertNullablesTo { get; set; }
 
-            [Required, Display(Name = "To Camel Case")]
+            [Display(Name = "To Camel Case")]
             public bool ToCamelCase { get; set; } = true;
 
-            [Required, Display(Name = "Remove Interface Prefix")]
+            [Display(Name = "Remove Interface Prefix")]
             public bool RemoveInterfacePrefix { get; set; } = true;
 
-            [Required, Display(Name = "Generate Imports")]
+            [Display(Name = "Generate Imports")]
             public bool GenerateImports { get; set; } = true;
 
-            [Required, Display(Name = "Use Kebab Case")]
+            [Display(Name = "Use Kebab Case")]
             public bool UseKebabCase { get; set; }
 
-            [Required, Display(Name = "Append Model Suffix")]
+            [Display(Name = "Append Model Suffix")]
             public bool AppendModelSuffix { get; set; }
 
-            [Required, Display(Name = "Quotation Mark")]
+            [Display(Name = "Quotation Mark")]
             public QuotationMark QuotationMark { get; set; }
+
+            [Display(Name = "Append New Line")]
+            public bool AppendNewLine { get; set; }
 
             public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
             {
@@ -60,7 +62,7 @@ namespace CSharpToTypeScript.Web.Pages
             public CodeConversionOptions MapToCodeConversionOptions()
                 => new CodeConversionOptions(Export, UseTabs, TabSize, ConvertDatesTo, ConvertNullablesTo, ToCamelCase, RemoveInterfacePrefix,
                     GenerateImports ? ImportGenerationMode.Simple : ImportGenerationMode.None,
-                    UseKebabCase, AppendModelSuffix, QuotationMark);
+                    UseKebabCase, AppendModelSuffix, QuotationMark, AppendNewLine);
         }
 
         private readonly ICodeConverter _codeConverter;

@@ -109,7 +109,7 @@
                         <i class="form-icon"></i> Generate Imports
                     </label>
                 </div>
-                <div class="form-group ml-2">
+                <div class="form-group ml-bigger">
                     <label class="form-switch" for="@nameof(SettingsModalModel.UseKebabCase)">
                         <InputCheckbox id="@nameof(SettingsModalModel.UseKebabCase)"
                             @bind-Value="SettingsModalModel.UseKebabCase"
@@ -117,12 +117,19 @@
                         <i class="form-icon"></i> Use Kebab Case
                     </label>
                 </div>
-                <div class="form-group ml-2">
+                <div class="form-group ml-bigger">
                     <label class="form-switch" for="@nameof(SettingsModalModel.AppendModelSuffix)">
                         <InputCheckbox id="@nameof(SettingsModalModel.AppendModelSuffix)"
                             @bind-Value="SettingsModalModel.AppendModelSuffix"
                             disabled="@(!SettingsModalModel.GenerateImports)" />
                         <i class="form-icon"></i> Append Model Suffix
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="form-switch" for="@nameof(SettingsModalModel.AppendNewLine)">
+                        <InputCheckbox id="@nameof(SettingsModalModel.AppendNewLine)"
+                            @bind-Value="SettingsModalModel.AppendNewLine" />
+                        <i class="form-icon"></i> Append New Line
                     </label>
                 </div>
             </div>
