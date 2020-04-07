@@ -39,14 +39,14 @@
 
         <div class="columns">
             <div class="column">
-                <div class="form-group">
+                <div class="form-group tooltip tooltip-bottom" data-tooltip="@SettingsModalModel.TabSizeDescription">
                     <label class="form-label" for="@nameof(SettingsModalModel.TabSize)">Tab Size</label>
                     <InputNumber class="form-input" id="@nameof(SettingsModalModel.TabSize)"
                         @bind-Value="SettingsModalModel.TabSize" min="2" max="8"
                         disabled="@SettingsModalModel.UseTabs" />
                     <ValidationMessage For="@(() => SettingsModalModel.TabSize)" />
                 </div>
-                <div class="form-group">
+                <div class="form-group tooltip tooltip-bottom" data-tooltip="@SettingsModalModel.ConvertDatesToDescription">
                     <label class="form-label" for="@nameof(SettingsModalModel.ConvertDatesTo)">Convert Dates To</label>
                     <InputSelect class="form-input" id="@nameof(SettingsModalModel.ConvertDatesTo)"
                         @bind-Value="SettingsModalModel.ConvertDatesTo">
@@ -55,7 +55,7 @@
                         <option value="@DateOutputType.Union">@nameof(DateOutputType.Union)</option>
                     </InputSelect>
                 </div>
-                <div class="form-group">
+                <div class="form-group tooltip tooltip-bottom" data-tooltip="@SettingsModalModel.ConvertNullablesToDescription">
                     <label class="form-label" for="@nameof(SettingsModalModel.ConvertNullablesTo)">Nullable Output
                         Type</label>
                     <InputSelect class="form-input" id="@nameof(SettingsModalModel.ConvertNullablesTo)"
@@ -64,7 +64,7 @@
                         <option value="@NullableOutputType.Undefined">@nameof(NullableOutputType.Undefined)</option>
                     </InputSelect>
                 </div>
-                <div class="form-group">
+                <div class="form-group tooltip tooltip-bottom" data-tooltip="@SettingsModalModel.QuotationMarkDescription">
                     <label class="form-label" for="@nameof(SettingsModalModel.QuotationMark)">Quotation Mark</label>
                     <InputSelect class="form-input" id="@nameof(SettingsModalModel.QuotationMark)"
                         @bind-Value="SettingsModalModel.QuotationMark">
@@ -74,42 +74,42 @@
                 </div>
             </div>
             <div class="column pt-bigger">
-                <div class="form-group">
+                <div class="form-group tooltip tooltip-bottom" data-tooltip="@SettingsModalModel.UseTabsDescription">
                     <label class="form-switch" for="@nameof(SettingsModalModel.UseTabs)">
                         <InputCheckbox id="@nameof(SettingsModalModel.UseTabs)"
                             @bind-Value="SettingsModalModel.UseTabs" />
                         <i class="form-icon"></i> Use Tabs
                     </label>
                 </div>
-                <div class="form-group">
+                <div class="form-group tooltip tooltip-bottom" data-tooltip="@SettingsModalModel.ExportDescription">
                     <label class="form-switch" for="@nameof(SettingsModalModel.Export)">
                         <InputCheckbox id="@nameof(SettingsModalModel.Export)"
                             @bind-Value="SettingsModalModel.Export" />
                         <i class="form-icon"></i> Export
                     </label>
                 </div>
-                <div class="form-group">
+                <div class="form-group tooltip tooltip-bottom" data-tooltip="@SettingsModalModel.ToCamelCaseDescription">
                     <label class="form-switch" for="@nameof(SettingsModalModel.ToCamelCase)">
                         <InputCheckbox id="@nameof(SettingsModalModel.ToCamelCase)"
                             @bind-Value="SettingsModalModel.ToCamelCase" />
                         <i class="form-icon"></i> To Camel Case
                     </label>
                 </div>
-                <div class="form-group">
+                <div class="form-group tooltip tooltip-bottom" data-tooltip="@SettingsModalModel.RemoveInterfacePrefixDescription">
                     <label class="form-switch" for="@nameof(SettingsModalModel.RemoveInterfacePrefix)">
                         <InputCheckbox id="@nameof(SettingsModalModel.RemoveInterfacePrefix)"
                             @bind-Value="SettingsModalModel.RemoveInterfacePrefix" />
                         <i class="form-icon"></i> Remove Interface Prefix
                     </label>
                 </div>
-                <div class="form-group">
+                <div class="form-group tooltip tooltip-bottom" data-tooltip="@SettingsModalModel.GenerateImportsDescription">
                     <label class="form-switch" for="@nameof(SettingsModalModel.GenerateImports)">
                         <InputCheckbox id="@nameof(SettingsModalModel.GenerateImports)"
                             @bind-Value="SettingsModalModel.GenerateImports" />
                         <i class="form-icon"></i> Generate Imports
                     </label>
                 </div>
-                <div class="form-group ml-bigger">
+                <div class="form-group ml-bigger tooltip tooltip-bottom" data-tooltip="@SettingsModalModel.UseKebabCaseDescription">
                     <label class="form-switch" for="@nameof(SettingsModalModel.UseKebabCase)">
                         <InputCheckbox id="@nameof(SettingsModalModel.UseKebabCase)"
                             @bind-Value="SettingsModalModel.UseKebabCase"
@@ -117,7 +117,7 @@
                         <i class="form-icon"></i> Use Kebab Case
                     </label>
                 </div>
-                <div class="form-group ml-bigger">
+                <div class="form-group ml-bigger tooltip tooltip-bottom" data-tooltip="@SettingsModalModel.AppendModelSuffixDescription">
                     <label class="form-switch" for="@nameof(SettingsModalModel.AppendModelSuffix)">
                         <InputCheckbox id="@nameof(SettingsModalModel.AppendModelSuffix)"
                             @bind-Value="SettingsModalModel.AppendModelSuffix"
@@ -125,7 +125,7 @@
                         <i class="form-icon"></i> Append Model Suffix
                     </label>
                 </div>
-                <div class="form-group">
+                <div class="form-group tooltip tooltip-bottom" data-tooltip="@SettingsModalModel.AppendNewLineDescription">
                     <label class="form-switch" for="@nameof(SettingsModalModel.AppendNewLine)">
                         <InputCheckbox id="@nameof(SettingsModalModel.AppendNewLine)"
                             @bind-Value="SettingsModalModel.AppendNewLine" />

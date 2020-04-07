@@ -6,6 +6,14 @@ $body-bg: $bg-color;
 @import "node_modules/spectre.css/src/spectre";
 @import "./../node_modules/spectre.css/src/spectre-icons";
 
+.tooltip {
+  position: relative;
+  &::after {
+    background: $bg-color;
+    font-size: 0.7em;
+  }
+}
+
 html,
 body {
   height: 100%;
