@@ -29,7 +29,8 @@ namespace CSharpToTypeScript.Blazor.Models
         public DateOutputType ConvertDatesTo { get; set; }
 
         public string ConvertDatesToDescription
-            => Multiline("Set output type for dates. You can pick between \"string\", \"Date\" and \"string | Date\".", 4);
+            => Multiline("Set output type for dates. You can pick between \"string\","
+                + " \"Date\" and \"string | Date\".", 4);
 
         public NullableOutputType ConvertNullablesTo { get; set; }
 
@@ -49,7 +50,8 @@ namespace CSharpToTypeScript.Blazor.Models
         public bool GenerateImports { get; set; } = true;
 
         public string GenerateImportsDescription
-            => Multiline("Generate import statements (flat directory structure and file names corresponding to type names).", 4);
+            => Multiline("Generate import statements (flat directory structure and file"
+                + " names corresponding to type names).", 4);
 
         public bool UseKebabCase { get; set; }
 
