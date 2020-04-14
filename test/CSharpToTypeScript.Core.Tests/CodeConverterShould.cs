@@ -639,5 +639,45 @@ export interface ImplementingItem {
 
             Assert.NotEqual(string.Empty, lastLine);
         }
+
+        [Fact]
+        public void OutputStringEnums()
+        {
+            var converted = _codeConverter.ConvertToTypeScript(@"enum Direction
+{
+    Up,
+    Down,
+    Left,
+    Right
+}", new CodeConversionOptions(export: false, useTabs: false, tabSize: 4,
+        stringEnums: true, quotationMark: QuotationMark.Single));
+
+            Assert.Equal(@"enum Direction {
+    Up = 'Up',
+    Down = 'Down',
+    Left = 'Left',
+    Right = 'Right'
+}".NormalizeNewLine(), converted);
+        }
+
+        [Fact]
+        public void RespectCamelCaseAndQuotationMarkSettingsForStringEnums()
+        {
+            var converted = _codeConverter.ConvertToTypeScript(@"enum Direction
+{
+    Up,
+    Down,
+    Left,
+    Right
+}", new CodeConversionOptions(export: false, useTabs: false, tabSize: 4,
+        stringEnums: true, enumStringToCamelCase: true, quotationMark: QuotationMark.Double));
+
+            Assert.Equal(@"enum Direction {
+    Up = ""up"",
+    Down = ""down"",
+    Left = ""left"",
+    Right = ""right""
+}".NormalizeNewLine(), converted);
+        }
     }
 }

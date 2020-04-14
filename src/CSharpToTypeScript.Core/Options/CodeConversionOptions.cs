@@ -5,7 +5,8 @@ namespace CSharpToTypeScript.Core.Options
         public CodeConversionOptions(bool export, bool useTabs, int? tabSize = null,
             DateOutputType convertDatesTo = DateOutputType.String, NullableOutputType convertNullablesTo = NullableOutputType.Null,
             bool toCamelCase = true, bool removeInterfacePrefix = true, ImportGenerationMode importGenerationMode = ImportGenerationMode.None,
-            bool useKebabCase = false, bool appendModelSuffix = false, QuotationMark quotationMark = QuotationMark.Double, bool appendNewLine = false)
+            bool useKebabCase = false, bool appendModelSuffix = false, QuotationMark quotationMark = QuotationMark.Double,
+            bool appendNewLine = false, bool stringEnums = false, bool enumStringToCamelCase = false)
         : base(useKebabCase, appendModelSuffix, removeInterfacePrefix)
         {
             Export = export;
@@ -17,6 +18,8 @@ namespace CSharpToTypeScript.Core.Options
             ImportGenerationMode = importGenerationMode;
             QuotationMark = quotationMark;
             AppendNewLine = appendNewLine;
+            StringEnums = stringEnums;
+            EnumStringToCamelCase = enumStringToCamelCase;
         }
 
         public bool Export { get; set; }
@@ -28,5 +31,7 @@ namespace CSharpToTypeScript.Core.Options
         public ImportGenerationMode ImportGenerationMode { get; set; }
         public QuotationMark QuotationMark { get; set; }
         public bool AppendNewLine { get; set; }
+        public bool StringEnums { get; set; }
+        public bool EnumStringToCamelCase { get; set; }
     }
 }

@@ -73,6 +73,16 @@ namespace CSharpToTypeScript.Blazor.Models
         public string AppendNewLineDescription
             => Multiline("Append new line to end of file (removes TSLint warning).");
 
+        public bool StringEnums { get; set; }
+
+        public string StringEnumsDescription
+            => Multiline("Output string enums.");
+
+        public bool EnumStringToCamelCase { get; set; }
+
+        public string EnumStringToCamelCaseDescription
+            => Multiline("Use camel case for enum strings.");
+
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if (!UseTabs && TabSize is null)
@@ -89,7 +99,7 @@ namespace CSharpToTypeScript.Blazor.Models
         public CodeConversionOptions MapToCodeConversionOptions()
             => new CodeConversionOptions(Export, UseTabs, TabSize, ConvertDatesTo, ConvertNullablesTo, ToCamelCase, RemoveInterfacePrefix,
                 GenerateImports ? ImportGenerationMode.Simple : ImportGenerationMode.None,
-                UseKebabCase, AppendModelSuffix, QuotationMark, AppendNewLine);
+                UseKebabCase, AppendModelSuffix, QuotationMark, AppendNewLine, StringEnums, EnumStringToCamelCase);
 
         public string Multiline(string text, int wordsPerLine = 5)
             => string.Join(Environment.NewLine,

@@ -132,6 +132,20 @@
                         <i class="form-icon"></i> Append New Line
                     </label>
                 </div>
+                <div class="form-group tooltip tooltip-bottom" data-tooltip="@SettingsModalModel.StringEnumsDescription">
+                    <label class="form-switch" for="@nameof(SettingsModalModel.StringEnums)">
+                        <InputCheckbox id="@nameof(SettingsModalModel.StringEnums)"
+                            @bind-Value="SettingsModalModel.StringEnums" />
+                        <i class="form-icon"></i> String Enums
+                    </label>
+                </div>
+                <div class="form-group tooltip tooltip-bottom" data-tooltip="@SettingsModalModel.EnumStringToCamelCaseDescription">
+                    <label class="form-switch" for="@nameof(SettingsModalModel.EnumStringToCamelCase)">
+                        <InputCheckbox id="@nameof(SettingsModalModel.EnumStringToCamelCase)"
+                            @bind-Value="SettingsModalModel.EnumStringToCamelCase" />
+                        <i class="form-icon"></i> Enum String To Camel Case
+                    </label>
+                </div>
             </div>
         </div>
         
