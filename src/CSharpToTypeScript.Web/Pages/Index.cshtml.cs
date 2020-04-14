@@ -49,6 +49,12 @@ namespace CSharpToTypeScript.Web.Pages
             [Display(Name = "Append New Line")]
             public bool AppendNewLine { get; set; }
 
+            [Display(Name = "String Enums")]
+            public bool StringEnums { get; set; }
+
+            [Display(Name = "Enum String To Camel Case")]
+            public bool EnumStringToCamelCase { get; set; }
+
             public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
             {
                 if (!UseTabs && TabSize is null)
@@ -62,7 +68,7 @@ namespace CSharpToTypeScript.Web.Pages
             public CodeConversionOptions MapToCodeConversionOptions()
                 => new CodeConversionOptions(Export, UseTabs, TabSize, ConvertDatesTo, ConvertNullablesTo, ToCamelCase, RemoveInterfacePrefix,
                     GenerateImports ? ImportGenerationMode.Simple : ImportGenerationMode.None,
-                    UseKebabCase, AppendModelSuffix, QuotationMark, AppendNewLine);
+                    UseKebabCase, AppendModelSuffix, QuotationMark, AppendNewLine, StringEnums, EnumStringToCamelCase);
         }
 
         private readonly ICodeConverter _codeConverter;
