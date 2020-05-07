@@ -35,7 +35,8 @@ namespace CSharpToTypeScript.Core.Services
                     .Where(p => !string.IsNullOrWhiteSpace(p)) ?? Enumerable.Empty<string>(),
                 baseTypes: ConvertBaseTypes(
                     type.BaseList?.Types ?? Enumerable.Empty<BaseTypeSyntax>(),
-                    type));
+                    type),
+                fromInterface: type is InterfaceDeclarationSyntax);
 
         private FieldNode ConvertProperty(PropertyDeclarationSyntax property)
             => new FieldNode(

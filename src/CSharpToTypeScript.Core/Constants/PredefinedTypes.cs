@@ -1,6 +1,6 @@
 namespace CSharpToTypeScript.Core.Constants
 {
-    public static class PredefinedTypes
+    internal static class PredefinedTypes
     {
         public const string Bool = "bool";
 

@@ -1,12 +1,12 @@
 <div class="modal @ActiveCssClass">
     <a href="#" class="modal-overlay" aria-label="Close" @onclick="OnCloseRequested" @onclick:preventDefault></a>
-    <div class="modal-container bg-dark">
-        <div class="modal-header text-light">
+    <div class="modal-container bg-dark p-2">
+        <div class="modal-header text-light py-2">
             <button type="button" class="btn btn-clear float-right" aria-label="Close"
                 @onclick="OnCloseRequested"></button>
             <div class="modal-title h5">@Title</div>
         </div>
-        <div class="modal-body">
+        <div class="modal-body py-0">
             <div class="content">
                 @ChildContent
             </div>

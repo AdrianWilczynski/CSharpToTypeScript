@@ -29,7 +29,8 @@ namespace CSharpToTypeScript.Core.Services
                     TypeDeclarationSyntax type => (RootNode)_rootTypeConverter.Convert(type),
                     EnumDeclarationSyntax @enum => _rootEnumConverter.Convert(@enum),
                     _ => throw new ArgumentException("Unknown syntax type.")
-                });
+                })
+                .ToList();
 
         private bool IsNotStatic(TypeDeclarationSyntax type)
             => type.Modifiers.All(m => m.Kind() != SyntaxKind.StaticKeyword);

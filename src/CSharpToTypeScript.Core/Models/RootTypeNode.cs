@@ -10,18 +10,21 @@ namespace CSharpToTypeScript.Core.Models
 {
     internal class RootTypeNode : RootNode
     {
-        public RootTypeNode(string name, IEnumerable<FieldNode> fields, IEnumerable<string> genericTypeParameters, IEnumerable<TypeNode> baseTypes)
+        public RootTypeNode(string name, IEnumerable<FieldNode> fields, IEnumerable<string> genericTypeParameters,
+            IEnumerable<TypeNode> baseTypes, bool fromInterface)
         {
             Name = name;
             Fields = fields;
             GenericTypeParameters = genericTypeParameters;
             BaseTypes = baseTypes;
+            FromInterface = fromInterface;
         }
 
         public override string Name { get; }
         public IEnumerable<FieldNode> Fields { get; }
-        public IEnumerable<string> GenericTypeParameters { get; set; }
-        public IEnumerable<TypeNode> BaseTypes { get; set; }
+        public IEnumerable<string> GenericTypeParameters { get; }
+        public IEnumerable<TypeNode> BaseTypes { get; }
+        public bool FromInterface { get; }
 
         public override IEnumerable<string> Requires
             => Fields.SelectMany(f => f.Requires)
@@ -35,7 +38,9 @@ namespace CSharpToTypeScript.Core.Models
             context.GenericTypeParameters = GenericTypeParameters;
 
             // keywords
-            return "export ".If(options.Export) + "interface "
+            return "export ".If(options.Export)
+                // type
+                + (!FromInterface && options.OutputType == OutputType.Class ? "class" : "interface") + " "
                 // name
                 + Name.TransformIf(options.RemoveInterfacePrefix, StringUtilities.RemoveInterfacePrefix)
                 // generic type parameters

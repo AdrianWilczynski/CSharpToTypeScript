@@ -679,5 +679,15 @@ export interface ImplementingItem {
     Right = ""right""
 }".NormalizeNewLine(), converted);
         }
+
+        [Fact]
+        public void ConvertToClasses()
+        {
+            var converted = _codeConverter.ConvertToTypeScript("class Item { }",
+                new CodeConversionOptions(export: false, useTabs: true, outputType: OutputType.Class));
+
+            Assert.Contains("class", converted);
+            Assert.DoesNotContain("interface", converted);
+        }
     }
 }

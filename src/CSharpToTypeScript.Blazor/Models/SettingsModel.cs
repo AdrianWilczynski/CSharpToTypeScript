@@ -83,6 +83,11 @@ namespace CSharpToTypeScript.Blazor.Models
         public string EnumStringToCamelCaseDescription
             => Multiline("Use camel case for enum strings.");
 
+        public OutputType OutputType { get; set; }
+
+        public string OutputTypeDescription
+           => Multiline("Class or interface?");
+
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if (!UseTabs && TabSize is null)
@@ -99,7 +104,7 @@ namespace CSharpToTypeScript.Blazor.Models
         public CodeConversionOptions MapToCodeConversionOptions()
             => new CodeConversionOptions(Export, UseTabs, TabSize, ConvertDatesTo, ConvertNullablesTo, ToCamelCase, RemoveInterfacePrefix,
                 GenerateImports ? ImportGenerationMode.Simple : ImportGenerationMode.None,
-                UseKebabCase, AppendModelSuffix, QuotationMark, AppendNewLine, StringEnums, EnumStringToCamelCase);
+                UseKebabCase, AppendModelSuffix, QuotationMark, AppendNewLine, StringEnums, EnumStringToCamelCase, OutputType);
 
         public string Multiline(string text, int wordsPerLine = 5)
             => string.Join(Environment.NewLine,
