@@ -4,6 +4,8 @@ Convert C# Models, ViewModels and DTOs into their TypeScript equivalents.
 
 ![In Action](img/InAction.gif)
 
+![Help](img/help.gif)
+
 ## Installing
 
 ```cmd
@@ -42,6 +44,8 @@ dotnet cs2ts [options] <Input>
 \* Simple import generation assumes flat output directory structure and file names corresponding to type names (e.g. `MyType`: `myType.ts`, `my-type.ts`, `my-type.model.ts`).
 
 ## Configuration file
+
+![Configuration File](img/configurationFile.gif)
 
 To create optional configuration file (`cs2tsconfig.json`) in current directory run:
 
