@@ -199,6 +199,20 @@ export interface ImplementingItem {
         }
 
         [Fact]
+        public void ConvertUris()
+        {
+            var converted = _codeConverter.ConvertToTypeScript(@"class Item
+{
+    public Uri Url { get; set; }
+}", new CodeConversionOptions(export: true, useTabs: false, tabSize: 4));
+
+            Assert.Equal(@"export interface Item {
+    url: string;
+}".NormalizeNewLine(), converted);
+        }
+
+
+        [Fact]
         public void ConvertTuples()
         {
             var converted = _codeConverter.ConvertToTypeScript(@"class Item

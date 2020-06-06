@@ -13,7 +13,7 @@ namespace CSharpToTypeScript.Core.Services.TypeConversionHandlers
 
         protected override IEnumerable<string> ConvertibleFromIdentified => new[]
         {
-            nameof(System.String), nameof(System.Char), nameof(System.TimeSpan), nameof(System.Guid)
+            nameof(System.String), nameof(System.Char), nameof(System.TimeSpan), nameof(System.Guid), nameof(System.Uri)
         };
     }
 }
