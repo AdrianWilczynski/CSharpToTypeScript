@@ -18,6 +18,7 @@ namespace CSharpToTypeScript.Core.Services
                 .SetNext(new DictionaryConverter(converter))
                 .SetNext(new NullableConverter(converter))
                 .SetNext(new GenericConverter(converter))
+                .SetNext(new UriConverter())
                 .SetNext(new CustomConverter());
 
             return converter;
