@@ -23,10 +23,11 @@ namespace CSharpToTypeScript.Core.Services
         public RootTypeNode Convert(TypeDeclarationSyntax type)
             => new RootTypeNode(
                 name: type.Identifier.ValueText,
-                fields: type.ChildNodes()
+                fields: GetChildNodes(type)
                     .SelectMany(node => node switch
                     {
                         PropertyDeclarationSyntax property when IsSerializable(property, type) => new[] { ConvertProperty(property) },
+                        ParameterSyntax parameter when type is RecordDeclarationSyntax => new[] { ConvertParameter(parameter) },
                         FieldDeclarationSyntax field when IsSerializable(field) => ConvertField(field),
                         _ => Enumerable.Empty<FieldNode>()
                     }),
@@ -38,22 +39,39 @@ namespace CSharpToTypeScript.Core.Services
                     type),
                 fromInterface: type is InterfaceDeclarationSyntax);
 
+        private IEnumerable<SyntaxNode> GetChildNodes(TypeDeclarationSyntax type)
+        {
+            switch (type)
+            {
+                case RecordDeclarationSyntax:
+                    return type.ChildNodes().First().ChildNodes();   
+                default:
+                    return type.ChildNodes();
+            }
+        }
+
         private FieldNode ConvertProperty(PropertyDeclarationSyntax property)
-            => new FieldNode(
+            => new(
                 name: property.Identifier.ValueText,
                 type: _typeConverter.Handle(property.Type),
-                jsonPropertyName: GetJsonPropertyName(property));
+                jsonPropertyName: GetJsonPropertyName(property.AttributeLists));
+        
+        private FieldNode ConvertParameter(ParameterSyntax property)
+            => new(
+                name: property.Identifier.ValueText,
+                type: _typeConverter.Handle(property.Type),
+                jsonPropertyName: GetJsonPropertyName(property.AttributeLists));
 
         private IEnumerable<FieldNode> ConvertField(FieldDeclarationSyntax field)
            => field.Declaration.Variables.Select(v => new FieldNode(
                 name: v.Identifier.ValueText,
                 type: _typeConverter.Handle(field.Declaration.Type),
-                jsonPropertyName: GetJsonPropertyName(field)))
+                jsonPropertyName: GetJsonPropertyName(field.AttributeLists)))
             .Where(f => !string.IsNullOrWhiteSpace(f.Name));
 
-        private string GetJsonPropertyName(MemberDeclarationSyntax member)
+        private string GetJsonPropertyName(SyntaxList<AttributeListSyntax> attributeLists)
         {
-            foreach (var attribute in member.AttributeLists.SelectMany(a => a.Attributes))
+            foreach (var attribute in attributeLists.SelectMany(a => a.Attributes))
             {
                 static bool IsNotNamed(AttributeArgumentSyntax attribute)
                     => attribute.NameColon is null && attribute.NameEquals is null;
