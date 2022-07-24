@@ -1,21 +1,21 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>C# to TypeScript</title>
-    <link rel="stylesheet" href="~/lib/mdbootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/lib/mdbootstrap/css/mdb.min.css" />
-    <link rel="stylesheet" href="~/lib/animate.css/animate.min.css" />
-    <link rel="stylesheet" href="~/lib/prismjs/themes/prism-tomorrow.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/lib/mdbootstrap/css/mdb.min.css"/>
+    <link rel="stylesheet" href="~/lib/animate.css/animate.min.css"/>
+    <link rel="stylesheet" href="~/lib/prism/themes/prism-tomorrow.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css"/>
 </head>
 <body class="grey lighten-5">
-    @RenderBody()
+@RenderBody()
 
-    <script src="~/lib/prismjs/prism.min.js"></script>
-    <script src="~/lib/prismjs/components/prism-typescript.min.js"></script>
+<script src="~/lib/prism/prism.min.js"></script>
+<script src="~/lib/prism/components/prism-typescript.min.js"></script>
 
-    @RenderSection("Scripts", required: false)
+@await RenderSectionAsync("Scripts", required: false)
 </body>
-</html> 
+</html>

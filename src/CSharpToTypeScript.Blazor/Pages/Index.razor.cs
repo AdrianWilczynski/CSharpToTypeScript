@@ -118,7 +118,7 @@ namespace CSharpToTypeScript.Blazor.Pages
 
             var steps = new Random().Next(1, Constants.Themes.Count);
 
-            for (int i = 0; i < steps; i++)
+            for (var i = 0; i < steps; i++)
             {
                 if (i != 0)
                 {

@@ -354,9 +354,10 @@ MigrationBackup/
 lib/
 
 out/
-node_modules/
 .vscode-test/
 *.vsix
+
+.idea/
 
 **/wwwroot/js/**/*.js
 

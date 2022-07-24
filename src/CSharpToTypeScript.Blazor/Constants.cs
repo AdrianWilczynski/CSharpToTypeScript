@@ -12,7 +12,7 @@ namespace CSharpToTypeScript.Blazor
             ("Azure", "https://csharptotypescript.azurewebsites.net")
         };
 
-        public static IReadOnlyList<(string DisplayName, string Name)> Themes = new List<(string, string)>
+        public static readonly IReadOnlyList<(string DisplayName, string Name)> Themes = new List<(string, string)>
         {
             ("Visual Studio Dark", "vs-dark"),
             ("Oceanic Next", "oceanic-next"),

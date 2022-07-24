@@ -102,7 +102,7 @@ namespace CSharpToTypeScript.Blazor.Models
             => (SettingsModel)MemberwiseClone();
 
         public CodeConversionOptions MapToCodeConversionOptions()
-            => new CodeConversionOptions(Export, UseTabs, TabSize, ConvertDatesTo, ConvertNullablesTo, ToCamelCase, RemoveInterfacePrefix,
+            => new(Export, UseTabs, TabSize, ConvertDatesTo, ConvertNullablesTo, ToCamelCase, RemoveInterfacePrefix,
                 GenerateImports ? ImportGenerationMode.Simple : ImportGenerationMode.None,
                 UseKebabCase, AppendModelSuffix, QuotationMark, AppendNewLine, StringEnums, EnumStringToCamelCase, OutputType);
 
