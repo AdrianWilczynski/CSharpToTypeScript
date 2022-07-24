@@ -87,7 +87,10 @@ import { themes, visualStudioDarkBackgroundColor } from './themes';
             ?.data.colors['editor.background'] ?? visualStudioDarkBackgroundColor;
     }
 
-    window.addEventListener('resize', () => {
+    window.addEventListener('resize', resize);
+    resize();
+    
+    function resize() {
         const dimensions = {
             width: window.innerWidth / 2,
             height: Math.max(window.innerHeight - navbar.offsetHeight, 100)
@@ -95,5 +98,5 @@ import { themes, visualStudioDarkBackgroundColor } from './themes';
 
         inputEditor.layout(dimensions);
         outputEditor.layout(dimensions);
-    });
+    }
 }

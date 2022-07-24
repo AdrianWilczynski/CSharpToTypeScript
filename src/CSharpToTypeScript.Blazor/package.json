@@ -1,5 +1,8 @@
 {
   "name": "csharptotypescript.blazor",
+  "scripts": {
+    "build": "npx webpack"
+  },
   "devDependencies": {
     "@types/blazor__javascript-interop": "^3.1.2",
     "@types/lodash": "^4.14.182",

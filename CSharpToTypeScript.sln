@@ -7,6 +7,26 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpToTypeScript.CLITool"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpToTypeScript.Web", "src\CSharpToTypeScript.Web\CSharpToTypeScript.Web.csproj", "{A02C0A8F-57B3-43FB-B053-58169447EFB4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6DABF802-E441-4F98-8005-2352708DDEF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpToTypeScript.Blazor.Tests", "test\CSharpToTypeScript.Blazor.Tests\CSharpToTypeScript.Blazor.Tests.csproj", "{CE274DB6-45AC-411F-AD8D-15592793B855}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpToTypeScript.CLITool.Tests", "test\CSharpToTypeScript.CLITool.Tests\CSharpToTypeScript.CLITool.Tests.csproj", "{4A167344-ED65-43A3-8F50-A929154CA1DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpToTypeScript.Core.Tests", "test\CSharpToTypeScript.Core.Tests\CSharpToTypeScript.Core.Tests.csproj", "{37A29A59-DEE9-475A-9AD5-F6040CED5D1B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpToTypeScript.Web.Tests", "test\CSharpToTypeScript.Web.Tests\CSharpToTypeScript.Web.Tests.csproj", "{450916C6-B398-4709-97E4-7F3F4C178BDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RunOnBuild", "samples\RunOnBuild\RunOnBuild.csproj", "{305AFB70-C404-41F1-8706-D9E32BC95A5D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpToTypeScript.VSCodeExtension.Tests", "test\CSharpToTypeScript.VSCodeExtension.Server.Tests\CSharpToTypeScript.VSCodeExtension.Tests.csproj", "{11BA1E9E-A7C5-4ACF-A0BF-201B45F4F5CC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VSCodeExtension", "VSCodeExtension", "{229B2ED0-5BC5-4450-8CFA-B498E5B04A0C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpToTypeScript.Server", "src\CSharpToTypeScript.VSCodeExtension\CSharpToTypeScript.Server\CSharpToTypeScript.Server.csproj", "{5497320E-B39E-412C-A0B1-BC3565FB58F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpToTypeScript.VSCodeExtension", "src\CSharpToTypeScript.VSCodeExtension\VSCodeExtension\CSharpToTypeScript.VSCodeExtension.esproj", "{5ED3BDC2-2BC3-44D1-B608-C9BD246D34B6}"
+EndProject
 Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{DB70529D-FB49-493C-91A8-99ED04BAE641}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -25,9 +45,50 @@ Global
 		{A02C0A8F-57B3-43FB-B053-58169447EFB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A02C0A8F-57B3-43FB-B053-58169447EFB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A02C0A8F-57B3-43FB-B053-58169447EFB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE274DB6-45AC-411F-AD8D-15592793B855}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE274DB6-45AC-411F-AD8D-15592793B855}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE274DB6-45AC-411F-AD8D-15592793B855}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE274DB6-45AC-411F-AD8D-15592793B855}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A167344-ED65-43A3-8F50-A929154CA1DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A167344-ED65-43A3-8F50-A929154CA1DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A167344-ED65-43A3-8F50-A929154CA1DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A167344-ED65-43A3-8F50-A929154CA1DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37A29A59-DEE9-475A-9AD5-F6040CED5D1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37A29A59-DEE9-475A-9AD5-F6040CED5D1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37A29A59-DEE9-475A-9AD5-F6040CED5D1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37A29A59-DEE9-475A-9AD5-F6040CED5D1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{450916C6-B398-4709-97E4-7F3F4C178BDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{450916C6-B398-4709-97E4-7F3F4C178BDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{450916C6-B398-4709-97E4-7F3F4C178BDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{450916C6-B398-4709-97E4-7F3F4C178BDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{305AFB70-C404-41F1-8706-D9E32BC95A5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{305AFB70-C404-41F1-8706-D9E32BC95A5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{305AFB70-C404-41F1-8706-D9E32BC95A5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{305AFB70-C404-41F1-8706-D9E32BC95A5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11BA1E9E-A7C5-4ACF-A0BF-201B45F4F5CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11BA1E9E-A7C5-4ACF-A0BF-201B45F4F5CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11BA1E9E-A7C5-4ACF-A0BF-201B45F4F5CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11BA1E9E-A7C5-4ACF-A0BF-201B45F4F5CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5497320E-B39E-412C-A0B1-BC3565FB58F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5497320E-B39E-412C-A0B1-BC3565FB58F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5497320E-B39E-412C-A0B1-BC3565FB58F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5497320E-B39E-412C-A0B1-BC3565FB58F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5ED3BDC2-2BC3-44D1-B608-C9BD246D34B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5ED3BDC2-2BC3-44D1-B608-C9BD246D34B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5ED3BDC2-2BC3-44D1-B608-C9BD246D34B6}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{5ED3BDC2-2BC3-44D1-B608-C9BD246D34B6}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CE274DB6-45AC-411F-AD8D-15592793B855} = {6DABF802-E441-4F98-8005-2352708DDEF3}
+		{4A167344-ED65-43A3-8F50-A929154CA1DB} = {6DABF802-E441-4F98-8005-2352708DDEF3}
+		{37A29A59-DEE9-475A-9AD5-F6040CED5D1B} = {6DABF802-E441-4F98-8005-2352708DDEF3}
+		{450916C6-B398-4709-97E4-7F3F4C178BDA} = {6DABF802-E441-4F98-8005-2352708DDEF3}
+		{11BA1E9E-A7C5-4ACF-A0BF-201B45F4F5CC} = {6DABF802-E441-4F98-8005-2352708DDEF3}
+		{5497320E-B39E-412C-A0B1-BC3565FB58F4} = {229B2ED0-5BC5-4450-8CFA-B498E5B04A0C}
+		{5ED3BDC2-2BC3-44D1-B608-C9BD246D34B6} = {229B2ED0-5BC5-4450-8CFA-B498E5B04A0C}
 	EndGlobalSection
 EndGlobal

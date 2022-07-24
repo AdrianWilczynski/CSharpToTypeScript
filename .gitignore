@@ -369,4 +369,6 @@ temp/
 
 **/RunOnBuild/Client/models/
 
+**/VSCodeExtension/server/
+
 **/CSharpToTypeScript.Blazor/wwwroot/dist/
