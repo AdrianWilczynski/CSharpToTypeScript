@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Linq;
 using CSharpToTypeScript.CLITool.Commands;
@@ -35,7 +36,7 @@ namespace CSharpToTypeScript.CLITool.Tests
             var generatedFilePath = Path.Join(nameof(ConvertSingleSimpleFile), "simpleItem.ts");
 
             Assert.True(File.Exists(generatedFilePath));
-            Assert.Equal("export interface SimpleItem {\r\n\r\n}", File.ReadAllText(generatedFilePath));
+            Assert.Equal($"export interface SimpleItem {{{Environment.NewLine}{Environment.NewLine}}}", File.ReadAllText(generatedFilePath));
         }
 
         [Fact]

@@ -50,7 +50,7 @@ namespace CSharpToTypeScript.Blazor.Tests
             Assert.False(toCamelCaseBackingInput.Selected);
 
             var tabSizeInput = _webDriver.FindElement(By.Id("TabSize"));
-            Assert.Equal("4", tabSizeInput.GetProperty("value"));
+            Assert.Equal("4", tabSizeInput.GetDomProperty("value"));
             tabSizeInput.Clear();
             tabSizeInput.SendKeys("8");
 
@@ -74,7 +74,7 @@ namespace CSharpToTypeScript.Blazor.Tests
             OpenSettings();
 
             var tabSizeInput = _webDriver.FindElement(By.Id("TabSize"));
-            Assert.Equal("4", tabSizeInput.GetProperty("value"));
+            Assert.Equal("4", tabSizeInput.GetDomProperty("value"));
             tabSizeInput.Clear();
             tabSizeInput.SendKeys("2");
 
@@ -85,7 +85,7 @@ namespace CSharpToTypeScript.Blazor.Tests
             OpenSettings();
 
             var preservedTabSizeValue = _webDriver.FindElement(By.Id("TabSize"))
-                .GetProperty("value");
+                .GetDomProperty("value");
 
             Assert.Equal("2", preservedTabSizeValue);
         }
@@ -93,7 +93,7 @@ namespace CSharpToTypeScript.Blazor.Tests
         #region Helpers
         private void NavigateToApp()
              => _webDriver.Navigate()
-                 .GoToUrl("https://localhost:5001/CSharpToTypeScript/");
+                 .GoToUrl("https://localhost:5001/CSharpToTypeScript");
 
         private void WaitForLoad()
             => new WebDriverWait(_webDriver, TimeSpan.FromSeconds(30))

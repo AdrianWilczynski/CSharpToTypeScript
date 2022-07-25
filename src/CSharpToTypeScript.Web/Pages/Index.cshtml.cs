@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.Text.Json;
 using CSharpToTypeScript.Core.Options;
 
 namespace CSharpToTypeScript.Web.Pages
@@ -99,7 +99,7 @@ namespace CSharpToTypeScript.Web.Pages
 
             Response.Cookies.Append(
                 nameof(Settings),
-                JsonConvert.SerializeObject(Settings),
+                JsonSerializer.Serialize(Settings),
                 new CookieOptions { Expires = DateTimeOffset.Now.AddYears(1) });
 
             PreviousInputCode = InputCode;
@@ -112,7 +112,7 @@ namespace CSharpToTypeScript.Web.Pages
         public void OnGet()
         {
             Settings = Request.Cookies[nameof(Settings)] is string settings
-                ? JsonConvert.DeserializeObject<SettingsModel>(settings)
+                ? JsonSerializer.Deserialize<SettingsModel>(settings)
                 : new SettingsModel();
 
             InputCode = PreviousInputCode;

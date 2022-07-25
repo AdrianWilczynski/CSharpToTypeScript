@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace MyProject.DTOs
 {
@@ -22,7 +22,7 @@ namespace MyProject.DTOs
         [JsonIgnore]
         public string IgnoreMe { get; set; }
 
-        [JsonProperty("new_name")]
+        [JsonPropertyName("new_name")]
         public string RenameMe { get; set; }
     }
 

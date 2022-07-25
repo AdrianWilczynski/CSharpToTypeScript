@@ -1,13 +1,11 @@
-using Xunit;
-using CSharpToTypeScript.Server;
-using CSharpToTypeScript.Core.Services;
+using System.Text.Json;
 using CSharpToTypeScript.Core.Options;
+using CSharpToTypeScript.Core.Services;
+using CSharpToTypeScript.Server;
+using CSharpToTypeScript.Server.DTOs;
+using Xunit;
 using Moq;
 using Server.Services;
-using Newtonsoft.Json;
-using CSharpToTypeScript.Server.DTOs;
-using Newtonsoft.Json.Serialization;
-using Newtonsoft.Json.Converters;
 
 namespace CSharpToTypeScript.VSCodeExtension.Server.Tests
 {
@@ -16,19 +14,19 @@ namespace CSharpToTypeScript.VSCodeExtension.Server.Tests
         [Fact]
         public void HandleRequests()
         {
-            var serializerSettings = new JsonSerializerSettings
+            var jsonSerializerOptions = new JsonSerializerOptions
             {
-                ContractResolver = new CamelCasePropertyNamesContractResolver(),
-                Converters = new[] { new StringEnumConverter() }
+                WriteIndented = true,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             };
 
-            var firstRequest = JsonConvert.SerializeObject(
+            var firstRequest = JsonSerializer.Serialize(
                 new Input { Code = "class First { }", Export = true, UseTabs = false, TabSize = 4, ConvertDatesTo = DateOutputType.String, ConvertNullablesTo = NullableOutputType.Undefined, ToCamelCase = true },
-                serializerSettings);
+                jsonSerializerOptions);
 
-            var secondRequest = JsonConvert.SerializeObject(
+            var secondRequest = JsonSerializer.Serialize(
                 new Input { Code = "class Second { }", Export = true, UseTabs = false, TabSize = 2, ConvertDatesTo = DateOutputType.Date, ConvertNullablesTo = NullableOutputType.Undefined, ToCamelCase = true },
-                serializerSettings);
+                jsonSerializerOptions);
 
             var stdioMock = new Mock<IStdio>();
             stdioMock.SetupSequence(s => s.ReadLine())
@@ -52,7 +50,7 @@ namespace CSharpToTypeScript.VSCodeExtension.Server.Tests
             stdioMock.Verify(s => s.ReadLine(), Times.Exactly(3));
 
             stdioMock.Verify(s =>
-                s.WriteLine(It.Is<string>(response => JsonConvert.DeserializeObject<Output>(response).ConvertedCode == "export interface First { }")),
+                s.WriteLine(It.Is<string>(response => response.Contains("export interface First { }"))),
                 Times.Once);
 
             stdioMock.Verify(s => s.WriteLine(It.IsAny<string>()), Times.Exactly(2));

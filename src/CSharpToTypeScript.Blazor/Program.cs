@@ -1,23 +1,18 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+﻿using System;
+using System.Net.Http;
 using CSharpToTypeScript.Core.DependencyInjection;
+using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using CSharpToTypeScript.Blazor.Pages;
 
-namespace CSharpToTypeScript.Blazor
-{
-    public static class Program
-    {
-        public static async Task Main(string[] args)
-        {
-            var builder = WebAssemblyHostBuilder.CreateDefault(args);
+var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
-            builder.RootComponents.Add<Index>("app");
+builder.RootComponents.Add<CSharpToTypeScript.Blazor.Pages.Index>("#app");
+builder.RootComponents.Add<HeadOutlet>("head::after");
 
-            builder.Services.AddCSharpToTypeScript();
-            builder.Services.AddBaseAddressHttpClient();
+builder.Services.AddCSharpToTypeScript();
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-            await builder.Build().RunAsync();
-        }
-    }
-}
+var app = builder.Build();
+
+await app.RunAsync();

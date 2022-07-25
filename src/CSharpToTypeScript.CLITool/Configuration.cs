@@ -1,6 +1,6 @@
+using System.Text.Json.Serialization;
 using CSharpToTypeScript.CLITool.Commands;
 using CSharpToTypeScript.Core.Options;
-using Newtonsoft.Json;
 
 namespace CSharpToTypeScript.CLITool
 {
@@ -16,7 +16,7 @@ namespace CSharpToTypeScript.CLITool
             }
         }
 
-        [JsonProperty("$schema")]
+        [JsonPropertyName("$schema")]
         public const string Schema
             = "https://adrianwilczynski.github.io/CSharpToTypeScript/cs2tsconfig.json";
 

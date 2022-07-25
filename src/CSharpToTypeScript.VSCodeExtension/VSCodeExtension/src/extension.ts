@@ -17,13 +17,13 @@ export function activate(context: vscode.ExtensionContext) {
     serverRunning = true;
 
     server = cp.spawn('dotnet', [context.asAbsolutePath(path.join(
-        'server', 'CSharpToTypeScript.Server', 'bin', 'Release', 'netcoreapp2.2', 'publish', 'CSharpToTypeScript.Server.dll'))]);
+        'server', 'CSharpToTypeScript.Server.dll'))]);
 
     server.on('error', err => {
         serverRunning = false;
         vscode.window.showErrorMessage(`"C# to TypeScript" server related error occurred: "${err.message}".`);
     });
-    server.stderr.on('data', data => {
+    server.stderr?.on('data', data => {
         standardError += data;
     });
     server.on('exit', code => {
@@ -31,7 +31,7 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.window.showWarningMessage(`"C# to TypeScript" server shutdown with code: "${code}". Standard error: "${standardError}".`);
     });
 
-    rl = readline.createInterface(server.stdout, server.stdin);
+    rl = readline.createInterface(server.stdout!, server.stdin!);
 
     context.subscriptions.push(
         vscode.commands.registerCommand('csharpToTypeScript.csharpToTypeScriptReplace', replaceCommand),
@@ -42,7 +42,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 export function deactivate() {
     if (serverRunning) {
-        server.stdin.write('EXIT\n');
+        server.stdin?.write('EXIT\n');
     }
 }
 

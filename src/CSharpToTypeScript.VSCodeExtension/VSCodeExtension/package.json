@@ -180,19 +180,19 @@
 	"scripts": {
 		"vscode:prepublish": "npm run compile-server && npm run compile",
 		"compile": "tsc -p ./",
-		"compile-server": "dotnet publish ./server/CSharpToTypeScript.Server/CSharpToTypeScript.Server.csproj -c Release",
+		"compile-server": "dotnet publish ../CSharpToTypeScript.Server/CSharpToTypeScript.Server.csproj -c Release -o ./server",
 		"watch": "tsc -watch -p ./",
 		"pretest": "npm run compile"
 	},
 	"devDependencies": {
-		"@types/glob": "^7.1.1",
-		"@types/mocha": "^5.2.6",
-		"@types/node": "^10.12.21",
-		"@types/vscode": "^1.38.0",
-		"glob": "^7.1.4",
-		"mocha": "^6.1.4",
-		"tslint": "^5.12.1",
-		"typescript": "^3.7.2",
-		"vscode-test": "^1.0.2"
+		"@types/glob": "^7.2.0",
+		"@types/mocha": "^9.1.1",
+		"@types/node": "^16.11.45",
+		"@types/vscode": "^1.69.0",
+		"glob": "^8.0.3",
+		"mocha": "^10.0.0",
+		"tslint": "^6.1.3",
+		"typescript": "^4.7.4",
+		"vscode-test": "^1.6.1"
 	}
 }

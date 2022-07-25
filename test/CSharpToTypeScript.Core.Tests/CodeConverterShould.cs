@@ -65,6 +65,17 @@ namespace CSharpToTypeScript.Core.Tests
     Blue
 }".NormalizeNewLine(), converted);
         }
+        
+        [Fact]
+        public void ConvertRecord()
+        {
+            var converted = _codeConverter.ConvertToTypeScript(@"record DailyTemperature(double HighTemp, double LowTemp)", new CodeConversionOptions(export: true, useTabs: false, tabSize: 4));
+
+            Assert.Equal(@"export interface DailyTemperature {
+    highTemp: number;
+    lowTemp: number;
+}".NormalizeNewLine(), converted);
+        }
 
         [Fact]
         public void ConvertGenericType()
