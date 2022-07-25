@@ -1,7 +1,7 @@
 {
   "name": "C# to TypeScript",
   "short_name": "C# to TS",
-  "start_url": "/",
+  "start_url": "/CSharpToTypeScript/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#1e1e1e",

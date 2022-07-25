@@ -93,7 +93,7 @@ namespace CSharpToTypeScript.Blazor.Tests
         #region Helpers
         private void NavigateToApp()
              => _webDriver.Navigate()
-                 .GoToUrl("https://localhost:5001/");
+                 .GoToUrl("https://localhost:5001/CSharpToTypeScript");
 
         private void WaitForLoad()
             => new WebDriverWait(_webDriver, TimeSpan.FromSeconds(30))

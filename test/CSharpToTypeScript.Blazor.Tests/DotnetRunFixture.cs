@@ -16,7 +16,7 @@ namespace CSharpToTypeScript.Blazor.Tests
                 StartInfo =
                 {
                     FileName = "dotnet",
-                    Arguments = "run",
+                    Arguments = "run --pathbase=/CSharpToTypeScript",
                     WorkingDirectory = Path.Join(
                         Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
                         "..", "..", "..", "..", "..", "src", "CSharpToTypeScript.Blazor"),
