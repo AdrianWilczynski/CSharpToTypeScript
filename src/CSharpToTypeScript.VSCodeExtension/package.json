@@ -190,7 +190,7 @@
 		"@types/node": "^10.12.21",
 		"@types/vscode": "^1.38.0",
 		"glob": "^7.1.4",
-		"mocha": "^6.1.4",
+		"mocha": "^10.2.0",
 		"tslint": "^5.12.1",
 		"typescript": "^3.7.2",
 		"vscode-test": "^1.0.2"
